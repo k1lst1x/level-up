@@ -1,0 +1,487 @@
+{# main/templates/main/home.html #}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+
+{# 1) HERO #}
+<section class="hero card" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <h1 class="hero-title">
+      Мы знаем, как сделать ваше мероприятие незабываемым
+    </h1>
+
+    
+
+    <div class="hero-subtitle">
+
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{% url 'kp:kp' %}" data-ev="home_hero_calc_click">
+        Рассчитать стоимость
+      </a>
+      <a class="btn btn-primary" href="#cases" data-ev="home_hero_cases_click">
+        Посмотреть кейсы
+      </a>
+    </div>
+
+    <div class="hero-micro muted"></div>
+  </div>
+</section>
+
+
+{# 2) КАТЕГОРИИ (на главной) #}
+<section class="home-section" id="services">
+  <div class="categories-page">
+    <div class="page-head">
+      <h2 class="page-title">Категории</h2>
+      <div class="page-subtitle muted"></div>
+
+      {# Поиск: лучше явно указывать action, чтобы не зависеть от URL этой страницы #}
+      <form method="get" action="{% url 'main:home' %}" class="search-row categories-search">
+        <input type="text" name="search" value="{{ search }}" placeholder="Поиск категории…" class="search-input" />
+        <button class="btn btn-compact" type="submit">Искать</button>
+
+        {% if search %}
+          <a class="btn btn-compact" href="{% url 'main:home' %}">Сброс</a>
+        {% endif %}
+      </form>
+    </div>
+
+    <div class="grid grid-2 categories-grid">
+      {% for c in categories %}
+      {# ✅ БЕЗ подкатегорий: сразу на услуги категории #}
+      <a class="tile categories-tile" href="{% url 'main:category_services' c.id %}">
+        <div class="tile-media categories-tile-media">
+          {% if c.image %}
+          <img src="{{ c.image.url }}" alt="{{ c.name }}" loading="lazy">
+          {% else %}
+          <div class="tile-placeholder">Без изображения</div>
+          {% endif %}
+        </div>
+
+        <div class="tile-body">
+          <div class="tile-title">{{ c.name }}</div>
+          <div class="tile-desc {% if not c.description %}tile-desc--empty{% endif %}">
+            {% if c.description %}{{ c.description }}{% else %}Описание не задано{% endif %}
+          </div>
+        </div>
+      </a>
+      {% empty %}
+      <div class="card muted" style="grid-column: 1 / -1;">
+        Ничего не найдено.
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+{# 3) КЕЙСЫ (карусель) #}
+<section class="home-section" id="cases">
+  <div class="home-section-head">
+    <h2 class="home-section-title home-section-title1">Наши кейсы</h2>
+  </div>
+
+  <div class="cases-wrap" data-cases>
+    <div class="cases-fade-left" aria-hidden="true"></div>
+    <div class="cases-fade-right" aria-hidden="true"></div>
+
+    <button class="cases-arrow left" type="button" aria-label="Назад" data-cases-prev>‹</button>
+    <button class="cases-arrow right" type="button" aria-label="Вперёд" data-cases-next>›</button>
+
+    <div class="cases-carousel" data-cases-track>
+      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="wedding-80" data-ev="home_case_open">
+        <div class="tile-media">
+          <img src="/static/img/home/case-1.jpg" alt="Свадьба • 80 гостей" loading="lazy">
+        </div>
+        <div class="tile-body">
+          <div class="tile-title">Свадьба • 80 гостей</div>
+          <div class="tile-desc"></div>
+        </div>
+      </a>
+
+      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="corp-awards" data-ev="home_case_open">
+        <div class="tile-media">
+          <img src="/static/img/home/case-2.jpg" alt="Корпоратив • награждение" loading="lazy">
+        </div>
+        <div class="tile-body">
+          <div class="tile-title">Корпоратив • награждение</div>
+          <div class="tile-desc"></div>
+        </div>
+      </a>
+
+      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="birthday-private" data-ev="home_case_open">
+        <div class="tile-media">
+          <img src="/static/img/home/case-3.jpg" alt="День рождения • private" loading="lazy">
+        </div>
+        <div class="tile-body">
+          <div class="tile-title">День рождения • private</div>
+          <div class="tile-desc"></div>
+        </div>
+      </a>
+
+      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="concert-show" data-ev="home_case_open">
+        <div class="tile-media">
+          <img src="/static/img/home/case-4.jpg" alt="Концерт • шоу" loading="lazy">
+        </div>
+        <div class="tile-body">
+          <div class="tile-title">Концерт • шоу</div>
+          <div class="tile-desc"></div>
+        </div>
+      </a>
+
+      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="wedding-140" data-ev="home_case_open">
+        <div class="tile-media">
+          <img src="/static/img/home/case-5.jpg" alt="Свадьба • 140 гостей" loading="lazy">
+        </div>
+        <div class="tile-body">
+          <div class="tile-title">Свадьба • 140 гостей</div>
+          <div class="tile-desc"></div>
+        </div>
+      </a>
+
+      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="corp-conf" data-ev="home_case_open">
+        <div class="tile-media">
+          <img src="/static/img/home/case-6.jpg" alt="Корпоратив • конференция" loading="lazy">
+        </div>
+        <div class="tile-body">
+          <div class="tile-title">Корпоратив • конференция</div>
+          <div class="tile-desc"></div>
+        </div>
+      </a>
+
+      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="private-gala" data-ev="home_case_open">
+        <div class="tile-media">
+          <img src="/static/img/home/case-7.jpg" alt="Частное • gala dinner" loading="lazy">
+        </div>
+        <div class="tile-body">
+          <div class="tile-title">Частное • gala dinner</div>
+          <div class="tile-desc"></div>
+        </div>
+      </a>
+
+      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="corp-team" data-ev="home_case_open">
+        <div class="tile-media">
+          <img src="/static/img/home/case-8.jpg" alt="Корпоратив • team party" loading="lazy">
+        </div>
+        <div class="tile-body">
+          <div class="tile-title">Корпоратив • team party</div>
+          <div class="tile-desc"></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="home-actions">
+      <a class="btn btn-primary" href="https://www.instagram.com/iamjesuskhan/" target="_blank"
+        rel="noopener noreferrer">
+        Смотреть все кейсы
+      </a>
+    </div>
+  </div>
+</section>
+
+{# 4) Как проходит работа (4 шага) #}
+<section class="home-section" id="process">
+  <div class="home-section-head">
+    <h2 class="home-section-title home-section-title1">Как проходит работа</h2>
+  </div>
+
+  <div class="process-flow">
+
+    <div class="process-step">
+      <div class="process-num">01</div>
+      <div class="process-card">
+        <h3>Бриф и задача</h3>
+        <p>Вместе с вами прорабатываем ключевые моменты: формат, цели и ожидания мероприятия.</p>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="process-num">02</div>
+      <div class="process-card">
+        <h3>Подготовка  </h3>
+        <p>Создаём несколько концепций, прорабатываем сценарий и фиксируем бюджет, чтобы всё было прозрачно.</p>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="process-num">03</div>
+      <div class="process-card">
+        <h3>Подготовка</h3>
+        <p>Координируем все этапы подготовки: от команды до таймингов, гарантируя безупречную организацию.</p>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="process-num">04</div>
+      <div class="process-card">
+        <h3>Проведение</h3>
+        <p>Полная координация и контроль, чтобы вы могли сосредоточиться на отдыхе — мы решаем все вопросы.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{# 5) Из чего складывается стоимость #}
+<section class="home-section" id="pricing-logic">
+  <div class="home-section-head">
+    <h2 class="home-section-title  home-section-title1">Из чего складывается стоимость</h2>
+  </div>
+
+  <div class="grid grid-2 home-grid-3">
+    <div class="card home-mini">
+      <div class="tile-title">Формат </div>
+      <div class="tile-desc">Свадьбы, корпоративы, любые мероприятия.</div>
+    </div>
+    <div class="card home-mini">
+      <div class="tile-title">Команда</div>
+      <div class="tile-desc">Ведущий, артисты, техперсонал.</div>
+    </div>
+    <div class="card home-mini">
+      <div class="tile-title">Оборудование</div>
+      <div class="tile-desc">Свет, звук, экраны, спецэффекты.</div>
+    </div>
+    <div class="card home-mini">
+      <div class="tile-title">Подготовка</div>
+      <div class="tile-desc">Тайинг, подрядчики, реквизиты.</div>
+    </div>
+  </div>
+
+  <div class="muted home-micro"></div>
+</section>
+
+{# 6) Финальный CTA #}
+<section class="home-section" id="final-cta">
+  <div class="card home-cta">
+    <div class="home-cta-title">Хотите программу под ваш формат?</div>
+    <div class="muted home-cta-sub">
+      Предложим 2–3 варианта с бюджетом и таймингом.
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{% url 'kp:kp' %}" data-ev="home_final_calc_click">Рассчитать стоимость</a>
+      <a class="btn btn-primary" href="{% url 'main:kp_examples' %}" data-ev="home_final_variants_click">
+        Получить варианты
+      </a>      
+    </div>
+
+    <div class="muted hero-micro"></div>
+  </div>
+</section>
+
+{# 7) FAQ #}
+<section class="home-section" id="faq">
+  <div class="home-section-head">
+    <h2 class="home-section-title">Часто задаваемые вопросы</h2>
+  </div>
+
+  <div class="faq-list">
+    <details class="card faq-item">
+      <summary class="faq-q">Сколько времени нужно на подготовку?</summary>
+      <div class="faq-a muted">Обычно от 7 дней. Срочные проекты тоже берём, если есть окно.</div>
+    </details>
+
+    <details class="card faq-item">
+      <summary class="faq-q">Можно уложиться в конкретный бюджет?</summary>
+      <div class="faq-a muted">Да. Предложим варианты под рамку и честно скажем, где компромисс.</div>
+    </details>
+
+    <details class="card faq-item">
+      <summary class="faq-q">Вы работаете «под ключ»?</summary>
+      <div class="faq-a muted">Да. От сценария и сметы до координации на площадке.</div>
+    </details>
+
+
+    <details class="card faq-item">
+      <summary class="faq-q">Что если что-то пойдёт не так?</summary>
+      <div class="faq-a muted">Все нюансы решаются командой здесь и сейчас.</div>
+    </details>
+  </div>
+</section>
+
+{# 8) Footer (минимум) #}
+{# 8) CONTACTS #}
+<section class="home-section" id="contacts">
+  <div class="contacts-card card">
+
+    <div class="contacts-head">
+      <h2 class="home-section-title home-section-title1">Контакты</h2>
+      <p class="muted contacts-sub">
+        Напишите или позвоните — обсудим формат и предложим варианты.
+      </p>
+    </div>
+
+    <div class="contacts-grid">
+
+      <a class="contact-item" href="https://wa.me/77075822357" target="_blank" rel="noopener">
+        <span class="contact-icon">
+          <img src="{% static 'icons/whatsapp.svg' %}" alt="WhatsApp">
+        </span>
+        <span class="contact-label">WhatsApp</span>
+      </a>
+
+      <a class="contact-item" href="https://t.me/mor22m" target="_blank" rel="noopener">
+        <span class="contact-icon">
+          <img src="{% static 'icons/telegram.svg' %}" alt="Telegram">
+        </span>
+        <span class="contact-label">Telegram</span>
+      </a>
+
+      <a class="contact-item" href="mailto:abdildaajzada@gmail.com">
+        <span class="contact-icon contact-icon-text">@</span>
+        <span class="contact-label">Почта</span>
+      </a>
+
+      <a class="contact-item" href="https://www.instagram.com/iamjesuskhan/" target="_blank" rel="noopener">
+        <span class="contact-icon">
+          <img src="{% static 'icons/instagram.svg' %}" alt="Instagram">
+        </span>
+        <span class="contact-label">Instagram</span>
+      </a>
+
+    </div>
+
+    <div class="contacts-address">
+      <a
+        class="addr-card"
+        href="https://2gis.kz/almaty/geo/9430047375041535/76.857007,43.236464"
+        target="_blank"
+        rel="noopener"
+        style="text-decoration:none; color:inherit;"
+      >
+        <span class="contact-icon">2GIS</span>
+        <div class="addr-text">
+          <div class="addr-title">Мы находимся</div>
+          <div class="addr-sub">Алматы, Улица Жубанова, 3а</div>
+        </div>
+      </a>
+    </div>    
+
+  </div>
+</section>
+
+
+{# JS: Cases carousel (стрелки + drag + dots + progress + snap) #}
+<script>
+  (function () {
+    const root = document.querySelector('[data-cases]');
+    if (!root) return;
+
+    const track = root.querySelector('[data-cases-track]');
+    const btnPrev = root.querySelector('[data-cases-prev]');
+    const btnNext = root.querySelector('[data-cases-next]');
+
+    const dotsWrap = root.querySelector('[data-cases-dots]');
+    const dots = dotsWrap ? Array.from(dotsWrap.querySelectorAll('.cases-dot')) : [];
+
+    const bar = root.querySelector('[data-cases-progress]');
+    const counter = root.querySelector('[data-cases-counter]');
+
+    if (!track) return;
+
+    function gapPx() {
+      const styles = window.getComputedStyle(track);
+      const g = parseFloat(styles.columnGap || styles.gap || '12');
+      return Number.isFinite(g) ? g : 12;
+    }
+
+    function stepPx() {
+      const first = track.querySelector('.tile');
+      if (!first) return Math.max(280, track.clientWidth * 0.8);
+      return first.getBoundingClientRect().width + gapPx();
+    }
+
+    function total() {
+      return track.querySelectorAll('.tile').length;
+    }
+
+    function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+
+    function index() {
+      const s = stepPx();
+      const i = Math.round(track.scrollLeft / s);
+      return clamp(i, 0, total() - 1);
+    }
+
+    function setUI(i) {
+      const t = total();
+
+      if (dots.length) dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+      if (counter) counter.textContent = (i + 1) + " / " + t;
+
+      if (bar) {
+        const pct = t <= 1 ? 100 : (i / (t - 1)) * 100;
+        bar.style.width = pct + "%";
+      }
+    }
+
+    function go(i) {
+      track.scrollTo({ left: i * stepPx(), behavior: 'smooth' });
+    }
+
+    function by(dir) {
+      go(clamp(index() + dir, 0, total() - 1));
+    }
+
+    btnPrev && btnPrev.addEventListener('click', () => by(-1));
+    btnNext && btnNext.addEventListener('click', () => by(1));
+
+    if (dots.length) {
+      dots.forEach((d) => {
+        d.addEventListener('click', () => {
+          const i = parseInt(d.getAttribute('data-dot') || '0', 10);
+          go(clamp(i, 0, total() - 1));
+        });
+      });
+    }
+
+    let down = false;
+    let startX = 0;
+    let startLeft = 0;
+
+    track.addEventListener('mousedown', (e) => {
+      down = true;
+      startX = e.pageX;
+      startLeft = track.scrollLeft;
+      track.style.scrollBehavior = 'auto';
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!down) return;
+      down = false;
+      track.style.scrollBehavior = '';
+      setTimeout(() => go(index()), 0);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!down) return;
+      track.scrollLeft = startLeft - (e.pageX - startX);
+    });
+
+    let raf = 0;
+    track.addEventListener('scroll', () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setUI(index()));
+    }, { passive: true });
+
+    window.addEventListener('resize', () => setUI(index()));
+    setUI(index());
+  })();
+
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('[data-ev]');
+    if (!el) return;
+    const ev = el.getAttribute('data-ev');
+    const format = el.getAttribute('data-format');
+    const caseId = el.getAttribute('data-case-id');
+  });
+</script>
+
+{% endblock %}

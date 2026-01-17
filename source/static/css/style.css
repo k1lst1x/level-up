@@ -1,0 +1,2782 @@
+/* static/css/style.css
+   CLEAN BASE (layout + components only)
+   Colors are NEUTRAL tokens. We'll repaint later in one place.
+*/
+
+/* =========================
+   0) RESET / BASE
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+html {
+  overscroll-behavior-y: none;
+}
+
+/* =========================
+   1) DESIGN TOKENS (NEUTRAL)
+   Only here we'll change colors later.
+========================= */
+:root {
+  /* surfaces */
+
+  --card: #ffffff;
+
+  /* text */
+  --text: #111111;
+  --muted: #6b7280;
+
+  /* borders / states */
+  --border: #e6e8ef;
+  --hover: #f1f3f9;
+
+  /* shadows */
+  --shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+
+  /* focus */
+  --focus: rgba(99, 102, 241, 0.12);
+  --focus-border: #c7d2fe;
+
+  /* tiles */
+  --tile-bg: #ffffff;
+  --tile-tint: #ffffff;
+  --tile-border: #e6e8ef;
+  --tile-hover: #f7f8fb;
+  --tile-media-bg: #eef0f6;
+
+  /* buttons */
+  --btn-bg: var(--card);
+  --btn-text: var(--text);
+  --btn-border: var(--border);
+
+  /* inputs */
+  --input-bg: var(--card);
+  --input-border: var(--border);
+
+  /* modal */
+  --modal-backdrop: rgba(0, 0, 0, 0.45);
+  --modal-bg: var(--card);
+  --modal-border: var(--border);
+  --modal-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
+}
+
+/* Dark theme (still neutral) */
+html[data-theme="dark"] {
+  --bg: #0b0c10;
+  --card: #12141a;
+
+  --text: #f3f4f6;
+  --muted: #a1a1aa;
+
+  --border: rgba(255, 255, 255, 0.14);
+  --hover: rgba(255, 255, 255, 0.06);
+
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+
+  --tile-bg: #12141a;
+  --tile-tint: #12141a;
+  --tile-border: rgba(255, 255, 255, 0.14);
+  --tile-hover: rgba(255, 255, 255, 0.08);
+  --tile-media-bg: rgba(255, 255, 255, 0.06);
+
+  --btn-bg: rgba(255, 255, 255, 0.06);
+  --btn-text: var(--text);
+  --btn-border: rgba(255, 255, 255, 0.14);
+
+  --input-bg: rgba(255, 255, 255, 0.06);
+  --input-border: rgba(255, 255, 255, 0.14);
+
+  --focus: rgba(167, 139, 250, 0.16);
+  --focus-border: rgba(167, 139, 250, 0.55);
+
+  --modal-backdrop: rgba(0, 0, 0, 0.72);
+  --modal-bg: #12141a;
+  --modal-border: rgba(255, 255, 255, 0.16);
+  --modal-shadow: 0 20px 60px rgba(0, 0, 0, 0.60);
+}
+
+/* =========================
+   2) LAYOUT: CONTAINER / GRID
+========================= */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+.grid {
+  display: grid;
+  gap: 8px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .grid {
+    gap: 10px;
+  }
+
+  .grid-2 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    gap: 12px;
+  }
+
+  .grid-2 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* =========================
+   3) NAVBAR
+========================= */
+.navbar {
+
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(5px);
+  padding: 10px 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  flex-wrap: nowrap;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 99999 !important;
+}
+
+body {
+  padding-top: 64px;
+  /* подгони: 56-72, если высота другая */
+}
+
+#cases {
+  scroll-margin-top: 86px;
+  /* можешь оставить или подогнать */
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* if links overflow, scroll horizontally instead of wrapping */
+.nav-left {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.nav-left::-webkit-scrollbar {
+  display: none;
+}
+
+.brand {
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--text);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.user-chip {
+  display: none;
+  text-align: right;
+}
+
+.user-chip-name {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.user-chip-role {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+@media (min-width: 520px) {
+  .user-chip {
+    display: block;
+  }
+}
+
+.user-btn,
+.theme-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.user-btn:hover,
+.theme-btn:hover {
+  background: var(--hover);
+}
+
+/* =========================
+   4) CARDS / TYPO
+========================= */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: none;
+}
+
+.muted {
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.page-head {
+  margin-bottom: 10px;
+}
+
+.page-title {
+  text-align: center;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.page-subtitle {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+/* =========================
+   5) TILES (categories/subcategories/performers/cards)
+========================= */
+.tile {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+  background: linear-gradient(180deg, var(--tile-tint), var(--tile-bg));
+  border: 1px solid var(--tile-border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+}
+
+.tile:active {
+  transform: scale(0.98);
+}
+
+.tile--static {
+  cursor: default;
+}
+
+@media (hover:hover) {
+  .tile:hover {
+    background: linear-gradient(180deg, var(--tile-hover), var(--tile-bg));
+    border-color: var(--focus-border);
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.10);
+    transform: translateY(-1px);
+  }
+
+  html[data-theme="dark"] .tile:hover {
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+  }
+}
+
+.tile-media {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--tile-media-bg);
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.tile-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tile-placeholder {
+  font-size: 14px;
+  color: var(--muted);
+  padding: 10px;
+  text-align: center;
+}
+
+.tile-body {
+  padding: 8px 10px 10px;
+}
+
+.tile-title {
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tile-desc {
+  margin-top: 4px;
+  font-size: 15px;
+  line-height: 1.25;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tile-desc--empty {
+  opacity: .85;
+}
+
+/* =========================
+   6) SEARCH / INPUTS / BUTTONS
+========================= */
+.search-row {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text);
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: var(--muted);
+}
+
+.search-input:focus {
+  border-color: var(--focus-border);
+  box-shadow: 0 0 0 4px var(--focus);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--btn-text);
+
+}
+
+.btn:hover {
+  background: var(--hover);
+}
+
+.btn:active {
+  transform: scale(0.99);
+}
+
+.btn-compact {
+  padding: 10px 12px;
+  width: auto;
+}
+
+.btn-danger {
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* =========================
+   7) MODALS (scroll + sticky header/footer)
+========================= */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--modal-backdrop);
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+  background: var(--modal-bg);
+  border: 1px solid var(--modal-border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--modal-shadow);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.modal-title {
+  font-weight: 900;
+}
+
+.modal-close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--text);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.modal-actions .btn {
+  width: 100%;
+}
+
+/* scroll modal variant */
+.modal--scroll {
+  display: flex;
+  flex-direction: column;
+  max-height: 82vh;
+  overflow: hidden;
+}
+
+.modal-header--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--modal-bg);
+  border-bottom: 1px solid var(--modal-border);
+  padding-bottom: 8px;
+}
+
+.modal-body {
+  padding: 12px 0;
+  overflow: hidden;
+}
+
+.modal-scroll {
+  max-height: 52vh;
+  overflow: auto;
+  padding-right: 6px;
+}
+
+.modal-actions--sticky {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  background: var(--modal-bg);
+  border-top: 1px solid var(--modal-border);
+  padding-top: 12px;
+}
+
+@media (max-width: 640px) {
+  .modal--scroll {
+    max-height: 90vh;
+  }
+
+  .modal-scroll {
+    max-height: 60vh;
+  }
+}
+
+/* =========================
+   8) PAGE HEAD (KP builder uses this)
+========================= */
+.page-head-top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-head-left {
+  justify-self: start;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.page-head-center {
+  justify-self: center;
+  text-align: center;
+  min-width: 0;
+}
+
+.page-head-right {
+  justify-self: end;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.page-head-center .page-title {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================
+   9) KP LIST / PICKER / TABS
+========================= */
+.kp-tabs-wrap {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.kp-tabs {
+  width: 100%;
+  max-width: 520px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px;
+  display: flex;
+  gap: 6px;
+}
+
+.kp-tab {
+  flex: 1;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 10px 12px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.kp-tab:hover {
+  background: var(--hover);
+  border-color: var(--border);
+}
+
+.kp-tab.is-active {
+  background: var(--card);
+  border-color: var(--focus-border);
+  box-shadow: var(--shadow);
+}
+
+.kp-center {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.kp-center-card {
+  width: 100%;
+  max-width: 720px;
+}
+
+@media (max-width: 520px) {
+  .kp-center-card {
+    max-width: 100%;
+  }
+}
+
+/* KP item cards (active drafts list) */
+.kp-item {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  transition: background .12s ease, border-color .12s ease, transform .12s ease, box-shadow .12s ease;
+}
+
+.kp-item:active {
+  transform: scale(0.99);
+}
+
+@media (hover:hover) {
+  .kp-item:hover {
+    background: var(--hover);
+    border-color: var(--focus-border);
+    box-shadow: var(--shadow);
+  }
+}
+
+.kp-item-title {
+  font-weight: 900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kp-item-sub {
+  font-size: 14px;
+  margin-top: 2px;
+  color: var(--muted);
+}
+
+/* KP customer pick button */
+.kp-pick {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background .12s ease, border-color .12s ease, transform .12s ease;
+}
+
+.kp-pick:active {
+  transform: scale(0.99);
+}
+
+@media (hover:hover) {
+  .kp-pick:hover {
+    background: var(--hover);
+    border-color: var(--focus-border);
+  }
+}
+
+.kp-pick-title {
+  font-weight: 900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kp-pick-sub {
+  font-size: 14px;
+  margin-top: 2px;
+  color: var(--muted);
+}
+
+/* KP choice card inside modal */
+.kp-choice-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kp-choice-title {
+  font-weight: 900;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kp-choice-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.kp-choice-actions form {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .kp-choice-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   10) KP BUILDER FORM
+========================= */
+.kp-builder-title {
+  text-align: center;
+  font-weight: 950;
+  font-size: 22px;
+  line-height: 1.15;
+  word-break: break-word;
+  margin: 2px 0 0;
+}
+
+.kp-section-title {
+  font-weight: 900;
+  text-align: center;
+}
+
+.kp-section-subtitle {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.kp-center-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.kp-center-actions .btn {
+  min-width: 160px;
+}
+
+.kp-cover-wrap {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.kp-cover-preview {
+  width: 240px;
+  max-width: 240px;
+  height: 150px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kp-upload-form {
+  flex: 1;
+  min-width: 260px;
+}
+
+.kp-upload-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.kp-upload-actions .btn {
+  min-width: 140px;
+}
+
+.kp-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+}
+
+.kp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.kp-field-full {
+  grid-column: 1 / -1;
+}
+
+.kp-label {
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.kp-help {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.kp-datetime-wrap {
+  width: 100%;
+  cursor: pointer;
+}
+
+.kp-datetime {
+  cursor: pointer;
+  max-width: 100%;
+}
+
+/* image helpers (templates) */
+.kp-cover-img,
+.kp-item-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.kp-item-photo {
+  width: 240px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--tile-media-bg);
+}
+
+.kp-item-photo img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center;
+  display: block;
+}
+
+.kp-field .search-input,
+.kp-field select.search-input,
+.kp-field textarea.search-input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .kp-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kp-cover-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .kp-cover-preview {
+    width: 100%;
+    max-width: 100%;
+    height: 180px;
+  }
+
+  .kp-upload-form {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .kp-upload-actions .btn,
+  .kp-center-actions .btn {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .search-input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  input[type="datetime-local"].search-input {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .kp-item-photo {
+    width: 100%;
+    height: 180px;
+  }
+}
+
+/* =========================
+   11) HERO (layout only)
+   Keep it neutral. We'll repaint later.
+========================= */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 22px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+@media (min-width: 640px) {
+  .hero {
+    padding: 28px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding: 34px;
+  }
+}
+
+.hero-bg {
+  display: none;
+  /* layout only; if you need image later, we'll add safely */
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title {
+  margin: 0;
+  font-weight: 750;
+  line-height: 1.02;
+  text-align: center;
+}
+
+
+.hero-subtitle {
+  margin-top: 10px;
+  max-width: 660px;
+
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.hero-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero-actions .btn {
+  flex: 0 1 220px;
+  min-width: 220px;
+  max-width: 240px;
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 12px;
+}
+
+@media (max-width: 520px) {
+  .hero-actions .btn {
+    flex: 1 1 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+/* =========================
+   12) CASES CAROUSEL (functional)
+========================= */
+#cases {
+  scroll-margin-top: 86px;
+}
+
+.cases-wrap {
+  position: relative;
+  margin-top: 10px;
+  overflow: visible;
+}
+
+.cases-carousel {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 20px 6px 14px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.cases-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.cases-carousel:active {
+  cursor: grabbing;
+}
+
+.cases-carousel>.tile {
+  flex: 0 0 45%;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 640px) {
+  .cases-carousel>.tile {
+    flex-basis: 48%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cases-carousel>.tile {
+    flex-basis: 32%;
+  }
+}
+
+.cases-carousel .tile-media {
+  aspect-ratio: 16 / 9;
+}
+
+.cases-fade-left,
+.cases-fade-right {
+  position: absolute;
+  top: 0;
+  bottom: 58px;
+  width: 64px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cases-fade-left {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg), rgba(0, 0, 0, 0));
+}
+
+.cases-fade-right {
+  right: 0;
+  background: linear-gradient(270deg, var(--bg), rgba(0, 0, 0, 0));
+}
+
+.cases-arrow {
+  display: inline-flex;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--text);
+  cursor: pointer;
+  align-items: center;
+  user-select: none;
+  justify-content: center;
+}
+
+.cases-arrow:hover {
+  background: var(--hover);
+}
+
+.cases-arrow.left {
+  left: 8px;
+}
+
+.cases-arrow.right {
+  right: 8px;
+}
+
+/* mobile full-bleed rail (optional, keeps your earlier behavior) */
+@media (max-width: 640px) {
+  #cases .cases-wrap {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  #cases .home-section-head {
+    width: min(1100px, calc(100% - 24px));
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #cases .cases-carousel>.tile {
+    flex: 0 0 55%;
+  }
+
+  #cases .cases-arrow.left {
+    left: 5px;
+  }
+
+  #cases .cases-arrow.right {
+    right: 5px;
+  }
+}
+
+/* =========================
+   13) PROCESS STEPS (layout only)
+========================= */
+.home-grid-4 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  max-width: 520px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.home-step {
+  position: relative;
+  min-height: 170px;
+  padding: 18px 18px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.home-step-num {
+  position: absolute;
+  top: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: .4px;
+
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+.home-grid-4>.home-step:nth-child(1) .home-step-num,
+.home-grid-4>.home-step:nth-child(3) .home-step-num {
+  left: 12px;
+}
+
+.home-grid-4>.home-step:nth-child(2) .home-step-num,
+.home-grid-4>.home-step:nth-child(4) .home-step-num {
+  right: 12px;
+}
+
+.home-step-title {
+  margin: 0 0 10px;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.home-step .muted {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.35;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* simple connector arrow (neutral) */
+.home-step::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -24px;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  opacity: 0.55;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
+  clip-path: polygon(46% 0%, 54% 0%, 54% 55%, 70% 55%, 50% 100%, 30% 55%, 46% 55%);
+}
+
+.home-step:last-child::after {
+  display: none;
+}
+
+@media (max-width: 420px) {
+  .home-grid-4 {
+    max-width: 100%;
+  }
+
+  .home-step {
+    min-height: 160px;
+  }
+}
+
+/* =========================
+   14) Small utilities you used
+========================= */
+.categories-search {
+  margin-bottom: 30px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* qty stepper (modal) */
+.qty-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.qty-title {
+  font-weight: 900;
+  font-size: 13px;
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qty-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.qty-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.qty-value {
+  min-width: 40px;
+  text-align: center;
+  font-weight: 900;
+  font-size: 14px;
+}
+
+/* =========================
+   FIX PACK: size + spacing + no haze
+   paste at VERY END
+========================= */
+
+/* 1) УБРАТЬ "ДЫМКУ" НАВСЕГДА
+   (если где-то в старом файле есть body::before/after с оверлеем) */
+body::before,
+body::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* на всякий: если "дымка" была blur/backdrop */
+
+/* 2) РАЗДВИНУТЬ СЕКЦИИ, ЧТОБЫ НЕ СЛИПАЛОСЬ */
+.home-section {
+  margin-top: 22px !important;
+}
+
+.home-section+.home-section {
+  margin-top: 28px !important;
+}
+
+/* если у тебя секции внутри .container без .home-section */
+.container>*+* {
+  margin-top: 18px;
+}
+
+/* 3) КЕЙСЫ: карточки чуть меньше + кнопка ПО ЦЕНТРУ */
+#cases .cases-carousel {
+  padding: 14px 6px 12px !important;
+  gap: 10px !important;
+}
+
+/* картинка кейса чуть ниже по высоте, чтобы плитка не была "башней" */
+#cases .cases-carousel .tile-media {
+  aspect-ratio: 16 / 10 !important;
+}
+
+/* кнопка "Смотреть все кейсы" по центру */
+#cases .home-actions,
+#cases .cases-actions,
+#cases .cases-cta {
+  display: flex;
+  justify-content: center !important;
+}
+
+#cases .home-actions .btn,
+#cases .cases-actions .btn,
+#cases .cases-cta .btn {
+  min-width: 220px;
+}
+
+/* 4) "КАК ПРОХОДИТ РАБОТА": сделать блоки меньше, компактнее */
+.home-grid-4 {
+  gap: 16px !important;
+  max-width: 520px;
+}
+
+.home-step {
+  min-height: 130px !important;
+  padding: 14px 14px 12px !important;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow) !important;
+  /* оставляем как было */
+}
+
+.home-step-title {
+  font-size: 16px !important;
+  margin: 0 0 8px !important;
+}
+
+.home-step .muted {
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+  max-width: 340px !important;
+}
+
+/* номер в кружке меньше */
+
+
+/* стрелки между шагами короче, чтобы блоки визуально не раздувались */
+.home-step::after {
+  bottom: -18px !important;
+  width: 24px !important;
+  height: 22px !important;
+  opacity: .35 !important;
+}
+
+/* 5) "ИЗ ЧЕГО СКЛАДЫВАЕТСЯ СТОИМОСТЬ": уменьшить мини-карточки */
+#pricing .tile,
+#price .tile,
+.price-grid .tile,
+.cost-grid .tile {
+  border-radius: 14px !important;
+}
+
+#pricing .tile-body,
+#price .tile-body,
+.price-grid .tile-body,
+.cost-grid .tile-body {
+  padding: 10px 12px 12px !important;
+}
+
+#pricing .tile-title,
+#price .tile-title,
+.price-grid .tile-title,
+.cost-grid .tile-title {
+  font-size: 13px !important;
+}
+
+#pricing .tile-desc,
+#price .tile-desc,
+.price-grid .tile-desc,
+.cost-grid .tile-desc {
+  font-size: 14px !important;
+  -webkit-line-clamp: 3;
+}
+
+/* 6) Общая компактность карточек, чтобы всё не было "пухлым" */
+.card {
+  padding: 12px !important;
+  border-radius: 14px !important;
+  margin-bottom: 10px !important;
+}
+
+.btn {
+  font-size: 18px !important;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+}
+
+/* На мобиле: меньше отступы, больше воздуха между секциями */
+@media (max-width: 520px) {
+  .container {
+    padding: 10px !important;
+  }
+
+  .home-section {
+    margin-top: 18px !important;
+  }
+
+  .home-section+.home-section {
+    margin-top: 22px !important;
+  }
+
+  /* кейсы: чуть шире карточка, но ниже */
+  #cases .cases-carousel>.tile {
+    flex: 0 0 62% !important;
+  }
+
+  #cases .cases-carousel .tile-media {
+    aspect-ratio: 16 / 11 !important;
+  }
+}
+
+
+/* CASES: ширина карточек в ленте */
+#cases .cases-carousel>.tile {
+  flex: 0 0 40% !important;
+  /* было 45/55/62, сделай 38–45% */
+}
+
+/* мобилка */
+@media (max-width: 640px) {
+  #cases .cases-carousel>.tile {
+    flex: 0 0 58% !important;
+    /* сделай 52–62% (меньше % = короче) */
+  }
+}
+
+/* УЖАТЬ "Как проходит работа" по бокам */
+#process .home-grid-4 {
+  max-width: 380px !important;
+  /* уже = меньше число */
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* УЖАТЬ "Как проходит работа" по бокам */
+#process .home-grid-4 {
+  max-width: 290px !important;
+  /* уже = меньше число */
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* =========================
+   THEME: Black/White + Purple buttons (PASTE LAST)
+   - background: black in dark, white in light
+   - text: white in dark, black in light
+   - ALL buttons purple always
+========================= */
+
+/* 1) БАЗА (light по умолчанию) */
+:root {
+
+  --card: #ffffff;
+
+  --text: #0b0b0f;
+  --muted: rgba(11, 11, 15, 0.62);
+
+  --border: rgba(11, 11, 15, 0.12);
+  --hover: rgba(11, 11, 15, 0.06);
+
+  --shadow: 0 10px 26px rgba(15, 23, 42, 0.10);
+
+  /* tiles */
+  --tile-bg: #ffffff;
+  --tile-tint: #ffffff;
+  --tile-border: rgba(11, 11, 15, 0.12);
+  --tile-hover: rgba(11, 11, 15, 0.04);
+  --tile-media-bg: rgba(11, 11, 15, 0.06);
+
+  /* inputs */
+  --input-bg: #ffffff;
+  --input-border: rgba(11, 11, 15, 0.14);
+
+  /* modal */
+  --modal-backdrop: rgba(0, 0, 0, 0.55);
+  --modal-bg: #ffffff;
+  --modal-border: rgba(11, 11, 15, 0.14);
+  --modal-shadow: 0 18px 50px rgba(15, 23, 42, 0.22);
+
+  /* focus */
+  --focus: rgba(122, 92, 255, 0.16);
+  --focus-border: rgba(122, 92, 255, 0.60);
+
+  /* PURPLE BRAND */
+  --purple: #6d4cff;
+  --purple-2: #7a5cff;
+  --purple-border: rgba(122, 92, 255, 0.75);
+  --purple-glow: rgba(122, 92, 255, 0.22);
+}
+
+/* 2) DARK: черный фон + белый текст */
+html[data-theme="dark"] {
+  --bg: #06060a;
+  --card: #0c0c12;
+
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.62);
+
+  --border: rgba(255, 255, 255, 0.14);
+  --hover: rgba(255, 255, 255, 0.06);
+
+  --shadow: 0 18px 46px rgba(0, 0, 0, 0.55);
+
+  --tile-bg: #0c0c12;
+  --tile-tint: #0c0c12;
+  --tile-border: rgba(255, 255, 255, 0.14);
+  --tile-hover: rgba(255, 255, 255, 0.07);
+  --tile-media-bg: rgba(255, 255, 255, 0.06);
+
+  --input-bg: rgba(255, 255, 255, 0.06);
+  --input-border: rgba(255, 255, 255, 0.14);
+
+  --modal-backdrop: rgba(0, 0, 0, 0.72);
+  --modal-bg: #0c0c12;
+  --modal-border: rgba(255, 255, 255, 0.16);
+  --modal-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
+
+  --focus: rgba(122, 92, 255, 0.22);
+  --focus-border: rgba(122, 92, 255, 0.70);
+}
+
+/* 3) УБРАТЬ всю “дымку/оверлеи” которые ты ненавидишь */
+body::before,
+body::after {
+  opacity: 0 !important;
+  background: none !important;
+  filter: none !important;
+}
+
+/* 4) Применяем фон/текст везде */
+html,
+body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+/* поверхности */
+.card,
+.tile,
+.kp-item,
+.kp-pick,
+.kp-choice-card,
+.kp-tabs,
+.modal {
+  background: var(--card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+  box-shadow: var(--shadow);
+}
+
+/* muted */
+.muted,
+.page-subtitle,
+.tile-desc,
+.kp-item-sub,
+.kp-pick-sub,
+.kp-label,
+.kp-help {
+  color: var(--muted) !important;
+}
+
+/* inputs */
+.search-input,
+select.search-input,
+textarea.search-input,
+.modal .search-input,
+.modal select.search-input,
+.modal textarea.search-input {
+  background: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--text) !important;
+}
+
+.search-input::placeholder {
+  color: var(--muted) !important;
+}
+
+.search-input:focus {
+  border-color: var(--focus-border) !important;
+  box-shadow: 0 0 0 4px var(--focus) !important;
+}
+
+/* 5) ВСЕ КНОПКИ ФИОЛЕТОВЫЕ (включая ссылки .btn и button.btn) */
+.btn,
+button.btn,
+a.btn,
+input[type="submit"].btn,
+input[type="button"].btn {
+  background: linear-gradient(180deg, var(--purple-2), var(--purple)) !important;
+  border-color: var(--purple-border) !important;
+  color: #fff !important;
+  box-shadow: 0 14px 30px var(--purple-glow) !important;
+}
+
+.btn:hover,
+button.btn:hover,
+a.btn:hover,
+input[type="submit"].btn:hover,
+input[type="button"].btn:hover {
+  filter: saturate(1.10) brightness(1.04) !important;
+}
+
+.btn:active,
+button.btn:active,
+a.btn:active {
+  transform: scale(0.99);
+}
+
+/* запрет “серых” кнопок в разных местах */
+.btn:not(.btn-primary),
+.btn.btn-primary {
+  background: linear-gradient(180deg, var(--purple-2), var(--purple)) !important;
+  border-color: var(--purple-border) !important;
+  color: #fff !important;
+}
+
+/* 6) navbar в тему (без градиентного цирка) */
+.navbar {
+
+  border-bottom-color: var(--border) !important;
+}
+
+.navbar .brand,
+.navbar .nav-links a {
+  color: var(--text) !important;
+}
+
+/* 7) cases fades под фон */
+.cases-fade-left {
+  background: linear-gradient(90deg, var(--bg), rgba(0, 0, 0, 0)) !important;
+}
+
+.cases-fade-right {
+  background: linear-gradient(270deg, var(--bg), rgba(0, 0, 0, 0)) !important;
+}
+
+/* ===== KP list: equal buttons ===== */
+.kp-choice-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+}
+
+.kp-choice-actions .btn,
+.kp-item .btn {
+  width: 100% !important;
+  height: 44px !important;
+  padding: 0 14px !important;
+}
+
+/* Все кнопки в KP-блоках — во всю ширину */
+.kp-center-actions .btn,
+.kp-upload-actions .btn,
+.kp-service-right .btn,
+.kp-submit-form .btn,
+.kp-services-head .btn,
+.card .btn {
+  width: 100%;
+}
+
+/* ===== KP header buttons: one row, equal width ===== */
+.kp-center-actions {
+  display: flex;
+  gap: 12px;
+  /* расстояние между кнопками */
+  justify-content: center;
+}
+
+.kp-center-actions .btn {
+  flex: 1;
+  /* одинаковая ширина */
+  min-width: 0;
+}
+
+/* Центрирование и отступы для блока действий услуги */
+.kp-service-actions {
+  display: flex;
+  justify-content: center;
+  /* центр по горизонтали */
+  align-items: center;
+  gap: 14px;
+  /* расстояние между элементами */
+}
+
+/* Значение количества */
+.qty-value {
+  min-width: 36px;
+  text-align: center;
+  font-weight: 900;
+}
+
+/* Контейнер действий услуги */
+.kp-service-actions {
+  display: flex;
+  flex-direction: column;
+  /* ВАЖНО: столбцом */
+  align-items: center;
+  /* центр по горизонтали */
+  gap: 14px;
+  /* вертикальный GAP между степпером и кнопкой */
+}
+
+/* Степпер: − 3 + в одну строку по центру */
+.kp-stepper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  /* расстояние между − 3 + */
+}
+
+/* Число */
+.qty-value {
+  min-width: 36px;
+  text-align: center;
+  font-weight: 900;
+}
+
+/* Кнопка "Убрать" снизу и не растягивается */
+.kp-service-actions form {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.kp-service-actions .btn {
+  max-width: 220px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* CRM: карточки во всю ширину */
+#crmGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  /* одна колонка */
+  gap: 12px;
+}
+
+/* на всякий случай, чтобы карточка не имела ограничений */
+#crmGrid>.tile,
+#crmGrid>.card {
+  width: 100%;
+}
+
+/* если где-то стоит max-width у контейнера, снимем */
+.crm-section,
+#crmGrid {
+  max-width: none;
+}
+
+/* CRM: кнопки на всю ширину, 3 равные колонки */
+.crm-actions {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+/* сами кнопки растягиваются */
+.crm-actions .btn {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  padding: 12px 14px;
+  /* шире и выше */
+  font-weight: 800;
+  border-radius: 14px;
+}
+
+.ico {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  vertical-align: -3px;
+}
+
+/* Контакты: 4 в ряд */
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0px;
+}
+
+/* пилюля */
+.contact-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 10px 12px;
+  border-radius: 14px;
+
+  background: #6d28d9;
+  /* фиолетовый */
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  text-decoration: none;
+  color: #000000;
+  /* текст белый */
+}
+
+.contact-pill:hover {
+  filter: brightness(1.06);
+}
+
+.contact-pill:active {
+  transform: translateY(1px);
+}
+
+/* иконка inline svg */
+.contact-pill svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  fill: currentColor;
+  /* ИКОНКА БЕЛАЯ, т.к. color белый */
+}
+
+.contact-pill .contact-txt {
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1;
+  color: currentColor;
+}
+
+/* адаптив: на узких экранах пусть становится 2x2 */
+@media (max-width: 520px) {
+  .contacts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+.home-section-title1 {
+  font-size: 23px !important;
+  margin: 0 0 10px !important;
+  text-align: center;
+}
+
+/* KP: одинаковая ширина кнопок в списке */
+.kp-item-actions{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+
+/* и ссылки, и формы, и кнопка внутри формы */
+.kp-item-actions > a.btn,
+.kp-item-actions > form{
+  width: 260px;              /* поставь свою ширину */
+}
+
+.kp-item-actions > form > button.btn{
+  width: 100%;
+}
+.kp-item-actions > a.btn,
+.kp-item-actions > form{
+  width: 100%;
+  min-width: 220px; /* чтобы не сжималось в соплю */
+}
+/* KP list layout */
+.kp-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.kp-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+}
+
+.kp-item-left{
+  min-width:0;
+}
+
+/* Главное: одинаковая ширина всех кнопок, включая form/button */
+.kp-item-actions{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:stretch;
+  width:260px; /* хочешь шире/уже — меняй */
+}
+
+.kp-item-actions > a.btn,
+.kp-item-actions > form{
+  width:100%;
+  margin:0;
+}
+
+.kp-item-actions > form > button.btn{
+  width:100%;
+  display:block;
+}
+
+/* Модалка выбора клиента */
+.kp-pick-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  max-height:55vh;
+  overflow:auto;
+}
+
+/* ===== PROCESS FLOW (Как проходит работа) ===== */
+
+.process-flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+  position: relative;
+}
+
+/* линия */
+.process-flow::before {
+  content: "";
+  position: absolute;
+  top: 38px;
+  left: 6%;
+  right: 6%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  z-index: 0;
+}
+
+.process-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.process-num {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--purple-2), var(--purple));
+  color: #fff;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  box-shadow: 0 10px 30px rgba(122,92,255,.35);
+}
+
+.process-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  max-width: 240px;
+}
+
+.process-card h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.process-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* адаптив */
+@media (max-width: 900px) {
+  .process-flow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .process-flow::before {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .process-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .process-card {
+    max-width: 100%;
+  }
+}
+
+/* ===== PROCESS FLOW — MOBILE TIMELINE UPGRADE ===== */
+
+@media (max-width: 520px) {
+
+  .process-flow {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    margin-top: 18px;
+  }
+
+  /* убираем горизонтальную линию */
+  .process-flow::before {
+    display: none;
+  }
+
+  .process-step {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  /* вертикальная линия */
+  .process-step::before {
+    content: "";
+    position: absolute;
+    left: 26px;
+    top: 56px;
+    bottom: -18px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--border), transparent);
+  }
+
+  .process-step:last-child::before {
+    display: none;
+  }
+
+  .process-num {
+    flex: 0 0 52px;
+    width: 52px;
+    height: 52px;
+    font-size: 15px;
+    margin: 0;
+  }
+
+  .process-card {
+    max-width: none;
+    width: 100%;
+    text-align: left;
+    padding: 14px 14px 14px 16px;
+  }
+
+  .process-card h3 {
+    font-size: 16px;
+  }
+
+  .process-card p {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+}
+
+/* =========================
+   CONTACTS (premium block)
+========================= */
+
+#contacts {
+  display: flex;
+  justify-content: center;
+}
+
+.contacts-card {
+  width: 100%;
+  padding: 20px !important;
+}
+
+.contacts-head {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.contacts-sub {
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+/* сетка контактов */
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+/* карточка контакта */
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 14px 10px;
+  border-radius: 16px;
+
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+
+  text-decoration: none;
+  color: var(--text);
+
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+
+.contact-item:hover {
+  border-color: var(--focus-border);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+  transform: translateY(-1px);
+}
+
+.contact-item:active {
+  transform: scale(0.98);
+}
+
+/* иконка */
+.contact-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(180deg, var(--purple-2), var(--purple));
+  box-shadow: 0 10px 26px var(--purple-glow);
+}
+
+.contact-icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+
+  /* если иконки ЧЁРНЫЕ — инвертируем, чтобы были видны */
+  filter: brightness(0) invert(1);
+}
+
+/* если текстовая иконка (@) */
+.contact-icon-text {
+  color: #fff;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+/* подпись */
+.contact-label {
+  font-weight: 800;
+  font-size: 13px;
+}
+
+/* адрес */
+.contacts-address {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.addr-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px 16px;
+  border-radius: 16px;
+
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.addr-ico {
+  font-size: 18px;
+}
+
+.addr-title {
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.addr-sub {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 720px) {
+  .contacts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .contacts-card {
+    padding: 16px !important;
+  }
+
+  .contact-item {
+    padding: 14px 8px;
+  }
+
+  .contact-label {
+    font-size: 14px;
+  }
+
+  .addr-card {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* =========================
+   KP PRICE INPUT (mobile-first)
+========================= */
+
+.kp-price-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+}
+
+.kp-price-input {
+  width: 92px;
+  height: 38px;
+
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+
+  padding: 0 10px;
+  font-size: 15px;
+  font-weight: 800;
+  text-align: right;
+
+  outline: none;
+  transition: border-color .12s ease, box-shadow .12s ease, transform .08s ease;
+}
+
+/* убираем стрелки */
+.kp-price-input::-webkit-outer-spin-button,
+.kp-price-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.kp-price-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.kp-price-input:focus {
+  border-color: var(--focus-border);
+  box-shadow: 0 0 0 4px var(--focus);
+  transform: scale(1.02);
+}
+
+.kp-currency {
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* мобильный приоритет */
+@media (max-width: 640px) {
+  .kp-price-wrap {
+    margin-left: 0;
+    margin-top: 6px;
+  }
+
+  .kp-price-input {
+    width: 100%;
+    height: 44px;
+    font-size: 16px; /* чтобы не было зума на iOS */
+    border-radius: 14px;
+  }
+}
+
+/* =========================
+   KP TOTAL BLOCK (premium)
+========================= */
+
+.kp-total-block {
+  padding: 18px !important;
+}
+
+.kp-total-card {
+  margin-top: 14px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--card), var(--hover));
+  box-shadow: var(--shadow);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kp-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.kp-total-row b {
+  font-size: 15px;
+}
+
+.kp-total-final {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.kp-total-final span:last-child {
+  background: linear-gradient(180deg, var(--purple-2), var(--purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* мобильная версия */
+@media (max-width: 640px) {
+  .kp-total-card {
+    padding: 14px 12px;
+  }
+
+  .kp-total-row {
+    font-size: 14px;
+  }
+
+  .kp-total-final {
+    font-size: 20px;
+  }
+}
+
+/* =========================
+   KP EXAMPLES PAGE
+========================= */
+
+.kp-examples-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.kp-example-card {
+  position: relative;
+  padding: 18px 16px 16px !important;
+  border-radius: 18px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kp-example-card.featured {
+  border: 2px solid var(--purple-border) !important;
+  box-shadow: 0 18px 46px var(--purple-glow) !important;
+  transform: translateY(-6px);
+}
+
+.kp-example-card.premium {
+  background: linear-gradient(180deg, var(--card), var(--hover));
+}
+
+.kp-example-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 999px;
+  letter-spacing: .5px;
+  color: #fff;
+  background: linear-gradient(180deg, var(--purple-2), var(--purple));
+  box-shadow: 0 10px 26px var(--purple-glow);
+}
+
+.kp-example-title {
+  margin: 10px 0 0;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.kp-example-sub {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+.kp-example-list {
+  padding-left: 18px;
+  margin: 6px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.kp-example-price {
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 900;
+  background: linear-gradient(180deg, var(--purple-2), var(--purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.kp-example-note {
+  font-size: 13px;
+}
+
+/* responsive */
+
+@media (max-width: 900px) {
+  .kp-examples-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kp-example-card.featured {
+    transform: none;
+  }
+}
+
+/* =========================
+   KP EXAMPLES MEDIA
+========================= */
+
+.kp-example-media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--tile-media-bg);
+  border: 1px solid var(--border);
+}
+
+.kp-example-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+
+/* =========================
+   CRM — MOBILE FIRST UI
+========================= */
+
+/* секция поиска */
+.search-row {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.crm-add-btn {
+  width: 100%;
+  font-weight: 900;
+  font-size: 15px;
+  padding: 14px;
+}
+
+/* сетка всегда 1 колонка */
+#crmGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+/* карточка клиента */
+#crmGrid .tile {
+  border-radius: 18px;
+}
+
+#crmGrid .tile-body {
+  padding: 14px 14px 12px;
+}
+
+/* имя */
+#crmGrid .tile-title {
+  font-size: 17px;
+  font-weight: 900;
+}
+
+/* строки инфы */
+#crmGrid .tile-desc {
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+/* кнопки контактов */
+.crm-actions .btn {
+  height: 48px;
+  border-radius: 16px;
+  font-weight: 900;
+  box-shadow: 0 10px 26px var(--purple-glow);
+}
+
+/* иконки */
+.crm-actions img.ico {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
+/* мета */
+#crmMeta {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+/* ===== МОДАЛКА (мобилка) ===== */
+
+.modal {
+  border-radius: 22px;
+}
+
+.modal-title {
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.modal-actions .btn {
+  height: 48px;
+  font-size: 15px;
+  font-weight: 900;
+  border-radius: 14px;
+}
+
+/* поля формы крупнее */
+.modal .search-input {
+  padding: 12px 14px;
+  font-size: 16px;
+  border-radius: 14px;
+}
+
+/* ===== MOBILE ONLY ===== */
+
+@media (max-width: 520px) {
+
+  .page-title {
+    font-size: 20px;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+  }
+
+  .search-row {
+    gap: 12px;
+  }
+
+  .crm-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .crm-actions .btn {
+    height: 52px;
+  }
+
+  .modal {
+    max-width: 100%;
+    padding: 14px;
+  }
+
+  .modal-body {
+    padding: 10px 0;
+  }
+}
+
+/* Контейнер для кнопок */
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Распределяет кнопки по всей ширине */
+  gap: 10px; /* Расстояние между кнопками */
+  flex-wrap: wrap; /* Разрешает кнопкам переноситься на новую строку при необходимости */
+  margin-bottom: 15px; /* Отступ снизу */
+}
+
+/* Стили для кнопок */
+.button-container .btn {
+  flex: 1 1 22%; /* Кнопки занимают 22% ширины контейнера */
+  min-width: 80px; /* Минимальная ширина кнопки */
+  text-align: center; /* Центрирует содержимое кнопки */
+  padding: 10px; /* Отступы внутри кнопки */
+}
+
+/* Стили для иконок внутри кнопок */
+.button-container .btn .ico {
+  width: 20px; /* Ширина иконки */
+  height: 20px; /* Высота иконки */
+}
+
+/* Адаптивность для мобильных устройств (ширина экрана до 768px) */
+@media (max-width: 768px) {
+  .button-container {
+    flex-direction: column; /* Кнопки переходят в колонку */
+    align-items: center; /* Выравнивание по центру */
+  }
+
+  .button-container .btn {
+    width: 100%; /* Каждая кнопка занимает 100% ширины */
+    margin-bottom: 10px; /* Отступ между кнопками */
+  }
+}
+
+
+/* Контейнер для кнопок */
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Распределяет кнопки по ширине */
+  gap: 10px; /* Расстояние между кнопками */
+  flex-wrap: wrap; /* Разрешает кнопкам переноситься на новую строку при необходимости */
+  margin-bottom: 15px; /* Отступ снизу */
+}
+
+/* Стили для кнопок */
+.button-container .btn {
+  flex: 1 1 22%; /* Кнопки занимают 22% ширины контейнера на ПК */
+  min-width: 80px; /* Минимальная ширина кнопки */
+  text-align: center; /* Центрирует содержимое кнопки */
+  padding: 10px; /* Отступы внутри кнопки */
+  box-sizing: border-box; /* Чтобы padding не добавлялся к ширине */
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .button-container {
+    flex-direction: column; /* Кнопки переходят в колонку на мобильных */
+    align-items: center; /* Выравнивание по центру */
+  }
+
+  .button-container .btn {
+    width: 100%; /* Каждая кнопка занимает 100% ширины */
+    margin-bottom: 10px; /* Отступ между кнопками */
+  }
+}
+/* =========================
+   BUTTON CONTAINER (NEW SECTION)
+========================= */
+
+/* Контейнер для кнопок */
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Распределяет кнопки по всей ширине */
+  gap: 10px; /* Расстояние между кнопками */
+  flex-wrap: wrap; /* Разрешает кнопкам переноситься на новую строку при необходимости */
+  margin-bottom: 15px; /* Отступ снизу */
+}
+
+/* Стили для кнопок */
+.button-container .btn {
+  flex: 1 1 22%; /* Кнопки занимают 22% ширины контейнера на ПК */
+  min-width: 100px; /* Минимальная ширина кнопки */
+  text-align: center; /* Центрирует содержимое кнопки */
+  padding: 12px; /* Отступы внутри кнопки */
+  font-weight: 900; /* Жирный шрифт */
+  border-radius: 14px; /* Закругленные углы */
+  box-sizing: border-box; /* Чтобы padding не добавлялся к ширине */
+  background: linear-gradient(180deg, #6d4cff, #7a5cff); /* Фиолетовый цвет для кнопок */
+  color: #fff; /* Текст белый */
+  border: none; /* Без рамки */
+  cursor: pointer; /* Курсор на кнопку */
+  transition: background 0.3s, transform 0.1s ease; /* Плавные переходы */
+}
+
+.button-container .btn:hover {
+  background: linear-gradient(180deg, #7a5cff, #6d4cff); /* Меняется градиент при наведении */
+}
+
+.button-container .btn:active {
+  transform: scale(0.98); /* Эффект сжатия при нажатии */
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .button-container {
+    flex-direction: column; /* Кнопки переходят в колонку на мобильных */
+    align-items: center; /* Выравнивание по центру */
+  }
+
+  .button-container .btn {
+    width: 100%; /* Каждая кнопка занимает 100% ширины */
+    margin-bottom: 10px; /* Отступ между кнопками */
+  }
+}

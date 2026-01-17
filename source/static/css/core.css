@@ -1,0 +1,41 @@
+/* static/css/core.css */
+/* ===== Base ===== */
+* { box-sizing: border-box; }
+
+body{
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ===== Wallpaper background layer ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--wallpaper-image);
+  background-repeat: repeat;
+  background-size: 520px auto;
+  opacity: 0.18;
+  filter: blur(0.4px) contrast(1);
+  z-index: -2;
+}
+
+/* вуаль для читаемости в тёмной теме */
+body::after{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(1200px 700px at 20% 0%, rgba(255,255,255,0.08), transparent 55%),
+              radial-gradient(900px 600px at 85% 10%, rgba(255,255,255,0.06), transparent 50%),
+              linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45));
+  opacity: 0;
+  z-index: -1;
+}
+
+html[data-theme="dark"] body::after{
+  opacity: 1;
+}

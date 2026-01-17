@@ -1,0 +1,11 @@
+from rest_framework.permissions import BasePermission
+
+
+class IsAdminRole(BasePermission):
+    def has_permission(self, request, view) -> bool:
+        return bool(request.user and request.user.is_authenticated and request.user.is_admin())
+
+
+class IsCustomerRole(BasePermission):
+    def has_permission(self, request, view) -> bool:
+        return bool(request.user and request.user.is_authenticated and request.user.is_customer())

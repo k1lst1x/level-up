@@ -1,0 +1,379 @@
+  {% extends "base.html" %}
+  {% load static %}
+
+  {% block title %}CRM{% endblock %}
+
+  {% block content %}
+
+  <section class="card">
+    <div class="page-head">
+      <h1 class="page-title">CRM</h1>
+      <div class="page-subtitle muted" style="text-align:center;">
+        Клиенты и контакты. Телефон обязателен, остальное по желанию.
+      </div>
+
+      <div class="search-row" style="justify-content:center;">
+        <input id="crmSearch" class="search-input" type="text" placeholder="Поиск: ФИО / компания / сфера / телефон…" />
+        <button class="btn btn-compact crm-add-btn" id="crmAddBtn" type="button">
+          ＋ Добавить клиента
+        </button>      
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-top:12px;">
+    <div id="crmMeta" class="muted" style="text-align:center; margin:10px 0;"></div>
+    <div id="crmGrid" class="grid grid-2"></div>
+  </section>
+
+  <div class="modal-backdrop" id="crmModal" style="display:none;">
+    <div class="modal modal--scroll" role="dialog" aria-modal="true" aria-labelledby="crmModalTitle">
+      <div class="modal-header modal-header--sticky">
+        <div class="modal-title" id="crmModalTitle">Новый клиент</div>
+        <button class="modal-close" id="crmModalClose" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="card">
+          <div class="kp-field">
+            <label class="kp-label" for="cName">ФИО / Название клиента</label>
+            <input id="cName" class="search-input" type="text" placeholder="Иван Иванов / TOO Ромашка" />
+          </div>
+
+          <div class="kp-field" style="margin-top:10px;">
+            <label class="kp-label" for="cPhone">Телефон (обязательно)</label>
+            <input id="cPhone" class="search-input" type="text" placeholder="+7700..." />
+          </div>
+
+          <div class="kp-field" style="margin-top:10px;">
+            <label class="kp-label" for="cWhatsapp">WhatsApp (необязательно)</label>
+            <input id="cWhatsapp" class="search-input" type="text" placeholder="+7700..." />
+          </div>
+
+          <div class="kp-field" style="margin-top:10px;">
+            <label class="kp-label" for="cEmail">Email (необязательно)</label>
+            <input id="cEmail" class="search-input" type="email" placeholder="mail@example.com" />
+          </div>
+
+          <div class="kp-field" style="margin-top:10px;">
+            <label class="kp-label" for="cTelegram">Telegram (необязательно)</label>
+            <input id="cTelegram" class="search-input" type="text" placeholder="@username или t.me/username" />
+          </div>
+
+          <div class="kp-field" style="margin-top:10px;">
+            <label class="kp-label" for="cCompany">Компания (необязательно)</label>
+            <input id="cCompany" class="search-input" type="text" placeholder="TOO..." />
+          </div>
+
+          <div class="kp-field" style="margin-top:10px;">
+            <label class="kp-label" for="cSphere">Сфера (необязательно)</label>
+            <input id="cSphere" class="search-input" type="text" placeholder="свадьбы / корпораты / IT" />
+          </div>
+
+          <div class="kp-field" style="margin-top:10px;">
+            <label class="kp-label" for="cTags">Теги (через запятую)</label>
+            <input id="cTags" class="search-input" type="text" placeholder="VIP, теплый, свадьба" />
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions modal-actions--sticky">
+        <button class="btn btn-compact" id="crmModalSave" type="button">Сохранить</button>
+        <button class="btn btn-danger btn-compact" id="crmModalCancel" type="button">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      if (window.__crm_inited__) return;
+      window.__crm_inited__ = true;
+
+      function esc(s) {
+        return String(s ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function normPhone(raw) {
+        if (!raw) return "";
+        var s = String(raw).trim();
+        var plus = s.startsWith("+") ? "+" : "";
+        var digits = s.replace(/[^\d]/g, "");
+        return digits ? (plus + digits) : "";
+      }
+
+      function waLink(phone) {
+        var p = normPhone(phone).replace("+", "");
+        return p ? ("https://wa.me/" + p) : "";
+      }
+
+      function tgLink(v) {
+        v = String(v || "").trim();
+        if (!v) return "";
+        if (v.startsWith("@")) return "https://t.me/" + v.slice(1);
+        if (v.includes("t.me/")) return v.startsWith("http") ? v : ("https://" + v.replace(/^\/+/, ""));
+        return "https://t.me/" + v; // если просто username
+      }
+
+      function getCsrf() {
+        var m = document.cookie.match(/csrftoken=([^;]+)/);
+        return m ? m[1] : "";
+      }
+
+      var grid = document.getElementById("crmGrid");
+      var meta = document.getElementById("crmMeta");
+      var searchEl = document.getElementById("crmSearch");
+      var addBtn = document.getElementById("crmAddBtn");
+
+      var modal = document.getElementById("crmModal");
+      var modalClose = document.getElementById("crmModalClose");
+      var modalCancel = document.getElementById("crmModalCancel");
+      var modalSave = document.getElementById("crmModalSave");
+
+      var cName = document.getElementById("cName");
+      var cPhone = document.getElementById("cPhone");
+      var cWhatsapp = document.getElementById("cWhatsapp");
+      var cEmail = document.getElementById("cEmail");
+      var cTelegram = document.getElementById("cTelegram");
+      var cCompany = document.getElementById("cCompany");
+      var cSphere = document.getElementById("cSphere");
+      var cTags = document.getElementById("cTags");
+
+      function openModal() { if (modal) modal.style.display = "flex"; }
+      function closeModal() { if (modal) modal.style.display = "none"; }
+
+      function clearModal() {
+        cName.value = "";
+        cPhone.value = "";
+        cWhatsapp.value = "";
+        cEmail.value = "";
+        cTelegram.value = "";
+        cCompany.value = "";
+        cSphere.value = "";
+        cTags.value = "";
+      }
+
+      if (addBtn) addBtn.addEventListener("click", function () {
+        clearModal();
+        openModal();
+        setTimeout(function () { cName.focus(); }, 30);
+      });
+
+      if (modalClose) modalClose.addEventListener("click", closeModal);
+      if (modalCancel) modalCancel.addEventListener("click", closeModal);
+
+      if (modal) modal.addEventListener("click", function (e) {
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeModal();
+      });
+
+      var API_BASES = ["/api/crm/", "/api/"];
+      var apiBase = null;
+
+      async function detectApiBase() {
+        if (apiBase) return apiBase;
+        for (var i = 0; i < API_BASES.length; i++) {
+          var base = API_BASES[i];
+          try {
+            var r = await fetch(base + "users/", { credentials: "same-origin" });
+            if (r.ok) { apiBase = base; return apiBase; }
+          } catch (e) { }
+        }
+        apiBase = API_BASES[0];
+        return apiBase;
+      }
+
+      var contacts = [];
+      var filtered = [];
+
+      function renderEmpty(msg) {
+        grid.innerHTML =
+          '<div class="card" style="grid-column:1/-1; text-align:center;">' +
+          '<div style="font-weight:900;">' + esc(msg) + '</div>' +
+          '<div class="muted" style="margin-top:6px;">Если не грузится, проверь корневой urls.py и куда подключён crm/urls.py</div>' +
+          '</div>';
+      }
+
+      function actionsRow(c) {
+        var pills = [];
+        var phone = normPhone(c.phone);
+        if (phone) pills.push(
+          '<a class="btn btn-compact" href="tel:' + esc(phone) + '" aria-label="Позвонить">' +
+          '<img class="ico" src="/static/icons/phone.svg" alt="Phone">' +
+          '</a>'
+        );
+
+
+        if (c.whatsapp) {
+          var wa = waLink(c.whatsapp);
+          if (wa) pills.push(
+            '<a class="btn btn-compact" target="_blank" rel="noopener" href="' + esc(wa) + '" aria-label="WhatsApp">' +
+            '<img class="ico" src="/static/icons/whatsapp.svg" alt="WhatsApp">' +
+            '</a>'
+          );
+
+        }
+
+        if (c.telegram) {
+          var tg = tgLink(c.telegram);
+          pills.push(
+            '<a class="btn btn-compact" target="_blank" rel="noopener" href="' + esc(tg) + '" aria-label="Telegram">' +
+            '<img class="ico" src="/static/icons/telegram.svg" alt="Telegram">' +
+            '</a>'
+          );
+
+
+        }
+
+        if (c.email) {
+          pills.push('<a class="btn btn-compact" href="mailto:' + esc(c.email) + '">✉️</a>');
+        }
+
+        return pills.join("");
+      }
+
+      function infoLine(label, value) {
+        if (!value) return "";
+        return '<div class="tile-desc" style="margin-top:6px;"><span class="muted">' + esc(label) + ':</span> ' + esc(value) + '</div>';
+      }
+
+      function render(list) {
+        meta.textContent = "Клиентов: " + list.length;
+
+        if (!list.length) {
+          renderEmpty("Пока нет клиентов");
+          return;
+        }
+
+        var html = "";
+        for (var i = 0; i < list.length; i++) {
+          var c = list[i];
+
+          // “одно поле, где всё отображается” я трактую как один компактный блок,
+          // но контакты строками (как ты и просил).
+          html +=
+            '<div class="tile tile--static">' +
+            '<div class="tile-body">' +
+            '<div class="tile-title">' + esc(c.name || (c.first_name + " " + c.last_name)) + '</div>' +
+            (c.company ? ('<div class="tile-desc" style="margin-top:6px;">🏢 ' + esc(c.company) + '</div>') : '') +
+            (c.sphere ? ('<div class="tile-desc" style="margin-top:6px;">🧭 ' + esc(c.sphere) + '</div>') : '') +
+
+            infoLine("Телефон", c.phone) +
+            infoLine("WhatsApp", c.whatsapp) +
+            infoLine("Email", c.email) +
+            infoLine("Telegram", c.telegram) +
+
+            (c.tags_text ? ('<div class="muted" style="margin-top:10px; font-size:12px;"># ' + esc(c.tags_text) + '</div>') : '') +
+
+            '<div class="crm-actions">' +
+            actionsRow(c) +
+            '</div>' +
+            '</div>' +
+            '</div>';
+        }
+
+        grid.innerHTML = html;
+      }
+
+      function applySearch() {
+        var q = (searchEl.value || "").trim().toLowerCase();
+        if (!q) { filtered = contacts.slice(); render(filtered); return; }
+
+        filtered = contacts.filter(function (c) {
+          var hay = [
+            c.name || "",
+            c.company || "",
+            c.sphere || "",
+            c.phone || "",
+            c.whatsapp || "",
+            c.email || "",
+            c.telegram || "",
+            c.tags_text || ""
+          ].join(" ").toLowerCase();
+          return hay.includes(q);
+        });
+
+        render(filtered);
+      }
+
+      if (searchEl) searchEl.addEventListener("input", applySearch);
+
+      async function loadContacts() {
+        meta.textContent = "Загрузка…";
+        await detectApiBase();
+
+        try {
+          var r = await fetch(apiBase + "users/", { credentials: "same-origin" });
+          if (!r.ok) { renderEmpty("Не удалось загрузить клиентов (HTTP " + r.status + ")"); return; }
+
+          var data = await r.json();
+          contacts = Array.isArray(data) ? data : (data.results || []);
+          filtered = contacts.slice();
+          applySearch();
+        } catch (e) {
+          renderEmpty("Ошибка запроса к API");
+        }
+      }
+
+      async function createContact() {
+        var full = (cName.value || "").trim().split(" ");
+
+        var payload = {
+          first_name: full[0] || "",
+          last_name: full.slice(1).join(" "),
+          phone: (cPhone.value || "").trim(),
+          whatsapp: (cWhatsapp.value || "").trim(),
+          email: (cEmail.value || "").trim(),
+          telegram: (cTelegram.value || "").trim(),
+          company: (cCompany.value || "").trim(),
+          sphere: (cSphere.value || "").trim(),
+          tags_text: (cTags.value || "").trim()
+        };
+
+        if (!cName.value.trim()) {
+          alert("ФИО/название обязательно.");
+          return;
+        }
+        if (!payload.phone) { alert("Телефон обязателен."); return; }
+
+        await detectApiBase();
+
+        try {
+          var r = await fetch(apiBase + "users/", {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCsrf()
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!r.ok) {
+            var t = "";
+            try { t = await r.text(); } catch (e) { }
+            alert("Не удалось сохранить (HTTP " + r.status + ").\n" + t);
+            return;
+          }
+
+          closeModal();
+          await loadContacts();
+        } catch (e) {
+          alert("Ошибка сохранения");
+        }
+      }
+
+      if (modalSave) modalSave.addEventListener("click", createContact);
+
+      loadContacts();
+    })();
+  </script>
+
+  {% endblock %}

@@ -1,0 +1,146 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>КП №{{ kp.id }} — {{ kp.title }}</title>
+  <link rel="stylesheet" href="{% static 'kp/print.css' %}">
+</head>
+
+<body>
+
+  <div class="no-print print-actions">
+    <a class="btn" href="{% url 'kp:builder' kp.id %}">Назад</a>
+    <a class="btn btn-primary" href="{% url 'kp:print' kp.id %}?download=1">Скачать PDF</a>
+  </div>
+
+  <div class="page">
+
+    {% include "kp/print/_header.html" %}
+
+    <!-- Основная информация: Заказчик / Исполнитель -->
+    <section class="block card">
+
+          <!-- Фото / обложка -->
+    <section class="block card">
+      {% if kp.photo %}
+        <div class="cover-frame">
+          <img
+            class="cover-img"
+            src="{% if site_url %}{{ site_url }}{% endif %}{{ kp.photo.url }}"
+            alt="Обложка КП"
+          >
+        </div>
+      {% else %}
+        <div class="pill">
+          <div class="value muted center">Фото не загружено.</div>
+        </div>
+      {% endif %}
+    </section>
+
+      <div class="grid-2">
+        <div class="cardish">
+          <div class="h3 center">Заказчик</div>
+
+          <div class="pill">
+            <div class="label">ФИО</div>
+            <div class="value value-strong">{{ customer_full_name|default:"—" }}</div>
+          </div>
+
+          <div class="pill">
+            <div class="label">Телефон</div>
+            <div class="value value-strong">{{ customer_phone|default:"—" }}</div>
+          </div>
+        </div>
+
+        <div class="cardish">
+          <div class="h3 center">Исполнитель</div>
+
+          <div class="pill">
+            <div class="label">ФИО / Название</div>
+            <div class="value value-strong">{{ performer_name|default:"—" }}</div>
+          </div>
+
+          <div class="pill">
+            <div class="label">Телефон</div>
+            <div class="value value-strong">{{ performer_phone|default:"—" }}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Параметры КП -->
+    <section class="block card">
+      <h2 class="h2 center">Параметры КП</h2>
+
+      <div class="grid-2">
+        <!-- 1 -->
+        <div class="pill">
+          <div class="label">Название мероприятия</div>
+          <div class="value value-big">{{ meta.event_title| default:"—" }}</div>
+        </div>
+
+        <!-- 2 -->
+        <div class="pill">
+          <div class="label">Дата и время</div>
+          <div class="value value-strong">
+            {{ now|date:"d.m.Y H:i" }}
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="pill">
+          <div class="label">Адрес проведения</div>
+          <div class="value">
+            {% if meta.event_address %}{{ meta.event_address }}{% else %}—{% endif %}
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="pill">
+          <div class="label">Ссылка на адрес (2ГИС/Google)</div>
+          <div class="value">
+            {% if meta.event_address_url %}
+              <a class="link-chip" href="{{ meta.event_address_url }}" target="_blank" rel="noopener">
+                {{ meta.event_address_url }}
+              </a>
+            {% else %}
+              —
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="pill">
+          <div class="label">Ссылка на Drive</div>
+          <div class="value">
+            {% if meta.drive_url %}
+              <a class="link-chip" href="{{ meta.drive_url }}" target="_blank" rel="noopener">
+                {{ meta.drive_url }}
+              </a>
+            {% else %}
+              —
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- 6 (широкий) -->
+        <div class="pill pill-full">
+          <div class="label">Описание / заметки</div>
+          <div class="value value-pre">
+            {% if meta.event_description %}{{ meta.event_description }}{% else %}—{% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    {% include "kp/print/_services.html" %}
+
+    {% include "kp/print/_footer.html" %}
+
+  </div>
+</body>
+</html>

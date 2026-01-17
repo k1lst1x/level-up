@@ -1,0 +1,8 @@
+{
+    "files.autoGuessEncoding": true,
+    "files.candidateGuessEncodings": [
+        "utf8",
+        "windows1251",
+        "utf16le"
+    ]
+}

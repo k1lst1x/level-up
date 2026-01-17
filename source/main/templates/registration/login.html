@@ -1,0 +1,156 @@
+{% load static %}
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Вход</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+    .auth-wrap {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .auth-title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .auth-sub {
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .auth-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .auth-field label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .auth-field input {
+      height: 46px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
+      font-size: 15px;
+      outline: none;
+    }
+
+    .auth-field input:focus {
+      border-color: var(--focus-border);
+      box-shadow: 0 0 0 4px var(--focus);
+    }
+
+    .auth-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .auth-footer {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .auth-footer a {
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .auth-error {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #ef4444;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 520px) {
+      .auth-card {
+        padding: 18px 16px;
+      }
+
+      .auth-title {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-wrap">
+    <div class="card auth-card">
+
+      <div>
+        <div class="auth-title">Вход в аккаунт</div>
+        <div class="auth-sub">Войдите, чтобы продолжить работу</div>
+      </div>
+
+      {% if form.errors %}
+        <div class="auth-error">Неверный логин или пароль</div>
+      {% endif %}
+
+      <form method="post" class="auth-form">
+        {% csrf_token %}
+
+        <div class="auth-field">
+          <label>Логин</label>
+          <input type="text" name="username" required autofocus>
+        </div>
+
+        <div class="auth-field">
+          <label>Пароль</label>
+          <input type="password" name="password" required>
+        </div>
+
+        <div class="auth-actions">
+          <button class="btn" type="submit">Войти</button>
+        </div>
+      </form>
+
+      <div class="auth-footer muted">
+        Нет аккаунта?
+        <a href="{% url 'register' %}">Зарегистрироваться</a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

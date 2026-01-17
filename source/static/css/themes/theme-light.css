@@ -1,0 +1,36 @@
+/* static/css/themes/theme-light.css */
+/* ===== Light theme (default) ===== */
+
+:root{
+  --bg: #f5f6fa;
+  --card: #ffffff;
+  --text: #111;
+  --muted: #6b7280;
+  --border: #e6e8ef;
+  --hover: #f1f3f9;
+  --shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+
+  /* фон-обои */
+  --wallpaper-image: none;
+  --wallpaper-opacity: 0;
+
+  /* Цвет плиток (категории/подкатегории/исполнители) */
+  --tile-bg: #ffffff;
+  --tile-tint: #f3f6ff;
+  --tile-border: #e0e7ff;
+  --tile-hover: #eef2ff;
+  --tile-media-bg: #e9eeff;
+
+  /* кнопки */
+  --btn-bg: var(--card);
+  --btn-text: var(--text);
+  --btn-border: var(--border);
+
+  /* поля */
+  --input-bg: var(--card);
+  --input-border: var(--border);
+
+  /* акцент */
+  --focus: rgba(99, 102, 241, 0.12);
+  --focus-border: #c7d2fe;
+}

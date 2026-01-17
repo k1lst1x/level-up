@@ -1,0 +1,208 @@
+{% load static %}
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Регистрация</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+    .auth-wrap {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 460px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .auth-title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .auth-sub {
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+      width: 100%;
+    }
+
+    .auth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .auth-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .auth-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .auth-field label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    /* 🔥 КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ */
+    .auth-field input {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+
+      height: 46px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
+      font-size: 15px;
+      outline: none;
+    }
+
+    .auth-field input:focus {
+      border-color: var(--focus-border);
+      box-shadow: 0 0 0 4px var(--focus);
+    }
+
+    .auth-error {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #ef4444;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .auth-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .auth-actions .btn {
+      width: 100%;
+    }
+
+    .auth-footer {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .auth-footer a {
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    @media (max-width: 640px) {
+      .auth-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .auth-card {
+        padding: 18px 16px;
+      }
+
+      .auth-title {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-wrap">
+    <div class="card auth-card">
+
+      <div>
+        <div class="auth-title">Создать аккаунт</div>
+        <div class="auth-sub">Заполните данные для регистрации</div>
+      </div>
+
+      {% if form.errors %}
+        <div class="auth-error">
+          Проверьте правильность заполнения формы
+        </div>
+      {% endif %}
+
+      <form method="post" class="auth-form">
+        {% csrf_token %}
+
+        <div class="auth-grid">
+
+          <div class="auth-field full">
+            <label>Логин</label>
+            {{ form.username }}
+          </div>
+
+          <div class="auth-field full">
+            <label>Почта</label>
+            {{ form.email }}
+          </div>
+
+          <div class="auth-field full">
+            <label>Телефон</label>
+            {{ form.phone }}
+          </div>
+
+          <div class="auth-field">
+            <label>Пароль</label>
+            {{ form.password1 }}
+          </div>
+
+          <div class="auth-field">
+            <label>Повторите пароль</label>
+            {{ form.password2 }}
+          </div>
+
+        </div>
+
+        <div class="auth-actions">
+          <button class="btn" type="submit">Зарегистрироваться</button>
+        </div>
+      </form>
+
+      <div class="auth-footer muted">
+        Уже есть аккаунт?
+        <a href="{% url 'login' %}">Войти</a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

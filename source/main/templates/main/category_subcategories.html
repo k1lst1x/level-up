@@ -1,0 +1,61 @@
+{# templates/main/category_subcategories.html #}
+{% extends "base.html" %}
+{% block title %}Подкатегории{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <div class="page-head-top">
+    <div class="page-head-left">
+      <a class="btn btn-compact" href="{% url 'main:home' %}">Назад</a>
+    </div>
+
+    <div class="page-head-center">
+      <h1 class="page-title">{{ category.name }}</h1>
+    </div>
+
+    <div class="page-head-right"></div>
+  </div>
+</div>
+
+
+  <div class="card">
+    <form method="get" class="search-row">
+      <input
+        type="text"
+        name="search"
+        value="{{ search }}"
+        placeholder="Поиск подкатегорий"
+        class="search-input"
+      />
+      <button class="btn btn-compact" type="submit">Искать</button>
+    </form>
+  </div>
+
+  <div class="grid grid-2" style="margin-top:12px;">
+    {% for s in subcategories %}
+      <a class="tile" href="{% url 'main:subcategory_services' s.id %}">
+        <div class="tile-media">
+          {% if s.image %}
+            <img src="{{ s.image.url }}" alt="{{ s.name }}">
+          {% else %}
+            <div class="tile-placeholder">Нет фото</div>
+          {% endif %}
+        </div>
+
+        <div class="tile-body">
+          <div class="tile-title">{{ s.name }}</div>
+
+          {% if s.description %}
+            <div class="tile-desc">{{ s.description|truncatechars:90 }}</div>
+          {% else %}
+            <div class="tile-desc tile-desc--empty">Без описания</div>
+          {% endif %}
+        </div>
+      </a>
+    {% empty %}
+      <div class="card">
+        <div class="muted">Подкатегорий пока нет.</div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

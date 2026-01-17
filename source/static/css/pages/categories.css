@@ -1,0 +1,43 @@
+/* pages/categories.css */
+/* Категории / подкатегории.
+   Ничего не ломает само по себе: стили включатся только если ты добавишь
+   классы в шаблон (например <body class="categories-page"> и грид .categories-grid). */
+
+.categories-page{}
+
+/* Поиск на странице категорий (если обернёшь форму/блок в .categories-search) */
+.categories-search{
+  margin-top: 12px;
+}
+
+/* На ПК: 3 крупные карточки вместо 4 мелких */
+@media (min-width: 1024px){
+  .categories-page .grid-2.categories-grid{
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 16px;
+  }
+
+  /* если хочешь управлять соотношением картинок именно на категориях */
+  .categories-page .tile-media.categories-tile-media{
+    aspect-ratio: 16 / 10;
+  }
+
+  .categories-page .tile-body{
+    padding: 12px 14px 14px;
+  }
+
+  .categories-page .tile-title{
+    font-size: 15px;
+  }
+
+  .categories-page .tile-desc{
+    font-size: 12.5px;
+    -webkit-line-clamp: 3;
+  }
+}
+
+@media (min-width: 1280px){
+  .categories-page .grid-2.categories-grid{
+    gap: 18px;
+  }
+}

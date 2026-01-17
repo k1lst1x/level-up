@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% block title %}Услуги{% endblock %}
+
+{% block content %}
+
+<div id="svcPage">
+
+  <div class="page-head">
+    <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+      <a class="btn btn-compact" href="{% url 'main:home' %}">Назад</a>
+      <h1 class="page-title" style="margin:0;">{{ category.name }}</h1>
+    </div>
+  </div>
+
+  <div class="card">
+    <form method="get" class="search-row">
+      <input
+        type="text"
+        name="search"
+        value="{{ search }}"
+        placeholder="Поиск услуг"
+        class="search-input"
+      />
+      <button class="btn btn-compact" type="submit">Искать</button>
+      {% if search %}
+        <a class="btn btn-compact" href="{% url 'main:category_services' category.id %}">Сброс</a>
+      {% endif %}
+    </form>
+  </div>
+
+  <div class="grid grid-2" style="margin-top:12px;">
+    {% for s in services %}
+      <div
+        class="tile tile--static js-service"
+        style="cursor:pointer;"
+        data-service-id="{{ s.id }}"
+        data-service-name="{{ s.name|escapejs }}"
+        data-allow-multiple="{% if s.allow_multiple %}1{% else %}0{% endif %}"
+      >
+        <div class="tile-media">
+          {% if s.image %}
+            <img src="{{ s.image.url }}" alt="{{ s.name }}">
+          {% else %}
+            <div class="tile-placeholder">Нет фото</div>
+          {% endif %}
+        </div>
+
+        <div class="tile-body">
+          <div class="tile-title">{{ s.name }}</div>
+          <div class="tile-desc">
+            {% if s.base_price %}<b>{{ s.base_price }}</b> ₸{% endif %}
+            {% if s.unit %} · {{ s.unit }}{% endif %}
+          </div>
+          {% if s.description %}
+            <div class="tile-desc">{{ s.description|truncatechars:90 }}</div>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <div class="card"><div class="muted">Услуг нет.</div></div>
+    {% endfor %}
+  </div>
+
+  <!-- ================= MODAL ================= -->
+  <div class="modal-backdrop" id="addModal" style="display:none;">
+    <div class="modal modal--scroll" style="max-width:640px;">
+      <div class="modal-header modal-header--sticky">
+        <div class="modal-title">Добавить услугу</div>
+        <button class="modal-close" type="button" onclick="closeAddModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="card">
+          <div style="font-weight:900;" id="modalServiceName"></div>
+          <div class="muted" style="margin-top:6px;">
+            Выбери КП, в которую добавить услугу
+          </div>
+        </div>
+
+        <!-- qty block -->
+        <div class="card" id="qtyCard" style="margin-top:12px; display:none;">
+          <div class="qty-row">
+            <div class="qty-left">
+              <div class="qty-title">Количество</div>
+              <div class="qty-sub muted" id="qtyHint">Можно добавить несколько раз</div>
+            </div>
+
+            <div class="qty-controls">
+              <button class="qty-btn" type="button" id="qtyMinus">−</button>
+              <div class="qty-value" id="qtyValue">1</div>
+              <button class="qty-btn" type="button" id="qtyPlus">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <a href="{% url 'kp:kp' %}"
+             class="btn btn-primary"
+             style="width:100%;">
+            Создать новое КП
+          </a>
+        </div>
+
+        {% if draft_kps %}
+          <div class="modal-scroll" style="margin-top:12px;">
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              {% for kp in draft_kps %}
+                <div class="kp-choice-card">
+                  <div class="kp-choice-title">
+                    {{ kp.title|default:"КП" }} · #{{ kp.id }}
+                  </div>
+                  <div class="kp-choice-sub muted">
+                    Клиент: {{ kp.customer.username }}
+                  </div>
+
+                  <div class="kp-choice-actions">
+                    <!-- add + stay -->
+                    <form method="post"
+                          action="{% url 'kp:add_to_kp' kp.id 0 %}"
+                          class="add-form add-form-stay"
+                          data-kp="{{ kp.id }}">
+                      {% csrf_token %}
+                      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                      <input type="hidden" name="qty" value="1" class="qty-input">
+                      <button class="btn btn-compact" type="submit">
+                        Добавить и продолжить
+                      </button>
+                    </form>
+
+                    <!-- add + open -->
+                    <form method="post"
+                          action="{% url 'kp:add_to_kp' kp.id 0 %}"
+                          class="add-form add-form-open"
+                          data-kp="{{ kp.id }}">
+                      {% csrf_token %}
+                      <input type="hidden" name="next" value="/kp/">
+                      <input type="hidden" name="qty" value="1" class="qty-input">
+                      <button class="btn btn-primary btn-compact" type="submit">
+                        Добавить и открыть
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}
+          <div class="card" style="margin-top:12px;">
+            <div class="muted">
+              Черновиков КП нет. Создай новое КП.
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+
+      <div class="modal-actions modal-actions--sticky">
+        <button class="btn" type="button" onclick="closeAddModal()">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const modal = document.getElementById("addModal");
+  const nameEl = document.getElementById("modalServiceName");
+
+  const qtyCard = document.getElementById("qtyCard");
+  const qtyValueEl = document.getElementById("qtyValue");
+  const qtyHintEl = document.getElementById("qtyHint");
+  const minusBtn = document.getElementById("qtyMinus");
+  const plusBtn = document.getElementById("qtyPlus");
+
+  let currentServiceId = null;
+  let allowMultiple = false;
+  let qty = 1;
+
+  function setQty(nextQty){
+    qty = Math.max(1, parseInt(nextQty || 1, 10) || 1);
+    qtyValueEl.textContent = String(qty);
+    document.querySelectorAll(".qty-input").forEach(inp => inp.value = String(qty));
+  }
+
+  window.closeAddModal = function(){
+    if(modal) modal.style.display = "none";
+  }
+
+  function openAddModal(serviceId, serviceName, allowMult){
+    currentServiceId = serviceId;
+    allowMultiple = !!allowMult;
+
+    if(nameEl) nameEl.textContent = serviceName || "";
+
+    // привязываем action на конкретный serviceId
+    document.querySelectorAll(".add-form").forEach(form => {
+      const kpId = form.dataset.kp;
+      form.action = `/kp/${kpId}/add/${serviceId}/`;
+    });
+
+    // qty UI
+    if(allowMultiple){
+      qtyCard.style.display = "block";
+      qtyHintEl.textContent = "Можно добавить несколько раз";
+      setQty(1);
+      minusBtn.disabled = false;
+      plusBtn.disabled = false;
+    } else {
+      // услуга одноразовая: qty всегда 1, UI прячем
+      qtyCard.style.display = "none";
+      setQty(1);
+      minusBtn.disabled = true;
+      plusBtn.disabled = true;
+    }
+
+    if(modal) modal.style.display = "flex";
+  }
+
+  document.querySelectorAll(".js-service").forEach(tile => {
+    tile.addEventListener("click", () => {
+      const sid = tile.dataset.serviceId;
+      const sname = tile.dataset.serviceName || "";
+      const allow = tile.dataset.allowMultiple === "1";
+      openAddModal(sid, sname, allow);
+    });
+  });
+
+  if(minusBtn) minusBtn.addEventListener("click", () => {
+    if(!allowMultiple) return;
+    setQty(qty - 1);
+  });
+
+  if(plusBtn) plusBtn.addEventListener("click", () => {
+    if(!allowMultiple) return;
+    setQty(qty + 1);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape") window.closeAddModal();
+  });
+
+  if(modal){
+    modal.addEventListener("click", (e) => {
+      if(e.target === modal) window.closeAddModal();
+    });
+  }
+})();
+</script>
+
+{% endblock %}

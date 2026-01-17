@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Примеры коммерческих предложений{% endblock %}
+
+{% block content %}
+
+<section class="home-section">
+  <div class="home-section-head">
+    <h1 class="home-section-title home-section-title1">Примеры коммерческих предложений</h1>
+    <p class="muted center">
+      Ниже — три варианта формата мероприятий. Каждый проект собирается индивидуально.
+    </p>
+  </div>
+</section>
+
+<section class="home-section">
+  <div class="kp-examples-grid">
+
+    <!-- BASIC -->
+    <article class="card kp-example-card">
+      <div class="kp-example-badge basic">BASIC</div>
+
+      <div class="kp-example-media">
+        <img src="{% static 'img/kp/basic.jpg' %}" alt="Минимальный формат">
+      </div>
+
+      <h2 class="kp-example-title">🎈 Минимальный формат</h2>
+      <p class="kp-example-sub">Подойдёт для камерных мероприятий и частных событий</p>
+
+      <ul class="kp-example-list">
+        <li>🎤 Ведущий / координатор</li>
+        <li>📝 Базовый сценарий</li>
+        <li>🎵 Музыкальное сопровождение</li>
+        <li>💡 Минимальный свет</li>
+        <li>✅ Контроль мероприятия</li>
+      </ul>
+
+      <div class="kp-example-price">от 300 000 ₸</div>
+
+      <div class="kp-example-note muted">
+        Подходит для дней рождений, небольших корпоративов, private-вечеринок.
+      </div>
+    </article>
+
+    <!-- STANDARD -->
+    <article class="card kp-example-card featured">
+      <div class="kp-example-badge pro">OPTIMAL</div>
+
+      <div class="kp-example-media">
+        <img src="{% static 'img/kp/standard.jpg' %}" alt="Оптимальный формат">
+      </div>
+
+      <h2 class="kp-example-title">⭐ Оптимальный формат</h2>
+      <p class="kp-example-sub">Самый популярный вариант для мероприятий под ключ</p>
+
+      <ul class="kp-example-list">
+        <li>🎤 Ведущий + координатор</li>
+        <li>🎨 Проработка концепции</li>
+        <li>📋 Сценарий и тайминг</li>
+        <li>🔊 Свет + звук</li>
+        <li>💃 Артисты / шоу-блок</li>
+        <li>🛠 Репетиции и контроль</li>
+      </ul>
+
+      <div class="kp-example-price">от 700 000 ₸</div>
+
+      <div class="kp-example-note muted">
+        Подходит для свадеб, корпоративов, презентаций, крупных частных событий.
+      </div>
+    </article>
+
+    <!-- PREMIUM -->
+    <article class="card kp-example-card premium">
+      <div class="kp-example-badge vip">PREMIUM</div>
+
+      <div class="kp-example-media">
+        <img src="{% static 'img/kp/premium.jpg' %}" alt="Премиальный формат">
+      </div>
+
+      <h2 class="kp-example-title">👑 Премиальный формат</h2>
+      <p class="kp-example-sub">Большие проекты, шоу-программы и масштабные события</p>
+
+      <ul class="kp-example-list">
+        <li>🎬 Продюсер проекта</li>
+        <li>🚀 Авторская концепция</li>
+        <li>🕺 Команда артистов</li>
+        <li>🎆 Сцена, экраны, спецэффекты</li>
+        <li>🏗 Полный продакшн</li>
+        <li>🎥 Режиссура мероприятия</li>
+      </ul>
+
+      <div class="kp-example-price">от 1 500 000 ₸</div>
+
+      <div class="kp-example-note muted">
+        Подходит для концертов, форумов, брендинговых и имиджевых мероприятий.
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="home-section">
+  <div class="card home-cta">
+    <div class="home-cta-title">Хотите рассчитать точную стоимость?</div>
+    <div class="muted home-cta-sub">
+      Соберите своё КП и получите персональный расчёт.
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{% url 'kp:kp' %}">Рассчитать стоимость</a>
+      <a class="btn" href="{% url 'main:home' %}">На главную</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,605 @@
+{# templates/kp/builder.html #}
+{% extends "base.html" %}
+{% block title %}КП: {{ kp.title }}{% endblock %}
+
+{% block content %}
+{% with can_edit=is_editable %}
+
+<section class="card kp-head">
+  <h1 class="kp-builder-title">{{ kp.title }}</h1>
+
+  <div class="kp-role muted">
+    {% if is_admin %}
+      Роль: менеджер (админ).
+      {% if kp.status == "REQUESTED" %}
+        Статус: заявка от клиента.
+      {% endif %}
+    {% else %}
+      Роль: клиент. “Отправить” отправляет КП менеджеру.
+    {% endif %}
+  </div>
+
+  <div class="kp-actions">
+    {% if is_admin %}
+      <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'kp:kp' %}">Назад в КП</a>
+    {% else %}
+      <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'main:home' %}">В категории</a>
+    {% endif %}
+
+    <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'kp:print' kp.id %}">Открыть для печати</a>
+  </div>
+</section>
+
+
+<section class="card kp-block">
+  <div class="kp-section-title">Фото / обложка КП</div>
+  <div class="kp-section-subtitle">Загрузи изображение (баннер/обложка).</div>
+
+  <div class="kp-cover-wrap">
+    <button
+      id="kpCoverClick"
+      class="kp-cover-preview"
+      type="button"
+      {% if not can_edit %}disabled{% endif %}
+      aria-label="Загрузить фото"
+      title="{% if can_edit %}Нажми, чтобы загрузить фото{% endif %}"
+    >
+      {% if kp.photo %}
+        <img src="{{ kp.photo.url }}" alt="KP photo" class="kp-cover-img">
+      {% else %}
+        <span class="muted kp-empty-text">Фото не загружено</span>
+      {% endif %}
+    </button>
+
+    {% if can_edit %}
+      <form
+        id="kpUploadForm"
+        method="post"
+        action="{% url 'kp:upload_photo' kp.id %}"
+        enctype="multipart/form-data"
+        class="kp-hidden"
+      >
+        {% csrf_token %}
+        <input id="kpPhotoInput" type="file" name="photo" accept="image/*" required>
+      </form>
+
+      <div class="modal-backdrop" id="kpPhotoModal" style="display:none;">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="kpPhotoModalTitle">
+          <div class="modal-header">
+            <div class="modal-title" id="kpPhotoModalTitle">Загрузка фото</div>
+            <button class="modal-close" type="button" id="kpPhotoModalCloseX" aria-label="Close">✕</button>
+          </div>
+
+          <div class="card kp-mini-card">
+            <div class="kp-mini-title">Фото / обложка КП</div>
+            <div class="muted kp-mini-text">
+              Нажми “Загрузить фото”, выбери файл и он загрузится автоматически.
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <button class="btn" type="button" id="kpPhotoModalUploadBtn">Загрузить фото</button>
+            <button class="btn" type="button" id="kpPhotoModalCloseBtn">Закрыть</button>
+          </div>
+        </div>
+      </div>
+
+      {% if messages %}
+        <div class="kp-messages">
+          {% for message in messages %}
+            <div class="muted kp-message">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="muted kp-readonly-hint">Это КП из истории. Редактирование выключено.</div>
+    {% endif %}
+  </div>
+</section>
+
+
+<section class="card kp-block">
+  <div class="kp-section-title">Параметры КП</div>
+
+  <form id="kpMetaForm" class="kp-form">
+    {% csrf_token %}
+
+    <div class="kp-meta-grid">
+      <div class="kp-field">
+        <label class="kp-label">Заголовок КП</label>
+        <input
+          class="search-input"
+          name="title"
+          value="{{ kp.title }}"
+          placeholder="Например: КП на мероприятие"
+          {% if not can_edit %}disabled{% endif %}
+        >
+      </div>
+
+      <div class="kp-field">
+        <label class="kp-label">Шаблон / тип мероприятия</label>
+        <select class="search-input" name="template_id" {% if not can_edit %}disabled{% endif %}>
+          <option value="">— не менять —</option>
+          {% for t in templates %}
+            <option value="{{ t.id }}" {% if kp.template_id == t.id %}selected{% endif %}>
+              {{ t.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="kp-field">
+        <label class="kp-label">Название мероприятия</label>
+        <input
+          class="search-input"
+          name="event_title"
+          value="{{ meta.event_title }}"
+          placeholder="Например: Свадьба / Корпоратив"
+          {% if not can_edit %}disabled{% endif %}
+        >
+      </div>
+
+      <div class="kp-field">
+        <label class="kp-label">Дата и время</label>
+        <div class="kp-datetime-wrap" data-dtp="1">
+          <input
+            class="search-input kp-datetime"
+            type="datetime-local"
+            name="event_datetime"
+            value="{{ meta.event_datetime }}"
+            {% if not can_edit %}disabled{% endif %}
+          >
+        </div>
+      </div>
+
+      <div class="kp-field">
+        <label class="kp-label">Адрес проведения</label>
+        <input
+          class="search-input"
+          name="event_address"
+          value="{{ meta.event_address }}"
+          placeholder="Например: Алматы, ул. Абая 10"
+          {% if not can_edit %}disabled{% endif %}
+        >
+      </div>
+
+      <div class="kp-field">
+        <label class="kp-label">Ссылка на адрес (2ГИС/Google)</label>
+        <input
+          class="search-input"
+          name="event_address_url"
+          value="{{ meta.event_address_url }}"
+          placeholder="https://2gis.kz/..."
+          {% if not can_edit %}disabled{% endif %}
+        >
+      </div>
+
+      <div class="kp-field">
+        <label class="kp-label">Ссылка на Drive</label>
+        <input
+          class="search-input"
+          name="drive_url"
+          value="{{ meta.drive_url }}"
+          placeholder="https://drive.google.com/..."
+          {% if not can_edit %}disabled{% endif %}
+        >
+      </div>
+
+      <div class="kp-field kp-field-full">
+        <label class="kp-label">Описание / заметки</label>
+        <textarea
+          class="search-input"
+          name="event_description"
+          rows="3"
+          placeholder="Короткое описание"
+          {% if not can_edit %}disabled{% endif %}
+        >{{ meta.event_description }}</textarea>
+      </div>
+    </div>
+  </form>
+
+  <div class="muted kp-autosave-status" id="autosaveStatus"></div>
+</section>
+
+
+<section class="card kp-block">
+  <div class="kp-services-head">
+    <div>
+      <div class="kp-services-title">Услуги в КП</div>
+      <div class="muted kp-services-sub">Добавляй через Категории → Услуги.</div>
+    </div>
+
+    {% if can_edit %}
+      <form method="post" action="{% url 'kp:clear' kp.id %}" style="margin: 20px 0px;">
+        {% csrf_token %}
+        <button class="btn btn-danger btn-compact" type="submit">Очистить КП</button>
+      </form>
+    {% endif %}
+  </div>
+
+  <div class="kp-services-list">
+    {% for it in items %}
+      <article class="card kp-service-row" data-item-row="{{ it.id }}">
+        <div class="kp-item-photo">
+          {% if it.service.image %}
+            <img src="{{ it.service.image.url }}" alt="{{ it.service.name }}" class="kp-item-photo-img">
+          {% else %}
+            <div class="kp-photo-empty muted">Без фото</div>
+          {% endif %}
+        </div>
+
+        <div class="kp-service-main">
+          <div class="kp-service-name">{{ it.service.name }}</div>
+
+          <div class="muted kp-service-meta">
+
+            <span class="kp-qty" data-qty-text="{{ it.id }}">{{ it.qty }}</span> шт · 
+          
+            {% if is_admin and can_edit %}
+              <div class="kp-price-wrap">
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  inputmode="numeric"
+                  value="{{ it.price }}"
+                  class="kp-price-input"
+                  data-price-input="{{ it.id }}"
+                >
+                <span class="kp-currency">₸</span>
+              </div>            
+            {% else %}
+              <span data-price-text="{{ it.id }}">{{ it.price }}</span> ₸
+            {% endif %}
+          
+          </div>          
+
+          <div class="kp-service-actions">
+            <div
+              class="kp-stepper"
+              data-item-id="{{ it.id }}"
+              data-qty="{{ it.qty }}"
+              {% if not can_edit %}data-disabled="1"{% endif %}
+            >
+              <button class="qty-btn" type="button" data-action="dec" aria-label="Уменьшить">−</button>
+              <div class="qty-value" aria-live="polite" data-qty-value="{{ it.id }}">{{ it.qty }}</div>
+              <button class="qty-btn" type="button" data-action="inc" aria-label="Увеличить">+</button>
+            </div>
+
+            {% if can_edit %}
+              <form method="post" action="{% url 'kp:remove_item' it.id %}">
+                {% csrf_token %}
+                <button class="btn btn-danger btn-compact" type="submit">Убрать</button>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="kp-service-right">
+          <div class="kp-service-sum">
+            <span data-item-sum="{{ it.id }}">{{ it.total_price }}</span> ₸
+          </div>
+        </div>
+      </article>
+    {% empty %}
+      <div class="muted">Пока пусто. Иди в категории и добавь услуги.</div>
+    {% endfor %}
+  </div>
+
+  <div class="kp-center-actions">
+    <a class="btn" href="{% url 'main:home' %}">Добавить услуги</a>
+  </div>
+</section>
+
+
+<section class="card kp-block kp-total-block">
+  <div class="kp-section-title">Итог по КП</div>
+  <div class="kp-section-subtitle">Финальная стоимость рассчитывается автоматически.</div>
+
+  <div class="kp-total-list kp-total-card">
+
+    <div class="kp-total-row">
+      <span class="muted">Сумма услуг</span>
+      <b><span id="kpSubtotal">{{ subtotal }}</span> ₸</b>
+    </div>
+
+    <div class="kp-total-row">
+      <span class="muted">Комиссия агенства 20%</span>
+      <b>+ <span id="kpExtra">{{ extra20 }}</span> ₸</b>
+    </div>
+
+    <div class="kp-total-row kp-total-final">
+      <span>ИТОГО</span>
+      <span><span id="kpTotal">{{ total }}</span> ₸</span>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="card kp-block">
+  <div class="kp-section-title">Готово?</div>
+
+  {% if can_edit %}
+    <div class="kp-section-subtitle">
+      {% if is_admin %}
+        Нажми “Завершить”, чтобы закрыть черновик и отправить его в историю.
+      {% else %}
+        Нажми “Отправить”, чтобы отправить КП менеджеру на рассмотрение.
+      {% endif %}
+    </div>
+
+    <div class="kp-center-actions">
+      <form method="post" action="{% url 'kp:submit' kp.id %}" class="kp-submit-form" target="_top">
+        {% csrf_token %}
+        {% if is_admin %}
+          <input type="hidden" name="next" value="/kp/?tab=history">
+          <button class="btn" type="submit">Завершить</button>
+        {% else %}
+          <input type="hidden" name="next" value="/kp/">
+          <button class="btn" type="submit">Отправить</button>
+        {% endif %}
+      </form>
+    </div>
+  {% else %}
+    <div class="muted kp-readonly-hint">
+      Это КП из истории. Если хочешь продолжить работу, нажми “Сделать активным” в Истории на странице /kp/.
+    </div>
+  {% endif %}
+</section>
+
+
+<script>
+  // boolean from Django template
+  const canEdit = {{ can_edit|yesno:"true,false" }};
+
+  /* ===== Click-anywhere datetime picker ===== */
+  (function () {
+    function openPicker(input) {
+      if (!input) return;
+      input.focus({ preventScroll: true });
+      if (typeof input.showPicker === "function") input.showPicker();
+      else input.click();
+    }
+
+    document.querySelectorAll(".kp-datetime-wrap[data-dtp='1']").forEach(function (wrap) {
+      var input = wrap.querySelector("input[type='datetime-local']");
+      if (!input) return;
+
+      wrap.addEventListener("click", function (e) {
+        if (e.target === input) return;
+        openPicker(input);
+      });
+
+      wrap.addEventListener("touchstart", function () {
+        openPicker(input);
+      }, { passive: true });
+    });
+  })();
+
+
+  /* ===== Cover modal upload ===== */
+  (function () {
+    if (!canEdit) return;
+
+    var coverBtn = document.getElementById("kpCoverClick");
+    var modal = document.getElementById("kpPhotoModal");
+    var closeX = document.getElementById("kpPhotoModalCloseX");
+    var closeBtn = document.getElementById("kpPhotoModalCloseBtn");
+    var uploadBtn = document.getElementById("kpPhotoModalUploadBtn");
+
+    var form = document.getElementById("kpUploadForm");
+    var input = document.getElementById("kpPhotoInput");
+
+    function openModal() { if (modal) modal.style.display = "flex"; }
+    function closeModal() { if (modal) modal.style.display = "none"; }
+
+    if (coverBtn) coverBtn.addEventListener("click", openModal);
+    if (closeX) closeX.addEventListener("click", closeModal);
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+    if (modal) {
+      modal.addEventListener("click", function (e) {
+        if (e.target === modal) closeModal();
+      });
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeModal();
+    });
+
+    if (uploadBtn && input) {
+      uploadBtn.addEventListener("click", function () { input.click(); });
+    }
+
+    if (input && form) {
+      input.addEventListener("change", function () {
+        if (input.files && input.files.length) {
+          closeModal();
+          form.submit();
+        }
+      });
+    }
+  })();
+
+
+  /* ===== Autosave ===== */
+  (function () {
+    if (!canEdit) return;
+
+    var form = document.getElementById("kpMetaForm");
+    var statusEl = document.getElementById("autosaveStatus");
+    if (!form) return;
+
+    var timer = null;
+
+    function csrfToken() {
+      var el = form.querySelector('input[name="csrfmiddlewaretoken"]');
+      return el ? el.value : "";
+    }
+
+    function setStatus(text) {
+      if (statusEl) statusEl.textContent = text || "";
+    }
+
+    function autosave() {
+      setStatus("Сохранение...");
+
+      var data = new FormData(form);
+      fetch("{% url 'kp:autosave' kp.id %}", {
+        method: "POST",
+        body: data,
+        headers: {
+          "X-CSRFToken": csrfToken(),
+          "X-Requested-With": "XMLHttpRequest"
+        },
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j && j.ok) setStatus("Сохранено.");
+        else setStatus("Не сохранилось.");
+      })
+      .catch(function () {
+        setStatus("Ошибка сети.");
+      });
+    }
+
+    function scheduleAutosave() {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(autosave, 450);
+    }
+
+    form.addEventListener("input", scheduleAutosave);
+    form.addEventListener("change", scheduleAutosave);
+  })();
+
+
+  /* ===== REAL stepper: updates DB + totals ===== */
+  (function () {
+    if (!canEdit) return;
+
+    function getCsrfToken() {
+      var el = document.querySelector('input[name="csrfmiddlewaretoken"]');
+      return el ? el.value : "";
+    }
+
+    function setDisabled(stepperEl, disabled) {
+      stepperEl.querySelectorAll("button").forEach(function (b) {
+        b.disabled = !!disabled;
+      });
+    }
+
+    function updateDom(itemId, qty, itemTotal, subtotal, extra20, total) {
+      document.querySelector('[data-qty-value="' + itemId + '"]').textContent = qty;
+      document.querySelector('[data-qty-text="' + itemId + '"]').textContent = qty;
+      document.querySelector('[data-item-sum="' + itemId + '"]').textContent = itemTotal;
+
+      document.getElementById("kpSubtotal").textContent = subtotal;
+      document.getElementById("kpExtra").textContent = extra20;
+      document.getElementById("kpTotal").textContent = total;
+    }
+
+    function postQty(itemId, action) {
+      return fetch("{% url 'kp:update_item_qty' 0 %}".replace("/0/", "/" + itemId + "/"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCsrfToken(),
+          "X-Requested-With": "XMLHttpRequest"
+        },
+        body: JSON.stringify({ action: action })
+      })
+      .then(function (r) {
+        return r.json().then(function (j) {
+          if (!r.ok) {
+            var msg = (j && (j.error || j.detail)) ? (j.error || j.detail) : "Ошибка";
+            throw new Error(msg);
+          }
+          return j;
+        });
+      });
+    }
+
+    document.querySelectorAll(".kp-stepper").forEach(function (stepper) {
+      if (stepper.getAttribute("data-disabled") === "1") return;
+
+      var itemId = stepper.getAttribute("data-item-id");
+      var dec = stepper.querySelector('[data-action="dec"]');
+      var inc = stepper.querySelector('[data-action="inc"]');
+
+      function onClick(action) {
+        setDisabled(stepper, true);
+
+        postQty(itemId, action)
+          .then(function (j) {
+            if (j && j.ok) {
+              updateDom(itemId, j.qty, j.item_total, j.subtotal, j.extra20, j.total);
+            } else {
+              throw new Error("Не сохранилось");
+            }
+          })
+          .catch(function (e) {
+            console.error(e);
+            alert(e.message || "Ошибка");
+          })
+          .finally(function () {
+            setDisabled(stepper, false);
+          });
+      }
+
+      if (dec) dec.addEventListener("click", function () { onClick("dec"); });
+      if (inc) inc.addEventListener("click", function () { onClick("inc"); });
+    });
+  })();
+
+  /* ===== PRICE EDIT (admin only) ===== */
+(function () {
+  if (!canEdit) return;
+
+  function getCsrfToken() {
+    var el = document.querySelector('input[name="csrfmiddlewaretoken"]');
+    return el ? el.value : "";
+  }
+
+  function postPrice(itemId, price) {
+    return fetch("{% url 'kp:update_item_price' 0 %}".replace("/0/", "/" + itemId + "/"), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCsrfToken(),
+        "X-Requested-With": "XMLHttpRequest"
+      },
+      body: JSON.stringify({ price: price })
+    }).then(r => r.json());
+  }
+
+  document.querySelectorAll("[data-price-input]").forEach(function (input) {
+      var itemId = input.getAttribute("data-price-input");
+      var timer = null;
+
+      function send() {
+        var val = parseInt(input.value || "0");
+        if (val < 0 || isNaN(val)) val = 0;
+
+        postPrice(itemId, val).then(function (j) {
+          if (!j || !j.ok) return;
+
+          document.querySelector('[data-item-sum="' + itemId + '"]').textContent = j.item_total;
+          document.getElementById("kpSubtotal").textContent = j.subtotal;
+          document.getElementById("kpExtra").textContent = j.extra20;
+          document.getElementById("kpTotal").textContent = j.total;
+        });
+      }
+
+      input.addEventListener("input", function () {
+        clearTimeout(timer);
+        timer = setTimeout(send, 400);
+      });
+
+      input.addEventListener("change", send);
+    });
+  })();
+</script>
+
+{% endwith %}
+{% endblock %}

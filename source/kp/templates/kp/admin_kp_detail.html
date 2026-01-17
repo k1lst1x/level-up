@@ -1,0 +1,183 @@
+{# templates/kp/detail.html (или admin_kp_detail.html) #}
+{% extends "base.html" %}
+{% block title %}КП: {{ kp.title }}{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="muted" style="font-size:13px;">КП → Черновик (админ)</div>
+    <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center;">
+      <div>
+        <div style="font-weight:900; font-size:18px;">{{ kp.title }}</div>
+        <div class="muted" style="margin-top:4px;">Клиент: <b>{{ kp.customer.username }}</b></div>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <a class="btn btn-compact" href="{% url 'kp:kp' %}">К списку</a>
+        <form method="post" action="{% url 'kp:submit' kp.id %}">
+          {% csrf_token %}
+          <button class="btn btn-primary btn-compact" type="submit">Отправить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px;">
+    <div style="font-weight:900;">Параметры КП (автосейв)</div>
+    <div class="muted" style="margin-top:6px;">Ничего “сохранять” не надо, оно само.</div>
+
+    <form id="kpMetaForm" style="margin-top:10px;">
+      {% csrf_token %}
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div>
+          <div class="muted" style="font-size:12px;">Заголовок КП</div>
+          <input class="search-input" name="title" value="{{ kp.title }}" placeholder="Например: КП на мероприятие" />
+        </div>
+
+        <div>
+          <div class="muted" style="font-size:12px;">Шаблон / тип мероприятия</div>
+          <select class="search-input" name="template_id">
+            <option value="">— не менять —</option>
+            {% for t in templates %}
+              <option value="{{ t.id }}" {% if kp.template_id == t.id %}selected{% endif %}>
+                {{ t.name }}
+              </option>
+            {% endfor %}
+          </select>
+          <div class="muted" style="font-size:12px; margin-top:4px;">Текущий: <b>{% if kp.template %}{{ kp.template }}{% else %}—{% endif %}</b></div>
+        </div>
+
+        <div>
+          <div class="muted" style="font-size:12px;">Название мероприятия</div>
+          <input class="search-input" name="event_title" value="{{ meta.event_title }}" placeholder="Например: Свадьба / Корпоратив" />
+        </div>
+
+        <div>
+          <div class="muted" style="font-size:12px;">Дата и время</div>
+          <input class="search-input" type="datetime-local" name="event_datetime" value="{{ meta.event_datetime }}" />
+        </div>
+
+        <div style="grid-column: 1 / span 2;">
+          <div class="muted" style="font-size:12px;">Локация (2GIS ссылка или текст)</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <input class="search-input" style="flex:1; min-width:260px;" name="event_location_url" value="{{ meta.event_location_url }}" placeholder="https://2gis.kz/... или просто адрес/название" />
+            <button class="btn btn-compact" type="button" onclick="open2gis()">Открыть</button>
+          </div>
+          <div class="muted" style="font-size:12px; margin-top:6px;">Если это не ссылка, откроется поиск в 2GIS.</div>
+        </div>
+
+        <div style="grid-column: 1 / span 2;">
+          <div class="muted" style="font-size:12px;">Описание / заметки</div>
+          <textarea class="search-input" name="event_description" rows="3" placeholder="Короткое описание">{{ meta.event_description }}</textarea>
+        </div>
+      </div>
+    </form>
+
+    <div class="muted" id="autosaveStatus" style="margin-top:8px; font-size:12px;"></div>
+  </div>
+
+  <div class="card" style="margin-top:12px;">
+    <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center;">
+      <div>
+        <div style="font-weight:900;">Услуги в КП</div>
+        <div class="muted" style="margin-top:4px;">Добавляй через Категории → Услуги.</div>
+      </div>
+      <form method="post" action="{% url 'kp:clear' kp.id %}">
+        {% csrf_token %}
+        <button class="btn btn-danger btn-compact" type="submit">Очистить КП</button>
+      </form>
+    </div>
+
+    <div style="margin-top:12px;">
+      {% for it in items %}
+        <div class="card" style="display:flex; gap:12px; align-items:center; margin-bottom:10px;">
+          <div style="width:72px; height:54px; border-radius:12px; overflow:hidden; border:1px solid var(--border); background:#eef0f6;">
+            {% if it.service.image %}
+              <img src="{{ it.service.image.url }}" alt="{{ it.service.name }}" style="width:100%; height:100%; object-fit:cover;">
+            {% endif %}
+          </div>
+
+          <div style="flex:1;">
+            <div style="font-weight:800;">{{ it.service.name }}</div>
+            <div class="muted" style="font-size:12px;">
+              {{ it.qty }} шт · {{ it.price }} ₸
+            </div>
+          </div>
+
+          <div style="text-align:right;">
+            <div style="font-weight:900;">{{ it.total_price }} ₸</div>
+            <form method="post" action="{% url 'kp:remove_item' it.id %}" style="margin-top:6px;">
+              {% csrf_token %}
+              <button class="btn btn-danger btn-compact" type="submit">Убрать</button>
+            </form>
+          </div>
+        </div>
+      {% empty %}
+        <div class="muted">Пока пусто. Иди в категории и добавь услуги.</div>
+      {% endfor %}
+    </div>
+
+    <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+      <a class="btn" href="{% url 'main:home' %}">Добавить услуги</a>
+    </div>
+  </div>
+
+  <script>
+    function open2gis() {
+      var input = document.querySelector('input[name="event_location_url"]');
+      var raw = input ? (input.value || "").trim() : "";
+      if (!raw) return;
+
+      var isLink = raw.startsWith("http://") || raw.startsWith("https://");
+      if (isLink) {
+        window.open(raw, "_blank");
+      } else {
+        var q = encodeURIComponent(raw);
+        window.open("https://2gis.kz/search/" + q, "_blank");
+      }
+    }
+
+    (function () {
+      var form = document.getElementById("kpMetaForm");
+      var statusEl = document.getElementById("autosaveStatus");
+      if (!form) return;
+
+      var timer = null;
+
+      function csrfToken() {
+        var el = form.querySelector('input[name="csrfmiddlewaretoken"]');
+        return el ? el.value : "";
+      }
+
+      function setStatus(text) {
+        if (statusEl) statusEl.textContent = text || "";
+      }
+
+      function autosave() {
+        setStatus("Сохранение...");
+        var data = new FormData(form);
+
+        fetch("{% url 'kp:autosave' kp.id %}", {
+          method: "POST",
+          body: data,
+          headers: { "X-CSRFToken": csrfToken() },
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (j && j.ok) setStatus("Сохранено.");
+          else setStatus("Не сохранилось.");
+        })
+        .catch(function () {
+          setStatus("Ошибка сети.");
+        });
+      }
+
+      function scheduleAutosave() {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(autosave, 450);
+      }
+
+      form.addEventListener("input", scheduleAutosave);
+      form.addEventListener("change", scheduleAutosave);
+    })();
+  </script>
+{% endblock %}

@@ -1,0 +1,33 @@
+/* static/css/themes/theme-dark.css */
+/* ===== Dark theme overrides ===== */
+
+html[data-theme="dark"]{
+  --bg: #07070a;
+  --card: rgba(18, 18, 22, 0.92);
+  --text: #f3f4f6;
+  --muted: #a1a1aa;
+  --border: rgba(255, 255, 255, 0.10);
+  --hover: rgba(255, 255, 255, 0.06);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+
+  /* обои */
+  --wallpaper-image: url("/static/img/bg-ornament.png");
+  --wallpaper-opacity: 0.35;
+
+  /* плитки */
+  --tile-bg: rgba(18, 18, 22, 0.92);
+  --tile-tint: rgba(35, 35, 45, 0.92);
+  --tile-border: rgba(255, 255, 255, 0.12);
+  --tile-hover: rgba(48, 48, 62, 0.92);
+  --tile-media-bg: rgba(255, 255, 255, 0.06);
+
+  --btn-bg: rgba(22, 22, 28, 0.95);
+  --btn-text: var(--text);
+  --btn-border: rgba(255, 255, 255, 0.14);
+
+  --input-bg: rgba(18, 18, 22, 0.92);
+  --input-border: rgba(255, 255, 255, 0.14);
+
+  --focus: rgba(167, 139, 250, 0.16);
+  --focus-border: rgba(167, 139, 250, 0.55);
+}

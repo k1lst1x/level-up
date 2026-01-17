@@ -1,0 +1,292 @@
+{# templates/kp/admin_kp_home.html #}
+{% extends "base.html" %}
+{% block title %}КП{% endblock %}
+
+{% block content %}
+
+<div class="page-head">
+  <div class="page-head-top">
+    <div class="page-head-left"></div>
+
+    <div class="page-head-center">
+      <h1 class="page-title">Коммерческие предложения</h1>
+      <div class="muted" style="font-size:12px; margin-top:6px;">
+        Тут ты админ. Клиенты сюда не попадают.
+      </div>
+    </div>
+
+    <div class="page-head-right"></div>
+  </div>
+</div>
+
+<div class="kp-tabs-wrap">
+  <div class="kp-tabs" role="tablist" aria-label="KP tabs">
+    <button
+      id="kpTabBtnActive"
+      class="kp-tab {% if tab == 'active' %}is-active{% endif %}"
+      type="button"
+      role="tab"
+      aria-controls="kpPaneActive"
+      aria-selected="{% if tab == 'active' %}true{% else %}false{% endif %}"
+      onclick="switchTab('active')"
+    >Активные</button>
+
+    <button
+      id="kpTabBtnRequests"
+      class="kp-tab {% if tab == 'requests' %}is-active{% endif %}"
+      type="button"
+      role="tab"
+      aria-controls="kpPaneRequests"
+      aria-selected="{% if tab == 'requests' %}true{% else %}false{% endif %}"
+      onclick="switchTab('requests')"
+    >Заявки</button>
+
+    <button
+      id="kpTabBtnHistory"
+      class="kp-tab {% if tab == 'history' %}is-active{% endif %}"
+      type="button"
+      role="tab"
+      aria-controls="kpPaneHistory"
+      aria-selected="{% if tab == 'history' %}true{% else %}false{% endif %}"
+      onclick="switchTab('history')"
+    >История</button>
+
+    <button
+      id="kpTabBtnPickCustomer"
+      class="kp-tab"
+      type="button"
+      onclick="openCustomerModal()"
+    >Создать</button>
+  </div>
+</div>
+
+<div class="kp-center">
+  <div class="kp-center-card">
+
+    {# ===== Active list ===== #}
+    <div id="kpPaneActive" role="tabpanel" style="{% if tab != 'active' %}display:none;{% endif %}">
+      <div class="card" style="margin-bottom:10px;">
+        <div class="muted">KP, которые сейчас у тебя в работе:</div>
+      </div>
+
+      {% if active_list %}
+        <div class="kp-list">
+          {% for kp in active_list %}
+            <div class="kp-item kp-row">
+              <div class="kp-item-left">
+                <div class="kp-item-title">#{{ kp.id }} · КП для {{ kp.customer.username }}</div>
+                <div class="kp-item-sub muted">
+                  {% if kp.template %}Шаблон: {{ kp.template.name|default:"—" }}{% else %}Шаблон: —{% endif %}
+                  · Обновлено: {{ kp.updated_at|date:"j E Y, H:i" }}
+                </div>
+              </div>
+
+              <div class="kp-item-actions">
+                <a class="btn btn-compact" href="{% url 'kp:builder' kp.id %}">Открыть</a>
+                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}?print=1">Печать</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="card">
+          <div class="muted">Активных черновиков нет. Нажми “Создать”.</div>
+        </div>
+      {% endif %}
+    </div>
+
+    {# ===== Requests list ===== #}
+    <div id="kpPaneRequests" role="tabpanel" style="{% if tab != 'requests' %}display:none;{% endif %}">
+      <div class="card" style="margin-bottom:10px;">
+        <div class="muted">Запросы от клиентов:</div>
+      </div>
+
+      {% if requests_list %}
+        <div class="kp-list">
+          {% for kp in requests_list %}
+            <div class="kp-item kp-row">
+              <div class="kp-item-left">
+                <div class="kp-item-title">#{{ kp.id }} · Заявка от {{ kp.customer.username }} · {{ kp.title }}</div>
+                <div class="kp-item-sub muted">
+                  Статус: {{ kp.status }} · Обновлено: {{ kp.updated_at|date:"j E Y, H:i" }}
+                </div>
+              </div>
+
+              <div class="kp-item-actions">
+                <a class="btn btn-compact" href="{% url 'kp:builder' kp.id %}">Открыть</a>
+                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}?print=1">Печать</a>
+
+                <form method="post" action="{% url 'kp:request_accept' kp.id %}">
+                  {% csrf_token %}
+                  <button class="btn btn-primary btn-compact" type="submit">Принять</button>
+                </form>
+
+                <form method="post" action="{% url 'kp:request_reject' kp.id %}">
+                  {% csrf_token %}
+                  <button class="btn btn-danger btn-compact" type="submit">Отклонить</button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="card">
+          <div class="muted">Заявок нет.</div>
+        </div>
+      {% endif %}
+    </div>
+
+    {# ===== History list ===== #}
+    <div id="kpPaneHistory" role="tabpanel" style="{% if tab != 'history' %}display:none;{% endif %}">
+      <div class="card" style="margin-bottom:10px;">
+        <div class="muted">Завершённые/отклонённые КП:</div>
+      </div>
+
+      {% if history_list %}
+        <div class="kp-list">
+          {% for kp in history_list %}
+            <div class="kp-item kp-row">
+              <div class="kp-item-left">
+                <div class="kp-item-title">#{{ kp.id }} {{ kp.title }}</div>
+                <div class="kp-item-sub muted">
+                  Клиент: {{ kp.customer.username }} · Обновлено: {{ kp.updated_at|date:"j E Y, H:i" }}
+                </div>
+              </div>
+
+              <div class="kp-item-actions">
+                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}">Открыть</a>
+                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}?print=1">Печать</a>
+
+                <form method="post" action="{% url 'kp:make_active' kp.id %}">
+                  {% csrf_token %}
+                  <button class="btn btn-compact" type="submit">Активировать</button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="card">
+          <div class="muted">История пустая.</div>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+{# ===== Customer pick modal (admin only) ===== #}
+<div class="modal-backdrop" id="customerModal" style="display:none;">
+  <div class="modal" role="dialog" aria-modal="true" style="max-width:560px;">
+    <div class="modal-header">
+      <div class="modal-title">Выбор клиента</div>
+      <button class="modal-close" type="button" onclick="closeCustomerModal()">✕</button>
+    </div>
+
+    <div class="card">
+      <div class="muted" style="font-size:12px; margin-bottom:8px;">
+        Выбери клиента и создастся/откроется черновик КП
+      </div>
+
+      <div class="kp-pick-list">
+        {% for u in customers %}
+          <form method="post" action="{% url 'kp:select_customer' %}">
+            {% csrf_token %}
+            <input type="hidden" name="customer_id" value="{{ u.id }}">
+            <button class="kp-pick" type="submit">
+              <div class="kp-pick-title">{{ u.username }}</div>
+              <div class="kp-pick-sub muted">id: {{ u.id }}</div>
+            </button>
+          </form>
+        {% empty %}
+          <div class="muted">Клиентов нет.</div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" type="button" onclick="closeCustomerModal()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function setActiveTabButton(kind){
+  var map = {
+    active: document.getElementById("kpTabBtnActive"),
+    requests: document.getElementById("kpTabBtnRequests"),
+    history: document.getElementById("kpTabBtnHistory"),
+  };
+
+  Object.keys(map).forEach(function(k){
+    var btn = map[k];
+    if(!btn) return;
+
+    if(k === kind){
+      btn.classList.add("is-active");
+      btn.setAttribute("aria-selected", "true");
+    } else {
+      btn.classList.remove("is-active");
+      btn.setAttribute("aria-selected", "false");
+    }
+  });
+}
+
+function switchTab(kind){
+  var panes = {
+    active: document.getElementById("kpPaneActive"),
+    requests: document.getElementById("kpPaneRequests"),
+    history: document.getElementById("kpPaneHistory"),
+  };
+
+  if(!panes[kind]) kind = "active";
+
+  Object.keys(panes).forEach(function(k){
+    var pane = panes[k];
+    if(!pane) return;
+    pane.style.display = (k === kind) ? "block" : "none";
+  });
+
+  setActiveTabButton(kind);
+
+  try { localStorage.setItem("kp_tab", kind); } catch(e) {}
+
+  try {
+    var url = new URL(window.location.href);
+    url.searchParams.set("tab", kind);
+    window.history.replaceState({}, "", url.toString());
+  } catch(e) {}
+}
+
+function openCustomerModal(){
+  var m = document.getElementById("customerModal");
+  if(m) m.style.display = "flex";
+}
+
+function closeCustomerModal(){
+  var m = document.getElementById("customerModal");
+  if(m) m.style.display = "none";
+}
+
+(function(){
+  var saved = null;
+  try { saved = localStorage.getItem("kp_tab"); } catch(e) {}
+
+  var initial = saved || "{{ tab|default:'active' }}";
+  if(initial !== "active" && initial !== "requests" && initial !== "history") initial = "active";
+  switchTab(initial);
+
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape") closeCustomerModal();
+  });
+
+  var m = document.getElementById("customerModal");
+  if(m){
+    m.addEventListener("click", function(e){
+      if(e.target === m) closeCustomerModal();
+    });
+  }
+})();
+</script>
+
+{% endblock %}

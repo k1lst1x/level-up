@@ -1,0 +1,399 @@
+/* static/css/pages/kp.css */
+
+/* ===== KP tabs + list ===== */
+.kp-tabs-wrap{
+  margin-top: 12px;
+  display:flex;
+  justify-content:center;
+}
+
+.kp-tabs{
+  width: 100%;
+  max-width: 520px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px;
+  display:flex;
+  gap: 6px;
+  backdrop-filter: blur(10px);
+}
+
+.kp-tab{
+  flex:1;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 10px 12px;
+  background: transparent;
+  color: var(--text);
+  cursor:pointer;
+  font-weight: 800;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+}
+
+.kp-tab:hover{
+  background: var(--hover);
+  border-color: var(--border);
+}
+
+.kp-tab.is-active{
+  background: linear-gradient(180deg, var(--tile-hover), var(--tile-bg));
+  border-color: var(--focus-border);
+  box-shadow: var(--shadow);
+}
+
+.kp-tab:active{ transform: scale(0.99); }
+
+.kp-center{
+  margin-top: 12px;
+  display:flex;
+  justify-content:center;
+}
+
+.kp-center-card{
+  width: 100%;
+  max-width: 720px;
+}
+
+@media (max-width: 520px){
+  .kp-center-card{ max-width: 100%; }
+}
+
+.kp-item{
+  display:block;
+  text-decoration:none;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 35px;
+  transition: background .12s ease, border-color .12s ease, transform .12s ease, box-shadow .12s ease;
+}
+
+.kp-item:active{ transform: scale(0.99); }
+
+@media (hover:hover){
+  .kp-item:hover{
+    background: var(--hover);
+    border-color: var(--focus-border);
+    box-shadow: var(--shadow);
+  }
+}
+
+.kp-item-title{
+  font-weight: 900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kp-item-sub{
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* кнопки выбора клиента */
+.kp-pick{
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background .12s ease, border-color .12s ease, transform .12s ease;
+}
+
+.kp-pick:active{ transform: scale(0.99); }
+
+@media (hover:hover){
+  .kp-pick:hover{
+    background: var(--hover);
+    border-color: var(--focus-border);
+  }
+}
+
+.kp-pick-title{
+  font-weight: 900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kp-pick-sub{ font-size: 12px; margin-top: 2px; }
+
+/* ===== subcategory_services: scrollable modal ===== */
+.modal--scroll{
+  display: flex;
+  flex-direction: column;
+  max-height: 82vh;
+  overflow: hidden;
+}
+
+.modal-header--sticky{
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.modal-body{
+  padding: 12px 0;
+  overflow: hidden;
+}
+
+.modal-scroll{
+  max-height: 52vh;
+  overflow: auto;
+  padding-right: 6px;
+}
+
+.modal-actions--sticky{
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+/* карточка выбора КП в модалке */
+.kp-choice-card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kp-choice-title{
+  font-weight: 900;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kp-choice-actions{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.kp-choice-actions form{ margin: 0; }
+
+@media (max-width: 640px){
+  .modal--scroll{ max-height: 90vh; }
+  .modal-scroll{ max-height: 60vh; }
+  .kp-choice-actions{ grid-template-columns: 1fr; }
+}
+
+/* =========================
+   KP BUILDER
+========================= */
+
+.kp-builder-title{
+  text-align:center;
+  font-weight: 950;
+  font-size: 22px;
+  line-height: 1.15;
+  word-break: break-word;
+  margin: 2px 0 0;
+}
+
+.kp-section-title{
+  font-weight: 900;
+  text-align: center;
+}
+
+.kp-section-subtitle{
+  margin-top: 6px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.kp-center-actions{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.kp-center-actions .btn{
+  min-width: 160px;
+}
+
+.kp-cover-wrap{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  align-items:flex-start;
+}
+
+.kp-cover-preview{
+  width:240px;
+  max-width:240px;
+  height:150px;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:var(--hover);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.kp-upload-form{
+  flex:1;
+  min-width:260px;
+}
+
+.kp-upload-actions{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.kp-upload-actions .btn{
+  min-width: 140px;
+}
+
+.kp-meta-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+  width:100%;
+  min-width:0;
+}
+
+.kp-field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width:0;
+}
+
+.kp-field-full{ grid-column: 1 / -1; }
+
+.kp-label{
+  font-size:12px;
+  color: var(--muted);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.kp-help{
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* datetime: нормальная тап-зона */
+.kp-datetime-wrap{
+  width:100%;
+  cursor:pointer;
+}
+
+.kp-datetime{
+  cursor:pointer;
+  max-width:100%;
+}
+
+/* фото услуги в КП */
+.kp-item-photo{
+  width:240px;
+  height:120px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background: var(--tile-media-bg);
+}
+
+/* ===== KP Builder: fix item image cropping ===== */
+.kp-item-photo img{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center;
+  display: block;
+}
+
+/* Fix overflow for inputs */
+.kp-field .search-input,
+.kp-field select.search-input,
+.kp-field textarea.search-input{
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+}
+
+/* ===== Mobile builder ===== */
+@media (max-width: 640px){
+  .kp-meta-grid{ grid-template-columns: 1fr; }
+
+  .kp-cover-wrap{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .kp-cover-preview{
+    width:100%;
+    max-width:100%;
+    height:180px;
+  }
+
+  .kp-upload-form{
+    min-width:0;
+    width:100%;
+  }
+
+  .kp-upload-actions .btn,
+  .kp-center-actions .btn{
+    width:100%;
+    min-width:0;
+  }
+
+  .search-input{
+    width:100%;
+    min-width:0;
+  }
+
+  input[type="datetime-local"].search-input{
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .kp-service-row{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .kp-item-photo{
+    width:100%;
+    height:180px;
+  }
+
+  .kp-service-right{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:8px;
+  }
+
+  .kp-service-right form{ margin:0; }
+}

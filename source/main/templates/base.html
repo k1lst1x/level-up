@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}AlmznyiEvent{% endblock %}</title>
+
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+  <div class="navbar">
+    <div class="nav-left">
+      <a class="brand" href="{% url 'main:home' %}">Категории</a>
+      <a class="brand" href="{% url 'kp:kp' %}">КП</a>
+
+      {% if request.user.is_authenticated and request.user.is_staff %}
+        <a class="brand" href="{% url 'main:crm' %}">CRM</a> <!-- Ссылка видна только админам -->
+      {% endif %}
+
+      <div class="nav-links">
+      </div>
+    </div>
+
+    <div class="nav-right">
+      {% if request.user.is_authenticated %}
+        <div class="user-chip">
+          <div class="user-chip-name">{{ request.user.username }}</div>
+          <div class="user-chip-role">
+            {% if request.user.is_staff %}admin{% else %}customer{% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      <button class="theme-btn" id="toggleTheme" type="button" title="Тема">🌙</button>
+
+      {% if request.user.is_authenticated %}
+        <button class="user-btn" id="openUserModal" type="button" title="Аккаунт">👤</button>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+
+  {% if request.user.is_authenticated %}
+    <div class="modal-backdrop" id="userModal" style="display:none;">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="userModalTitle">
+        <div class="modal-header">
+          <div class="modal-title" id="userModalTitle">Аккаунт</div>
+          <button class="modal-close" id="closeUserModal" type="button" aria-label="Close">✕</button>
+        </div>
+
+        <div class="card">
+          <div style="font-weight:900;">{{ request.user.username }}</div>
+          <div class="muted" style="margin-top:4px; font-size:13px;">
+            {% if request.user.is_staff %}Админ{% else %}Заказчик{% endif %}
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <form method="post" action="{% url 'logout' %}" style="margin:0;">
+            {% csrf_token %}
+            <button class="btn btn-danger btn-compact" type="submit">Выйти</button>
+          </form>
+          <button class="btn btn-compact" id="closeUserModal2" type="button">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <script>
+    (function () {
+      if (window.__zd_base_inited__) return;
+      window.__zd_base_inited__ = true;
+
+      var THEME_KEY = "zd_theme";
+      var htmlEl = document.documentElement;
+      var themeBtn = document.getElementById("toggleTheme");
+
+      function getSystemTheme() {
+        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      }
+
+      function applyTheme(theme) {
+        htmlEl.setAttribute("data-theme", theme);
+        if (themeBtn) themeBtn.textContent = (theme === "dark") ? "☀️" : "🌙";
+      }
+
+      function loadTheme() {
+        var saved = null;
+        try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+        applyTheme(saved || getSystemTheme());
+      }
+
+      function toggleTheme() {
+        var current = htmlEl.getAttribute("data-theme") || "light";
+        var next = (current === "dark") ? "light" : "dark";
+        try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+        applyTheme(next);
+      }
+
+      loadTheme();
+      if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
+
+      if (window.matchMedia) {
+        var mq = window.matchMedia("(prefers-color-scheme: dark)");
+        if (mq && mq.addEventListener) {
+          mq.addEventListener("change", function () {
+            var hasSaved = false;
+            try { hasSaved = !!localStorage.getItem(THEME_KEY); } catch (e) {}
+            if (!hasSaved) loadTheme();
+          });
+        }
+      }
+
+      var modal = document.getElementById("userModal");
+      var openBtn = document.getElementById("openUserModal");
+      var closeBtn = document.getElementById("closeUserModal");
+      var closeBtn2 = document.getElementById("closeUserModal2");
+
+      function openModal() { if (modal) modal.style.display = "flex"; }
+      function closeModal() { if (modal) modal.style.display = "none"; }
+
+      if (openBtn) openBtn.addEventListener("click", openModal);
+      if (closeBtn) openBtn && closeBtn.addEventListener("click", closeModal);
+      if (closeBtn2) closeBtn2.addEventListener("click", closeModal);
+
+      if (modal) {
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) closeModal();
+        });
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeModal();
+      });
+    })();
+  </script>
+
+</body>
+</html>
