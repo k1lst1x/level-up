@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!doctype html>
 <html lang="ru" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Вход</title>
+  <title>{% trans "Вход" %}</title>
 
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -118,35 +119,35 @@
     <div class="card auth-card">
 
       <div>
-        <div class="auth-title">Вход в аккаунт</div>
-        <div class="auth-sub">Войдите, чтобы продолжить работу</div>
+        <div class="auth-title">{% trans "Вход в аккаунт" %}</div>
+        <div class="auth-sub">{% trans "Войдите, чтобы продолжить работу" %}</div>
       </div>
 
       {% if form.errors %}
-        <div class="auth-error">Неверный логин или пароль</div>
+        <div class="auth-error">{% trans "Неверный логин или пароль" %}</div>
       {% endif %}
 
       <form method="post" class="auth-form">
         {% csrf_token %}
 
         <div class="auth-field">
-          <label>Логин</label>
+          <label>{% trans "Логин" %}</label>
           <input type="text" name="username" required autofocus>
         </div>
 
         <div class="auth-field">
-          <label>Пароль</label>
+          <label>{% trans "Пароль" %}</label>
           <input type="password" name="password" required>
         </div>
 
         <div class="auth-actions">
-          <button class="btn" type="submit">Войти</button>
+          <button class="btn" type="submit">{% trans "Войти" %}</button>
         </div>
       </form>
 
       <div class="auth-footer muted">
-        Нет аккаунта?
-        <a href="{% url 'register' %}">Зарегистрироваться</a>
+        {% trans "Нет аккаунта?" %}
+        <a href="{% url 'register' %}">{% trans "Зарегистрироваться" %}</a>
       </div>
 
     </div>

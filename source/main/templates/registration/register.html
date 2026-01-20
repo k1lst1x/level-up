@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!doctype html>
 <html lang="ru" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Регистрация</title>
+  <title>{% trans "Регистрация" %}</title>
 
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -149,13 +150,13 @@
     <div class="card auth-card">
 
       <div>
-        <div class="auth-title">Создать аккаунт</div>
-        <div class="auth-sub">Заполните данные для регистрации</div>
+        <div class="auth-title">{% trans "Создать аккаунт" %}</div>
+        <div class="auth-sub">{% trans "Заполните данные для регистрации" %}</div>
       </div>
 
       {% if form.errors %}
         <div class="auth-error">
-          Проверьте правильность заполнения формы
+          {% trans "Проверьте правильность заполнения формы" %}
         </div>
       {% endif %}
 
@@ -165,40 +166,40 @@
         <div class="auth-grid">
 
           <div class="auth-field full">
-            <label>Логин</label>
+            <label>{% trans "Логин" %}</label>
             {{ form.username }}
           </div>
 
           <div class="auth-field full">
-            <label>Почта</label>
+            <label>{% trans "Почта" %}</label>
             {{ form.email }}
           </div>
 
           <div class="auth-field full">
-            <label>Телефон</label>
+            <label>{% trans "Телефон" %}</label>
             {{ form.phone }}
           </div>
 
           <div class="auth-field">
-            <label>Пароль</label>
+            <label>{% trans "Пароль" %}</label>
             {{ form.password1 }}
           </div>
 
           <div class="auth-field">
-            <label>Повторите пароль</label>
+            <label>{% trans "Повторите пароль" %}</label>
             {{ form.password2 }}
           </div>
 
         </div>
 
         <div class="auth-actions">
-          <button class="btn" type="submit">Зарегистрироваться</button>
+          <button class="btn" type="submit">{% trans "Зарегистрироваться" %}</button>
         </div>
       </form>
 
       <div class="auth-footer muted">
-        Уже есть аккаунт?
-        <a href="{% url 'login' %}">Войти</a>
+        {% trans "Уже есть аккаунт?" %}
+        <a href="{% url 'login' %}">{% trans "Войти" %}</a>
       </div>
 
     </div>

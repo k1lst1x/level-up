@@ -1,9 +1,11 @@
+{% load i18n %}
+
 <footer class="footer">
   <hr class="hr">
 
   <div class="footer-line">
     <div class="footer-item">
-      <span class="muted">Исполнитель:</span>
+      <span class="muted">{% trans "Исполнитель:" %}</span>
       <b>{{ performer_name|default:"—" }}</b>
       {% if performer_phone %} · {{ performer_phone }}{% endif %}
     </div>
@@ -11,7 +13,7 @@
     {% comment %}<div class="footer-sep">|</div>{% endcomment %}
 
     <div class="footer-item">
-      <span class="muted">Контакты:</span>
+      <span class="muted">{% trans "Контакты:" %}</span>
       {% if performer_email %}
         {{ performer_email }}
       {% else %}

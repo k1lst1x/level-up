@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Услуги{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Услуги" %}{% endblock %}
 
 {% block content %}
 
@@ -7,7 +8,7 @@
 
   <div class="page-head">
     <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-      <a class="btn btn-compact" href="{% url 'main:home' %}">Назад</a>
+      <a class="btn btn-compact" href="{% url 'main:home' %}">{% trans "Назад" %}</a>
       <h1 class="page-title" style="margin:0;">{{ category.name }}</h1>
     </div>
   </div>
@@ -18,12 +19,12 @@
         type="text"
         name="search"
         value="{{ search }}"
-        placeholder="Поиск услуг"
+        placeholder="{% trans "Поиск услуг" %}"
         class="search-input"
       />
-      <button class="btn btn-compact" type="submit">Искать</button>
+      <button class="btn btn-compact" type="submit">{% trans "Искать" %}</button>
       {% if search %}
-        <a class="btn btn-compact" href="{% url 'main:category_services' category.id %}">Сброс</a>
+        <a class="btn btn-compact" href="{% url 'main:category_services' category.id %}">{% trans "Сброс" %}</a>
       {% endif %}
     </form>
   </div>
@@ -41,7 +42,7 @@
           {% if s.image %}
             <img src="{{ s.image.url }}" alt="{{ s.name }}">
           {% else %}
-            <div class="tile-placeholder">Нет фото</div>
+            <div class="tile-placeholder">{% trans "Нет фото" %}</div>
           {% endif %}
         </div>
 
@@ -57,7 +58,7 @@
         </div>
       </div>
     {% empty %}
-      <div class="card"><div class="muted">Услуг нет.</div></div>
+      <div class="card"><div class="muted">{% trans "Услуг нет." %}</div></div>
     {% endfor %}
   </div>
 
@@ -65,7 +66,7 @@
   <div class="modal-backdrop" id="addModal" style="display:none;">
     <div class="modal modal--scroll" style="max-width:640px;">
       <div class="modal-header modal-header--sticky">
-        <div class="modal-title">Добавить услугу</div>
+        <div class="modal-title">{% trans "Добавить услугу" %}</div>
         <button class="modal-close" type="button" onclick="closeAddModal()">✕</button>
       </div>
 
@@ -74,7 +75,7 @@
         <div class="card">
           <div style="font-weight:900;" id="modalServiceName"></div>
           <div class="muted" style="margin-top:6px;">
-            Выбери КП, в которую добавить услугу
+            {% trans "Выбери КП, в которую добавить услугу" %}
           </div>
         </div>
 
@@ -82,8 +83,8 @@
         <div class="card" id="qtyCard" style="margin-top:12px; display:none;">
           <div class="qty-row">
             <div class="qty-left">
-              <div class="qty-title">Количество</div>
-              <div class="qty-sub muted" id="qtyHint">Можно добавить несколько раз</div>
+              <div class="qty-title">{% trans "Количество" %}</div>
+              <div class="qty-sub muted" id="qtyHint" data-multi-text="{% trans "Можно добавить несколько раз" %}">{% trans "Можно добавить несколько раз" %}</div>
             </div>
 
             <div class="qty-controls">
@@ -98,7 +99,7 @@
           <a href="{% url 'kp:kp' %}"
              class="btn btn-primary"
              style="width:100%;">
-            Создать новое КП
+            {% trans "Создать новое КП" %}
           </a>
         </div>
 
@@ -108,10 +109,10 @@
               {% for kp in draft_kps %}
                 <div class="kp-choice-card">
                   <div class="kp-choice-title">
-                    {{ kp.title|default:"КП" }} · #{{ kp.id }}
+                    {{ kp.title|default:_("КП") }} · #{{ kp.id }}
                   </div>
                   <div class="kp-choice-sub muted">
-                    Клиент: {{ kp.customer.username }}
+                    {% trans "Клиент:" %} {{ kp.customer.username }}
                   </div>
 
                   <div class="kp-choice-actions">
@@ -124,7 +125,7 @@
                       <input type="hidden" name="next" value="{{ request.get_full_path }}">
                       <input type="hidden" name="qty" value="1" class="qty-input">
                       <button class="btn btn-compact" type="submit">
-                        Добавить и продолжить
+                        {% trans "Добавить и продолжить" %}
                       </button>
                     </form>
 
@@ -137,7 +138,7 @@
                       <input type="hidden" name="next" value="/kp/">
                       <input type="hidden" name="qty" value="1" class="qty-input">
                       <button class="btn btn-primary btn-compact" type="submit">
-                        Добавить и открыть
+                        {% trans "Добавить и открыть" %}
                       </button>
                     </form>
                   </div>
@@ -148,7 +149,7 @@
         {% else %}
           <div class="card" style="margin-top:12px;">
             <div class="muted">
-              Черновиков КП нет. Создай новое КП.
+              {% trans "Черновиков КП нет. Создай новое КП." %}
             </div>
           </div>
         {% endif %}
@@ -156,7 +157,7 @@
       </div>
 
       <div class="modal-actions modal-actions--sticky">
-        <button class="btn" type="button" onclick="closeAddModal()">Закрыть</button>
+        <button class="btn" type="button" onclick="closeAddModal()">{% trans "Закрыть" %}</button>
       </div>
     </div>
   </div>
@@ -202,7 +203,7 @@
     // qty UI
     if(allowMultiple){
       qtyCard.style.display = "block";
-      qtyHintEl.textContent = "Можно добавить несколько раз";
+      qtyHintEl.textContent = qtyHintEl.dataset.multiText || "Можно добавить несколько раз";
       setQty(1);
       minusBtn.disabled = false;
       plusBtn.disabled = false;

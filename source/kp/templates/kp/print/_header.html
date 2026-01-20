@@ -1,6 +1,8 @@
+{% load i18n %}
+
 <header class="header">
   <div class="header-left">
-    <div class="doc-title">Коммерческое предложение</div>
+    <div class="doc-title">{% trans "Коммерческое предложение" %}</div>
     {% if kp.title %}
       <div class="subtitle">{{ kp.title }}</div>
     {% endif %}
@@ -9,13 +11,13 @@
   <div class="header-right">
     <div class="header-info">
       <div class="info-item">
-        <span class="muted">КП №{{ kp.id }}</span>
+        <span class="muted">{% trans "КП №" %}{{ kp.id }}</span>
       </div>
       <div class="info-item">
-        <span class="muted">Дата:</span> {{ now|date:"d.m.Y" }}
+        <span class="muted">{% trans "Дата:" %}</span> {{ now|date:"d.m.Y" }}
       </div>
       <div class="info-item">
-        <span class="muted">Время:</span> {{ now|date:"H:i" }}
+        <span class="muted">{% trans "Время:" %}</span> {{ now|date:"H:i" }}
       </div>
     </div>
   </div>

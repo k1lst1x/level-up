@@ -1,16 +1,17 @@
 {# main/templates/main/kp.html #}
 {% extends "base.html" %}
-{% block title %}КП{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "КП" %}{% endblock %}
 
 {% block content %}
   <div class="card">
-    <div class="muted" style="font-size:13px;">КП → Черновик</div>
+    <div class="muted" style="font-size:13px;">{% trans "КП → Черновик" %}</div>
 
     {% if kp %}
       <h2 style="margin:6px 0;">{{ kp.title }}</h2>
 
       <div class="muted">
-        Итого:
+        {% trans "Итого:" %}
         <b>
           {% if total_sum %}{{ total_sum }}{% else %}0{% endif %}
         </b> ₸
@@ -19,27 +20,27 @@
       {# ✅ очистка работает только если kp существует #}
       <form method="post" action="{% url 'kp:clear' kp.id %}" style="margin-top:10px;">
         {% csrf_token %}
-        <button class="btn btn-danger" type="submit">Очистить КП</button>
+        <button class="btn btn-danger" type="submit">{% trans "Очистить КП" %}</button>
       </form>
 
       {# ✅ клиент может "создать КП" = отправить заявку менеджеру #}
       <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-        <a class="btn" href="{% url 'main:home' %}">Перейти в категории</a>
+        <a class="btn" href="{% url 'main:home' %}">{% trans "Перейти в категории" %}</a>
 
         {% if items and items|length > 0 %}
           <form method="post" action="{% url 'kp:customer_request_submit' %}" style="margin:0;">
             {% csrf_token %}
-            <button class="btn btn-primary" type="submit">Создать КП</button>
+            <button class="btn btn-primary" type="submit">{% trans "Создать КП" %}</button>
           </form>
         {% else %}
           <div class="muted" style="font-size:12px;">
-            Чтобы создать КП, сначала добавь услуги.
+            {% trans "Чтобы создать КП, сначала добавь услуги." %}
           </div>
         {% endif %}
       </div>
 
       <div class="muted" style="margin-top:10px; font-size:12px;">
-        Ты собираешь услуги, а менеджер подтверждает и связывается с тобой.
+        {% trans "Ты собираешь услуги, а менеджер подтверждает и связывается с тобой." %}
       </div>
 
       {% if messages %}
@@ -51,11 +52,11 @@
       {% endif %}
 
     {% else %}
-      <h2 style="margin:6px 0;">Черновик КП</h2>
-      <div class="muted">Черновик ещё не создан.</div>
+      <h2 style="margin:6px 0;">{% trans "Черновик КП" %}</h2>
+      <div class="muted">{% trans "Черновик ещё не создан." %}</div>
 
       <div style="margin-top:12px;">
-        <a class="btn" href="{% url 'main:home' %}">Перейти в категории</a>
+        <a class="btn" href="{% url 'main:home' %}">{% trans "Перейти в категории" %}</a>
       </div>
     {% endif %}
   </div>
@@ -75,8 +76,10 @@
             {{ it.service.name }}
           </div>
           <div class="muted" style="font-size:12px;">
-            {{ it.qty }} шт · {{ it.price }} ₸
-            {% if it.discount and it.discount > 0 %} · скидка {{ it.discount }}{% endif %}
+            {% blocktrans with qty=it.qty price=it.price %}
+              {{ qty }} шт · {{ price }} ₸
+            {% endblocktrans %}
+            {% if it.discount and it.discount > 0 %} · {% trans "скидка" %} {{ it.discount }}{% endif %}
           </div>
         </div>
 
@@ -84,13 +87,13 @@
           <div style="font-weight:900;">{{ it.total_price }} ₸</div>
           <form method="post" action="{% url 'kp:remove_item' it.id %}" style="margin-top:6px;">
             {% csrf_token %}
-            <button class="btn btn-danger" type="submit">Убрать</button>
+            <button class="btn btn-danger" type="submit">{% trans "Убрать" %}</button>
           </form>
         </div>
       </div>
     {% empty %}
       <div class="card">
-        <div class="muted">Пока пусто. Иди в подкатегорию и нажми “Выбрать”.</div>
+        <div class="muted">{% trans "Пока пусто. Иди в подкатегорию и нажми “Выбрать”." %}</div>
       </div>
     {% endfor %}
   </div>
