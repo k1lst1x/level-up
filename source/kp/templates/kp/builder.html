@@ -1,6 +1,7 @@
 {# templates/kp/builder.html #}
 {% extends "base.html" %}
-{% block title %}КП: {{ kp.title }}{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "КП:" %} {{ kp.title }}{% endblock %}
 
 {% block content %}
 {% with can_edit=is_editable %}
@@ -10,30 +11,30 @@
 
   <div class="kp-role muted">
     {% if is_admin %}
-      Роль: менеджер (админ).
+      {% trans "Роль: менеджер (админ)." %}
       {% if kp.status == "REQUESTED" %}
-        Статус: заявка от клиента.
+        {% trans "Статус: заявка от клиента." %}
       {% endif %}
     {% else %}
-      Роль: клиент. “Отправить” отправляет КП менеджеру.
+      {% trans "Роль: клиент. “Отправить” отправляет КП менеджеру." %}
     {% endif %}
   </div>
 
   <div class="kp-actions">
     {% if is_admin %}
-      <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'kp:kp' %}">Назад в КП</a>
+      <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'kp:kp' %}">{% trans "Назад в КП" %}</a>
     {% else %}
-      <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'main:home' %}">В категории</a>
+      <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'main:home' %}">{% trans "В категории" %}</a>
     {% endif %}
 
-    <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'kp:print' kp.id %}">Открыть для печати</a>
+    <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'kp:print' kp.id %}">{% trans "Открыть для печати" %}</a>
   </div>
 </section>
 
 
 <section class="card kp-block">
-  <div class="kp-section-title">Фото / обложка КП</div>
-  <div class="kp-section-subtitle">Загрузи изображение (баннер/обложка).</div>
+  <div class="kp-section-title">{% trans "Фото / обложка КП" %}</div>
+  <div class="kp-section-subtitle">{% trans "Загрузи изображение (баннер/обложка)." %}</div>
 
   <div class="kp-cover-wrap">
     <button
@@ -41,13 +42,13 @@
       class="kp-cover-preview"
       type="button"
       {% if not can_edit %}disabled{% endif %}
-      aria-label="Загрузить фото"
-      title="{% if can_edit %}Нажми, чтобы загрузить фото{% endif %}"
+      aria-label="{% trans 'Загрузить фото' %}"
+      title="{% if can_edit %}{% trans 'Нажми, чтобы загрузить фото' %}{% endif %}"
     >
       {% if kp.photo %}
-        <img src="{{ kp.photo.url }}" alt="KP photo" class="kp-cover-img">
+        <img src="{{ kp.photo.url }}" alt="{% trans 'KP photo' %}" class="kp-cover-img">
       {% else %}
-        <span class="muted kp-empty-text">Фото не загружено</span>
+        <span class="muted kp-empty-text">{% trans "Фото не загружено" %}</span>
       {% endif %}
     </button>
 
@@ -66,20 +67,20 @@
       <div class="modal-backdrop" id="kpPhotoModal" style="display:none;">
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="kpPhotoModalTitle">
           <div class="modal-header">
-            <div class="modal-title" id="kpPhotoModalTitle">Загрузка фото</div>
-            <button class="modal-close" type="button" id="kpPhotoModalCloseX" aria-label="Close">✕</button>
+            <div class="modal-title" id="kpPhotoModalTitle">{% trans "Загрузка фото" %}</div>
+            <button class="modal-close" type="button" id="kpPhotoModalCloseX" aria-label="{% trans 'Close' %}">✕</button>
           </div>
 
           <div class="card kp-mini-card">
-            <div class="kp-mini-title">Фото / обложка КП</div>
+            <div class="kp-mini-title">{% trans "Фото / обложка КП" %}</div>
             <div class="muted kp-mini-text">
-              Нажми “Загрузить фото”, выбери файл и он загрузится автоматически.
+              {% trans "Нажми “Загрузить фото”, выбери файл и он загрузится автоматически." %}
             </div>
           </div>
 
           <div class="modal-actions">
-            <button class="btn" type="button" id="kpPhotoModalUploadBtn">Загрузить фото</button>
-            <button class="btn" type="button" id="kpPhotoModalCloseBtn">Закрыть</button>
+            <button class="btn" type="button" id="kpPhotoModalUploadBtn">{% trans "Загрузить фото" %}</button>
+            <button class="btn" type="button" id="kpPhotoModalCloseBtn">{% trans "Закрыть" %}</button>
           </div>
         </div>
       </div>
@@ -92,34 +93,34 @@
         </div>
       {% endif %}
     {% else %}
-      <div class="muted kp-readonly-hint">Это КП из истории. Редактирование выключено.</div>
+      <div class="muted kp-readonly-hint">{% trans "Это КП из истории. Редактирование выключено." %}</div>
     {% endif %}
   </div>
 </section>
 
 
 <section class="card kp-block">
-  <div class="kp-section-title">Параметры КП</div>
+  <div class="kp-section-title">{% trans "Параметры КП" %}</div>
 
   <form id="kpMetaForm" class="kp-form">
     {% csrf_token %}
 
     <div class="kp-meta-grid">
       <div class="kp-field">
-        <label class="kp-label">Заголовок КП</label>
+        <label class="kp-label">{% trans "Заголовок КП" %}</label>
         <input
           class="search-input"
           name="title"
           value="{{ kp.title }}"
-          placeholder="Например: КП на мероприятие"
+          placeholder="{% trans 'Например: КП на мероприятие' %}"
           {% if not can_edit %}disabled{% endif %}
         >
       </div>
 
       <div class="kp-field">
-        <label class="kp-label">Шаблон / тип мероприятия</label>
+        <label class="kp-label">{% trans "Шаблон / тип мероприятия" %}</label>
         <select class="search-input" name="template_id" {% if not can_edit %}disabled{% endif %}>
-          <option value="">— не менять —</option>
+          <option value="">{% trans "— не менять —" %}</option>
           {% for t in templates %}
             <option value="{{ t.id }}" {% if kp.template_id == t.id %}selected{% endif %}>
               {{ t.name }}
@@ -129,18 +130,18 @@
       </div>
 
       <div class="kp-field">
-        <label class="kp-label">Название мероприятия</label>
+        <label class="kp-label">{% trans "Название мероприятия" %}</label>
         <input
           class="search-input"
           name="event_title"
           value="{{ meta.event_title }}"
-          placeholder="Например: Свадьба / Корпоратив"
+          placeholder="{% trans 'Например: Свадьба / Корпоратив' %}"
           {% if not can_edit %}disabled{% endif %}
         >
       </div>
 
       <div class="kp-field">
-        <label class="kp-label">Дата и время</label>
+        <label class="kp-label">{% trans "Дата и время" %}</label>
         <div class="kp-datetime-wrap" data-dtp="1">
           <input
             class="search-input kp-datetime"
@@ -153,45 +154,45 @@
       </div>
 
       <div class="kp-field">
-        <label class="kp-label">Адрес проведения</label>
+        <label class="kp-label">{% trans "Адрес проведения" %}</label>
         <input
           class="search-input"
           name="event_address"
           value="{{ meta.event_address }}"
-          placeholder="Например: Алматы, ул. Абая 10"
+          placeholder="{% trans 'Например: Алматы, ул. Абая 10' %}"
           {% if not can_edit %}disabled{% endif %}
         >
       </div>
 
       <div class="kp-field">
-        <label class="kp-label">Ссылка на адрес (2ГИС/Google)</label>
+        <label class="kp-label">{% trans "Ссылка на адрес (2ГИС/Google)" %}</label>
         <input
           class="search-input"
           name="event_address_url"
           value="{{ meta.event_address_url }}"
-          placeholder="https://2gis.kz/..."
+          placeholder="{% trans 'https://2gis.kz/...' %}"
           {% if not can_edit %}disabled{% endif %}
         >
       </div>
 
       <div class="kp-field">
-        <label class="kp-label">Ссылка на Drive</label>
+        <label class="kp-label">{% trans "Ссылка на Drive" %}</label>
         <input
           class="search-input"
           name="drive_url"
           value="{{ meta.drive_url }}"
-          placeholder="https://drive.google.com/..."
+          placeholder="{% trans 'https://drive.google.com/...' %}"
           {% if not can_edit %}disabled{% endif %}
         >
       </div>
 
       <div class="kp-field kp-field-full">
-        <label class="kp-label">Описание / заметки</label>
+        <label class="kp-label">{% trans "Описание / заметки" %}</label>
         <textarea
           class="search-input"
           name="event_description"
           rows="3"
-          placeholder="Короткое описание"
+          placeholder="{% trans 'Короткое описание' %}"
           {% if not can_edit %}disabled{% endif %}
         >{{ meta.event_description }}</textarea>
       </div>
@@ -205,14 +206,14 @@
 <section class="card kp-block">
   <div class="kp-services-head">
     <div>
-      <div class="kp-services-title">Услуги в КП</div>
-      <div class="muted kp-services-sub">Добавляй через Категории → Услуги.</div>
+      <div class="kp-services-title">{% trans "Услуги в КП" %}</div>
+      <div class="muted kp-services-sub">{% trans "Добавляй через Категории → Услуги." %}</div>
     </div>
 
     {% if can_edit %}
       <form method="post" action="{% url 'kp:clear' kp.id %}" style="margin: 20px 0px;">
         {% csrf_token %}
-        <button class="btn btn-danger btn-compact" type="submit">Очистить КП</button>
+        <button class="btn btn-danger btn-compact" type="submit">{% trans "Очистить КП" %}</button>
       </form>
     {% endif %}
   </div>
@@ -224,7 +225,7 @@
           {% if it.service.image %}
             <img src="{{ it.service.image.url }}" alt="{{ it.service.name }}" class="kp-item-photo-img">
           {% else %}
-            <div class="kp-photo-empty muted">Без фото</div>
+            <div class="kp-photo-empty muted">{% trans "Без фото" %}</div>
           {% endif %}
         </div>
 
@@ -232,9 +233,8 @@
           <div class="kp-service-name">{{ it.service.name }}</div>
 
           <div class="muted kp-service-meta">
+            <span class="kp-qty" data-qty-text="{{ it.id }}">{{ it.qty }}</span> {% trans "шт" %} ·
 
-            <span class="kp-qty" data-qty-text="{{ it.id }}">{{ it.qty }}</span> шт · 
-          
             {% if is_admin and can_edit %}
               <div class="kp-price-wrap">
                 <input
@@ -247,12 +247,11 @@
                   data-price-input="{{ it.id }}"
                 >
                 <span class="kp-currency">₸</span>
-              </div>            
+              </div>
             {% else %}
               <span data-price-text="{{ it.id }}">{{ it.price }}</span> ₸
             {% endif %}
-          
-          </div>          
+          </div>
 
           <div class="kp-service-actions">
             <div
@@ -261,15 +260,15 @@
               data-qty="{{ it.qty }}"
               {% if not can_edit %}data-disabled="1"{% endif %}
             >
-              <button class="qty-btn" type="button" data-action="dec" aria-label="Уменьшить">−</button>
+              <button class="qty-btn" type="button" data-action="dec" aria-label="{% trans 'Уменьшить' %}">−</button>
               <div class="qty-value" aria-live="polite" data-qty-value="{{ it.id }}">{{ it.qty }}</div>
-              <button class="qty-btn" type="button" data-action="inc" aria-label="Увеличить">+</button>
+              <button class="qty-btn" type="button" data-action="inc" aria-label="{% trans 'Увеличить' %}">+</button>
             </div>
 
             {% if can_edit %}
               <form method="post" action="{% url 'kp:remove_item' it.id %}">
                 {% csrf_token %}
-                <button class="btn btn-danger btn-compact" type="submit">Убрать</button>
+                <button class="btn btn-danger btn-compact" type="submit">{% trans "Убрать" %}</button>
               </form>
             {% endif %}
           </div>
@@ -282,50 +281,48 @@
         </div>
       </article>
     {% empty %}
-      <div class="muted">Пока пусто. Иди в категории и добавь услуги.</div>
+      <div class="muted">{% trans "Пока пусто. Иди в категории и добавь услуги." %}</div>
     {% endfor %}
   </div>
 
   <div class="kp-center-actions">
-    <a class="btn" href="{% url 'main:home' %}">Добавить услуги</a>
+    <a class="btn" href="{% url 'main:home' %}">{% trans "Добавить услуги" %}</a>
   </div>
 </section>
 
 
 <section class="card kp-block kp-total-block">
-  <div class="kp-section-title">Итог по КП</div>
-  <div class="kp-section-subtitle">Финальная стоимость рассчитывается автоматически.</div>
+  <div class="kp-section-title">{% trans "Итог по КП" %}</div>
+  <div class="kp-section-subtitle">{% trans "Финальная стоимость рассчитывается автоматически." %}</div>
 
   <div class="kp-total-list kp-total-card">
-
     <div class="kp-total-row">
-      <span class="muted">Сумма услуг</span>
+      <span class="muted">{% trans "Сумма услуг" %}</span>
       <b><span id="kpSubtotal">{{ subtotal }}</span> ₸</b>
     </div>
 
     <div class="kp-total-row">
-      <span class="muted">Комиссия агенства 20%</span>
+      <span class="muted">{% trans "Комиссия агенства 20%" %}</span>
       <b>+ <span id="kpExtra">{{ extra20 }}</span> ₸</b>
     </div>
 
     <div class="kp-total-row kp-total-final">
-      <span>ИТОГО</span>
+      <span>{% trans "ИТОГО" %}</span>
       <span><span id="kpTotal">{{ total }}</span> ₸</span>
     </div>
-
   </div>
 </section>
 
 
 <section class="card kp-block">
-  <div class="kp-section-title">Готово?</div>
+  <div class="kp-section-title">{% trans "Готово?" %}</div>
 
   {% if can_edit %}
     <div class="kp-section-subtitle">
       {% if is_admin %}
-        Нажми “Завершить”, чтобы закрыть черновик и отправить его в историю.
+        {% trans "Нажми “Завершить”, чтобы закрыть черновик и отправить его в историю." %}
       {% else %}
-        Нажми “Отправить”, чтобы отправить КП менеджеру на рассмотрение.
+        {% trans "Нажми “Отправить”, чтобы отправить КП менеджеру на рассмотрение." %}
       {% endif %}
     </div>
 
@@ -334,24 +331,39 @@
         {% csrf_token %}
         {% if is_admin %}
           <input type="hidden" name="next" value="/kp/?tab=history">
-          <button class="btn" type="submit">Завершить</button>
+          <button class="btn" type="submit">{% trans "Завершить" %}</button>
         {% else %}
           <input type="hidden" name="next" value="/kp/">
-          <button class="btn" type="submit">Отправить</button>
+          <button class="btn" type="submit">{% trans "Отправить" %}</button>
         {% endif %}
       </form>
     </div>
   {% else %}
     <div class="muted kp-readonly-hint">
-      Это КП из истории. Если хочешь продолжить работу, нажми “Сделать активным” в Истории на странице /kp/.
+      {% trans "Это КП из истории. Если хочешь продолжить работу, нажми “Сделать активным” в Истории на странице /kp/." %}
     </div>
   {% endif %}
 </section>
 
+{# === i18n strings for JS (NO {% trans %} inside JS code) === #}
+<div
+  id="i18nJs"
+  data-saving="{% trans 'Сохранение...' %}"
+  data-saved="{% trans 'Сохранено.' %}"
+  data-not-saved="{% trans 'Не сохранилось.' %}"
+  data-net-error="{% trans 'Ошибка сети.' %}"
+  data-error="{% trans 'Ошибка' %}"
+  data-not-saved-short="{% trans 'Не сохранилось' %}"
+  style="display:none;"
+></div>
 
 <script>
   // boolean from Django template
   const canEdit = {{ can_edit|yesno:"true,false" }};
+
+  // i18n helper for JS
+  const i18nEl = document.getElementById("i18nJs");
+  const T = (key, fallback) => (i18nEl ? i18nEl.getAttribute("data-" + key) : fallback) || fallback;
 
   /* ===== Click-anywhere datetime picker ===== */
   (function () {
@@ -443,7 +455,7 @@
     }
 
     function autosave() {
-      setStatus("Сохранение...");
+      setStatus(T("saving", "Сохранение..."));
 
       var data = new FormData(form);
       fetch("{% url 'kp:autosave' kp.id %}", {
@@ -456,11 +468,11 @@
       })
       .then(function (r) { return r.json(); })
       .then(function (j) {
-        if (j && j.ok) setStatus("Сохранено.");
-        else setStatus("Не сохранилось.");
+        if (j && j.ok) setStatus(T("saved", "Сохранено."));
+        else setStatus(T("not-saved", "Не сохранилось."));
       })
       .catch(function () {
-        setStatus("Ошибка сети.");
+        setStatus(T("net-error", "Ошибка сети."));
       });
     }
 
@@ -490,13 +502,21 @@
     }
 
     function updateDom(itemId, qty, itemTotal, subtotal, extra20, total) {
-      document.querySelector('[data-qty-value="' + itemId + '"]').textContent = qty;
-      document.querySelector('[data-qty-text="' + itemId + '"]').textContent = qty;
-      document.querySelector('[data-item-sum="' + itemId + '"]').textContent = itemTotal;
+      var qtyValue = document.querySelector('[data-qty-value="' + itemId + '"]');
+      var qtyText = document.querySelector('[data-qty-text="' + itemId + '"]');
+      var sumEl = document.querySelector('[data-item-sum="' + itemId + '"]');
 
-      document.getElementById("kpSubtotal").textContent = subtotal;
-      document.getElementById("kpExtra").textContent = extra20;
-      document.getElementById("kpTotal").textContent = total;
+      if (qtyValue) qtyValue.textContent = qty;
+      if (qtyText) qtyText.textContent = qty;
+      if (sumEl) sumEl.textContent = itemTotal;
+
+      var subEl = document.getElementById("kpSubtotal");
+      var extraEl = document.getElementById("kpExtra");
+      var totalEl = document.getElementById("kpTotal");
+
+      if (subEl) subEl.textContent = subtotal;
+      if (extraEl) extraEl.textContent = extra20;
+      if (totalEl) totalEl.textContent = total;
     }
 
     function postQty(itemId, action) {
@@ -512,7 +532,7 @@
       .then(function (r) {
         return r.json().then(function (j) {
           if (!r.ok) {
-            var msg = (j && (j.error || j.detail)) ? (j.error || j.detail) : "Ошибка";
+            var msg = (j && (j.error || j.detail)) ? (j.error || j.detail) : T("error", "Ошибка");
             throw new Error(msg);
           }
           return j;
@@ -535,12 +555,12 @@
             if (j && j.ok) {
               updateDom(itemId, j.qty, j.item_total, j.subtotal, j.extra20, j.total);
             } else {
-              throw new Error("Не сохранилось");
+              throw new Error(T("not-saved-short", "Не сохранилось"));
             }
           })
           .catch(function (e) {
             console.error(e);
-            alert(e.message || "Ошибка");
+            alert(e.message || T("error", "Ошибка"));
           })
           .finally(function () {
             setDisabled(stepper, false);
@@ -553,41 +573,47 @@
   })();
 
   /* ===== PRICE EDIT (admin only) ===== */
-(function () {
-  if (!canEdit) return;
+  (function () {
+    if (!canEdit) return;
 
-  function getCsrfToken() {
-    var el = document.querySelector('input[name="csrfmiddlewaretoken"]');
-    return el ? el.value : "";
-  }
+    function getCsrfToken() {
+      var el = document.querySelector('input[name="csrfmiddlewaretoken"]');
+      return el ? el.value : "";
+    }
 
-  function postPrice(itemId, price) {
-    return fetch("{% url 'kp:update_item_price' 0 %}".replace("/0/", "/" + itemId + "/"), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": getCsrfToken(),
-        "X-Requested-With": "XMLHttpRequest"
-      },
-      body: JSON.stringify({ price: price })
-    }).then(r => r.json());
-  }
+    function postPrice(itemId, price) {
+      return fetch("{% url 'kp:update_item_price' 0 %}".replace("/0/", "/" + itemId + "/"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCsrfToken(),
+          "X-Requested-With": "XMLHttpRequest"
+        },
+        body: JSON.stringify({ price: price })
+      }).then(function(r){ return r.json(); });
+    }
 
-  document.querySelectorAll("[data-price-input]").forEach(function (input) {
+    document.querySelectorAll("[data-price-input]").forEach(function (input) {
       var itemId = input.getAttribute("data-price-input");
       var timer = null;
 
       function send() {
-        var val = parseInt(input.value || "0");
+        var val = parseInt(input.value || "0", 10);
         if (val < 0 || isNaN(val)) val = 0;
 
         postPrice(itemId, val).then(function (j) {
           if (!j || !j.ok) return;
 
-          document.querySelector('[data-item-sum="' + itemId + '"]').textContent = j.item_total;
-          document.getElementById("kpSubtotal").textContent = j.subtotal;
-          document.getElementById("kpExtra").textContent = j.extra20;
-          document.getElementById("kpTotal").textContent = j.total;
+          var sumEl = document.querySelector('[data-item-sum="' + itemId + '"]');
+          if (sumEl) sumEl.textContent = j.item_total;
+
+          var subEl = document.getElementById("kpSubtotal");
+          var extraEl = document.getElementById("kpExtra");
+          var totalEl = document.getElementById("kpTotal");
+
+          if (subEl) subEl.textContent = j.subtotal;
+          if (extraEl) extraEl.textContent = j.extra20;
+          if (totalEl) totalEl.textContent = j.total;
         });
       }
 

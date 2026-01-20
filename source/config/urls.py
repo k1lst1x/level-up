@@ -17,6 +17,10 @@ urlpatterns = [
     # API
     path("api/", include("catalog.urls")),
     path("api/", include("crm.urls")),
+
+    # Translate
+    path("i18n/", include("django.conf.urls.i18n")),
+    path("rosetta/", include("rosetta.urls")),
 ]
 
 if settings.DEBUG:

@@ -1,73 +1,78 @@
 {# templates/kp/detail.html (или admin_kp_detail.html) #}
 {% extends "base.html" %}
-{% block title %}КП: {{ kp.title }}{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "КП:" %} {{ kp.title }}{% endblock %}
 
 {% block content %}
   <div class="card">
-    <div class="muted" style="font-size:13px;">КП → Черновик (админ)</div>
+    <div class="muted" style="font-size:13px;">{% trans "КП → Черновик (админ)" %}</div>
     <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center;">
       <div>
         <div style="font-weight:900; font-size:18px;">{{ kp.title }}</div>
-        <div class="muted" style="margin-top:4px;">Клиент: <b>{{ kp.customer.username }}</b></div>
+        <div class="muted" style="margin-top:4px;">
+          {% trans "Клиент:" %} <b>{{ kp.customer.username }}</b>
+        </div>
       </div>
       <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <a class="btn btn-compact" href="{% url 'kp:kp' %}">К списку</a>
+        <a class="btn btn-compact" href="{% url 'kp:kp' %}">{% trans "К списку" %}</a>
         <form method="post" action="{% url 'kp:submit' kp.id %}">
           {% csrf_token %}
-          <button class="btn btn-primary btn-compact" type="submit">Отправить</button>
+          <button class="btn btn-primary btn-compact" type="submit">{% trans "Отправить" %}</button>
         </form>
       </div>
     </div>
   </div>
 
   <div class="card" style="margin-top:12px;">
-    <div style="font-weight:900;">Параметры КП (автосейв)</div>
-    <div class="muted" style="margin-top:6px;">Ничего “сохранять” не надо, оно само.</div>
+    <div style="font-weight:900;">{% trans "Параметры КП (автосейв)" %}</div>
+    <div class="muted" style="margin-top:6px;">{% trans "Ничего “сохранять” не надо, оно само." %}</div>
 
     <form id="kpMetaForm" style="margin-top:10px;">
       {% csrf_token %}
 
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
         <div>
-          <div class="muted" style="font-size:12px;">Заголовок КП</div>
-          <input class="search-input" name="title" value="{{ kp.title }}" placeholder="Например: КП на мероприятие" />
+          <div class="muted" style="font-size:12px;">{% trans "Заголовок КП" %}</div>
+          <input class="search-input" name="title" value="{{ kp.title }}" placeholder="{% trans 'Например: КП на мероприятие' %}" />
         </div>
 
         <div>
-          <div class="muted" style="font-size:12px;">Шаблон / тип мероприятия</div>
+          <div class="muted" style="font-size:12px;">{% trans "Шаблон / тип мероприятия" %}</div>
           <select class="search-input" name="template_id">
-            <option value="">— не менять —</option>
+            <option value="">{% trans "— не менять —" %}</option>
             {% for t in templates %}
               <option value="{{ t.id }}" {% if kp.template_id == t.id %}selected{% endif %}>
                 {{ t.name }}
               </option>
             {% endfor %}
           </select>
-          <div class="muted" style="font-size:12px; margin-top:4px;">Текущий: <b>{% if kp.template %}{{ kp.template }}{% else %}—{% endif %}</b></div>
+          <div class="muted" style="font-size:12px; margin-top:4px;">
+            {% trans "Текущий:" %} <b>{% if kp.template %}{{ kp.template }}{% else %}—{% endif %}</b>
+          </div>
         </div>
 
         <div>
-          <div class="muted" style="font-size:12px;">Название мероприятия</div>
-          <input class="search-input" name="event_title" value="{{ meta.event_title }}" placeholder="Например: Свадьба / Корпоратив" />
+          <div class="muted" style="font-size:12px;">{% trans "Название мероприятия" %}</div>
+          <input class="search-input" name="event_title" value="{{ meta.event_title }}" placeholder="{% trans 'Например: Свадьба / Корпоратив' %}" />
         </div>
 
         <div>
-          <div class="muted" style="font-size:12px;">Дата и время</div>
+          <div class="muted" style="font-size:12px;">{% trans "Дата и время" %}</div>
           <input class="search-input" type="datetime-local" name="event_datetime" value="{{ meta.event_datetime }}" />
         </div>
 
         <div style="grid-column: 1 / span 2;">
-          <div class="muted" style="font-size:12px;">Локация (2GIS ссылка или текст)</div>
+          <div class="muted" style="font-size:12px;">{% trans "Локация (2GIS ссылка или текст)" %}</div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <input class="search-input" style="flex:1; min-width:260px;" name="event_location_url" value="{{ meta.event_location_url }}" placeholder="https://2gis.kz/... или просто адрес/название" />
-            <button class="btn btn-compact" type="button" onclick="open2gis()">Открыть</button>
+            <input class="search-input" style="flex:1; min-width:260px;" name="event_location_url" value="{{ meta.event_location_url }}" placeholder="{% trans 'https://2gis.kz/... или просто адрес/название' %}" />
+            <button class="btn btn-compact" type="button" onclick="open2gis()">{% trans "Открыть" %}</button>
           </div>
-          <div class="muted" style="font-size:12px; margin-top:6px;">Если это не ссылка, откроется поиск в 2GIS.</div>
+          <div class="muted" style="font-size:12px; margin-top:6px;">{% trans "Если это не ссылка, откроется поиск в 2GIS." %}</div>
         </div>
 
         <div style="grid-column: 1 / span 2;">
-          <div class="muted" style="font-size:12px;">Описание / заметки</div>
-          <textarea class="search-input" name="event_description" rows="3" placeholder="Короткое описание">{{ meta.event_description }}</textarea>
+          <div class="muted" style="font-size:12px;">{% trans "Описание / заметки" %}</div>
+          <textarea class="search-input" name="event_description" rows="3" placeholder="{% trans 'Короткое описание' %}">{{ meta.event_description }}</textarea>
         </div>
       </div>
     </form>
@@ -78,12 +83,12 @@
   <div class="card" style="margin-top:12px;">
     <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center;">
       <div>
-        <div style="font-weight:900;">Услуги в КП</div>
-        <div class="muted" style="margin-top:4px;">Добавляй через Категории → Услуги.</div>
+        <div style="font-weight:900;">{% trans "Услуги в КП" %}</div>
+        <div class="muted" style="margin-top:4px;">{% trans "Добавляй через Категории → Услуги." %}</div>
       </div>
       <form method="post" action="{% url 'kp:clear' kp.id %}">
         {% csrf_token %}
-        <button class="btn btn-danger btn-compact" type="submit">Очистить КП</button>
+        <button class="btn btn-danger btn-compact" type="submit">{% trans "Очистить КП" %}</button>
       </form>
     </div>
 
@@ -99,7 +104,7 @@
           <div style="flex:1;">
             <div style="font-weight:800;">{{ it.service.name }}</div>
             <div class="muted" style="font-size:12px;">
-              {{ it.qty }} шт · {{ it.price }} ₸
+              {% blocktrans with qty=it.qty price=it.price %}{{ qty }} шт · {{ price }} ₸{% endblocktrans %}
             </div>
           </div>
 
@@ -107,17 +112,17 @@
             <div style="font-weight:900;">{{ it.total_price }} ₸</div>
             <form method="post" action="{% url 'kp:remove_item' it.id %}" style="margin-top:6px;">
               {% csrf_token %}
-              <button class="btn btn-danger btn-compact" type="submit">Убрать</button>
+              <button class="btn btn-danger btn-compact" type="submit">{% trans "Убрать" %}</button>
             </form>
           </div>
         </div>
       {% empty %}
-        <div class="muted">Пока пусто. Иди в категории и добавь услуги.</div>
+        <div class="muted">{% trans "Пока пусто. Иди в категории и добавь услуги." %}</div>
       {% endfor %}
     </div>
 
     <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-      <a class="btn" href="{% url 'main:home' %}">Добавить услуги</a>
+      <a class="btn" href="{% url 'main:home' %}">{% trans "Добавить услуги" %}</a>
     </div>
   </div>
 
@@ -153,7 +158,7 @@
       }
 
       function autosave() {
-        setStatus("Сохранение...");
+        setStatus("{% trans 'Сохранение...' %}");
         var data = new FormData(form);
 
         fetch("{% url 'kp:autosave' kp.id %}", {
@@ -163,11 +168,11 @@
         })
         .then(function (r) { return r.json(); })
         .then(function (j) {
-          if (j && j.ok) setStatus("Сохранено.");
-          else setStatus("Не сохранилось.");
+          if (j && j.ok) setStatus("{% trans 'Сохранено.' %}");
+          else setStatus("{% trans 'Не сохранилось.' %}");
         })
         .catch(function () {
-          setStatus("Ошибка сети.");
+          setStatus("{% trans 'Ошибка сети.' %}");
         });
       }
 

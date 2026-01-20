@@ -1,12 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Категории{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Категории" %}{% endblock %}
 
 {% block content %}
 
   <div class="categories-page">
 
     <div class="page-head">
-      <h1 class="page-title">Категории</h1>
+      <h1 class="page-title">{% trans "Категории" %}</h1>
 
       <div class="page-subtitle muted">
 
@@ -17,14 +18,14 @@
           type="text"
           name="search"
           value="{{ search }}"
-          placeholder="Поиск категории…"
+          placeholder="{% trans "Поиск категории…" %}"
           class="search-input"
         />
-        <button class="btn btn-compact" type="submit">Искать</button>
+        <button class="btn btn-compact" type="submit">{% trans "Искать" %}</button>
 
         {# Кнопка “сбросить”, только если что-то введено #}
         {% if search %}
-          <a class="btn btn-compact" href="{% url 'main:categories' %}">Сброс</a>
+          <a class="btn btn-compact" href="{% url 'main:categories' %}">{% trans "Сброс" %}</a>
         {% endif %}
       </form>
     </div>
@@ -36,20 +37,20 @@
             {% if c.image %}
               <img src="{{ c.image.url }}" alt="{{ c.name }}">
             {% else %}
-              <div class="tile-placeholder">Без изображения</div>
+              <div class="tile-placeholder">{% trans "Без изображения" %}</div>
             {% endif %}
           </div>
 
           <div class="tile-body">
             <div class="tile-title">{{ c.name }}</div>
             <div class="tile-desc {% if not c.description %}tile-desc--empty{% endif %}">
-              {% if c.description %}{{ c.description }}{% else %}Описание не задано{% endif %}
+              {% if c.description %}{{ c.description }}{% else %}{% trans "Описание не задано" %}{% endif %}
             </div>
           </div>
         </a>
       {% empty %}
         <div class="card muted" style="grid-column: 1 / -1;">
-          Ничего не найдено.
+          {% trans "Ничего не найдено." %}
         </div>
       {% endfor %}
     </div>

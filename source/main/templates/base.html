@@ -1,3 +1,7 @@
+{% load static %}
+
+{% load i18n %}
+
 <!doctype html>
 <html lang="ru" data-theme="light">
 <head>
@@ -5,7 +9,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{% block title %}AlmznyiEvent{% endblock %}</title>
 
-  {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
@@ -13,11 +16,11 @@
 
   <div class="navbar">
     <div class="nav-left">
-      <a class="brand" href="{% url 'main:home' %}">Категории</a>
-      <a class="brand" href="{% url 'kp:kp' %}">КП</a>
+      <a class="brand" href="{% url 'main:home' %}">{% trans "Категории" %}</a>
+      <a class="brand" href="{% url 'kp:kp' %}">{% trans "КП" %}</a>
 
       {% if request.user.is_authenticated and request.user.is_staff %}
-        <a class="brand" href="{% url 'main:crm' %}">CRM</a> <!-- Ссылка видна только админам -->
+        <a class="brand" href="{% url 'main:crm' %}">{% trans "CRM" %}</a> <!-- Ссылка видна только админам -->
       {% endif %}
 
       <div class="nav-links">
@@ -25,19 +28,31 @@
     </div>
 
     <div class="nav-right">
+      {% get_current_language as CURRENT_LANGUAGE %}
+
+      <form action="{% url 'set_language' %}" method="post" style="margin:0;">
+        {% csrf_token %}
+     <input name="next" type="hidden" value="{{ request.get_full_path }}">
+     <select name="language" onchange="this.form.submit()">
+        <option value="ru" {% if CURRENT_LANGUAGE == "ru" %}selected{% endif %}>{% trans "RU" %}</option>
+        <option value="kk" {% if CURRENT_LANGUAGE == "kk" %}selected{% endif %}>{% trans "KZ" %}</option>
+        <option value="en" {% if CURRENT_LANGUAGE == "en" %}selected{% endif %}>{% trans "EN" %}</option>
+      </select>
+      </form>
+
       {% if request.user.is_authenticated %}
         <div class="user-chip">
           <div class="user-chip-name">{{ request.user.username }}</div>
           <div class="user-chip-role">
-            {% if request.user.is_staff %}admin{% else %}customer{% endif %}
+            {% if request.user.is_staff %}{% trans "admin" %}{% else %}{% trans "customer" %}{% endif %}
           </div>
         </div>
       {% endif %}
 
-      <button class="theme-btn" id="toggleTheme" type="button" title="Тема">🌙</button>
+      <button class="theme-btn" id="toggleTheme" type="button" title="{% trans "Тема" %}">🌙</button>
 
       {% if request.user.is_authenticated %}
-        <button class="user-btn" id="openUserModal" type="button" title="Аккаунт">👤</button>
+        <button class="user-btn" id="openUserModal" type="button" title="{% trans "Аккаунт" %}">👤</button>
       {% endif %}
     </div>
   </div>
@@ -50,23 +65,23 @@
     <div class="modal-backdrop" id="userModal" style="display:none;">
       <div class="modal" role="dialog" aria-modal="true" aria-labelledby="userModalTitle">
         <div class="modal-header">
-          <div class="modal-title" id="userModalTitle">Аккаунт</div>
-          <button class="modal-close" id="closeUserModal" type="button" aria-label="Close">✕</button>
+          <div class="modal-title" id="userModalTitle">{% trans "Аккаунт" %}</div>
+          <button class="modal-close" id="closeUserModal" type="button" aria-label="{% trans "Close" %}">✕</button>
         </div>
 
         <div class="card">
           <div style="font-weight:900;">{{ request.user.username }}</div>
           <div class="muted" style="margin-top:4px; font-size:13px;">
-            {% if request.user.is_staff %}Админ{% else %}Заказчик{% endif %}
+            {% if request.user.is_staff %}{% trans "Админ" %}{% else %}{% trans "Заказчик" %}{% endif %}
           </div>
         </div>
 
         <div class="modal-actions">
           <form method="post" action="{% url 'logout' %}" style="margin:0;">
             {% csrf_token %}
-            <button class="btn btn-danger btn-compact" type="submit">Выйти</button>
+            <button class="btn btn-danger btn-compact" type="submit">{% trans "Выйти" %}</button>
           </form>
-          <button class="btn btn-compact" id="closeUserModal2" type="button">Закрыть</button>
+          <button class="btn btn-compact" id="closeUserModal2" type="button">{% trans "Закрыть" %}</button>
         </div>
       </div>
     </div>

@@ -3,11 +3,10 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "dev-secret-key"
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = [
-    "194.32.141.184",
-    "level-up-kz.duckdns.org",
-    "www.level-up-kz.duckdns.org",
+    "localhost",
+    "127.0.0.1",
 ]
 CSRF_TRUSTED_ORIGINS = [
     "http://level-up-kz.duckdns.org",
@@ -23,6 +22,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "rest_framework",
+    "rosetta",
 
     "accounts",
     "catalog",
@@ -34,11 +34,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -73,8 +75,14 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
-
-LANGUAGE_CODE = "ru-ru"
+LOCALE_PATHS = [BASE_DIR / "locale"]
+LANGUAGE_COOKIE_NAME = "django_language"
+LANGUAGE_CODE = "ru"
+LANGUAGES = [
+    ("ru", "Russian"), 
+    ("kk","Kazakh"), 
+    ("en", "English")
+]
 
 TIME_ZONE = "Asia/Almaty"
 USE_I18N = True

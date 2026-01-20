@@ -1,6 +1,7 @@
 {# templates/kp/admin_kp_home.html #}
 {% extends "base.html" %}
-{% block title %}КП{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "КП" %}{% endblock %}
 
 {% block content %}
 
@@ -9,9 +10,9 @@
     <div class="page-head-left"></div>
 
     <div class="page-head-center">
-      <h1 class="page-title">Коммерческие предложения</h1>
+      <h1 class="page-title">{% trans "Коммерческие предложения" %}</h1>
       <div class="muted" style="font-size:12px; margin-top:6px;">
-        Тут ты админ. Клиенты сюда не попадают.
+        {% trans "Тут ты админ. Клиенты сюда не попадают." %}
       </div>
     </div>
 
@@ -20,7 +21,7 @@
 </div>
 
 <div class="kp-tabs-wrap">
-  <div class="kp-tabs" role="tablist" aria-label="KP tabs">
+  <div class="kp-tabs" role="tablist" aria-label="{% trans 'KP tabs' %}">
     <button
       id="kpTabBtnActive"
       class="kp-tab {% if tab == 'active' %}is-active{% endif %}"
@@ -29,7 +30,7 @@
       aria-controls="kpPaneActive"
       aria-selected="{% if tab == 'active' %}true{% else %}false{% endif %}"
       onclick="switchTab('active')"
-    >Активные</button>
+    >{% trans "Активные" %}</button>
 
     <button
       id="kpTabBtnRequests"
@@ -39,7 +40,7 @@
       aria-controls="kpPaneRequests"
       aria-selected="{% if tab == 'requests' %}true{% else %}false{% endif %}"
       onclick="switchTab('requests')"
-    >Заявки</button>
+    >{% trans "Заявки" %}</button>
 
     <button
       id="kpTabBtnHistory"
@@ -49,14 +50,14 @@
       aria-controls="kpPaneHistory"
       aria-selected="{% if tab == 'history' %}true{% else %}false{% endif %}"
       onclick="switchTab('history')"
-    >История</button>
+    >{% trans "История" %}</button>
 
     <button
       id="kpTabBtnPickCustomer"
       class="kp-tab"
       type="button"
       onclick="openCustomerModal()"
-    >Создать</button>
+    >{% trans "Создать" %}</button>
   </div>
 </div>
 
@@ -66,7 +67,7 @@
     {# ===== Active list ===== #}
     <div id="kpPaneActive" role="tabpanel" style="{% if tab != 'active' %}display:none;{% endif %}">
       <div class="card" style="margin-bottom:10px;">
-        <div class="muted">KP, которые сейчас у тебя в работе:</div>
+        <div class="muted">{% trans "KP, которые сейчас у тебя в работе:" %}</div>
       </div>
 
       {% if active_list %}
@@ -74,23 +75,29 @@
           {% for kp in active_list %}
             <div class="kp-item kp-row">
               <div class="kp-item-left">
-                <div class="kp-item-title">#{{ kp.id }} · КП для {{ kp.customer.username }}</div>
+                <div class="kp-item-title">
+                  {% blocktrans with id=kp.id username=kp.customer.username %}#{{ id }} · КП для {{ username }}{% endblocktrans %}
+                </div>
                 <div class="kp-item-sub muted">
-                  {% if kp.template %}Шаблон: {{ kp.template.name|default:"—" }}{% else %}Шаблон: —{% endif %}
-                  · Обновлено: {{ kp.updated_at|date:"j E Y, H:i" }}
+                  {% if kp.template %}
+                    {% trans "Шаблон:" %} {{ kp.template.name|default:"—" }}
+                  {% else %}
+                    {% trans "Шаблон:" %} —
+                  {% endif %}
+                  · {% trans "Обновлено:" %} {{ kp.updated_at|date:"j E Y, H:i" }}
                 </div>
               </div>
 
               <div class="kp-item-actions">
-                <a class="btn btn-compact" href="{% url 'kp:builder' kp.id %}">Открыть</a>
-                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}?print=1">Печать</a>
+                <a class="btn btn-compact" href="{% url 'kp:builder' kp.id %}">{% trans "Открыть" %}</a>
+                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}?print=1">{% trans "Печать" %}</a>
               </div>
             </div>
           {% endfor %}
         </div>
       {% else %}
         <div class="card">
-          <div class="muted">Активных черновиков нет. Нажми “Создать”.</div>
+          <div class="muted">{% trans "Активных черновиков нет. Нажми “Создать”." %}</div>
         </div>
       {% endif %}
     </div>
@@ -98,7 +105,7 @@
     {# ===== Requests list ===== #}
     <div id="kpPaneRequests" role="tabpanel" style="{% if tab != 'requests' %}display:none;{% endif %}">
       <div class="card" style="margin-bottom:10px;">
-        <div class="muted">Запросы от клиентов:</div>
+        <div class="muted">{% trans "Запросы от клиентов:" %}</div>
       </div>
 
       {% if requests_list %}
@@ -106,24 +113,26 @@
           {% for kp in requests_list %}
             <div class="kp-item kp-row">
               <div class="kp-item-left">
-                <div class="kp-item-title">#{{ kp.id }} · Заявка от {{ kp.customer.username }} · {{ kp.title }}</div>
+                <div class="kp-item-title">
+                  {% blocktrans with id=kp.id username=kp.customer.username title=kp.title %}#{{ id }} · Заявка от {{ username }} · {{ title }}{% endblocktrans %}
+                </div>
                 <div class="kp-item-sub muted">
-                  Статус: {{ kp.status }} · Обновлено: {{ kp.updated_at|date:"j E Y, H:i" }}
+                  {% trans "Статус:" %} {{ kp.status }} · {% trans "Обновлено:" %} {{ kp.updated_at|date:"j E Y, H:i" }}
                 </div>
               </div>
 
               <div class="kp-item-actions">
-                <a class="btn btn-compact" href="{% url 'kp:builder' kp.id %}">Открыть</a>
-                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}?print=1">Печать</a>
+                <a class="btn btn-compact" href="{% url 'kp:builder' kp.id %}">{% trans "Открыть" %}</a>
+                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}?print=1">{% trans "Печать" %}</a>
 
                 <form method="post" action="{% url 'kp:request_accept' kp.id %}">
                   {% csrf_token %}
-                  <button class="btn btn-primary btn-compact" type="submit">Принять</button>
+                  <button class="btn btn-primary btn-compact" type="submit">{% trans "Принять" %}</button>
                 </form>
 
                 <form method="post" action="{% url 'kp:request_reject' kp.id %}">
                   {% csrf_token %}
-                  <button class="btn btn-danger btn-compact" type="submit">Отклонить</button>
+                  <button class="btn btn-danger btn-compact" type="submit">{% trans "Отклонить" %}</button>
                 </form>
               </div>
             </div>
@@ -131,7 +140,7 @@
         </div>
       {% else %}
         <div class="card">
-          <div class="muted">Заявок нет.</div>
+          <div class="muted">{% trans "Заявок нет." %}</div>
         </div>
       {% endif %}
     </div>
@@ -139,7 +148,7 @@
     {# ===== History list ===== #}
     <div id="kpPaneHistory" role="tabpanel" style="{% if tab != 'history' %}display:none;{% endif %}">
       <div class="card" style="margin-bottom:10px;">
-        <div class="muted">Завершённые/отклонённые КП:</div>
+        <div class="muted">{% trans "Завершённые/отклонённые КП:" %}</div>
       </div>
 
       {% if history_list %}
@@ -147,19 +156,19 @@
           {% for kp in history_list %}
             <div class="kp-item kp-row">
               <div class="kp-item-left">
-                <div class="kp-item-title">#{{ kp.id }} {{ kp.title }}</div>
+                <div class="kp-item-title">{% blocktrans with id=kp.id title=kp.title %}#{{ id }} {{ title }}{% endblocktrans %}</div>
                 <div class="kp-item-sub muted">
-                  Клиент: {{ kp.customer.username }} · Обновлено: {{ kp.updated_at|date:"j E Y, H:i" }}
+                  {% trans "Клиент:" %} {{ kp.customer.username }} · {% trans "Обновлено:" %} {{ kp.updated_at|date:"j E Y, H:i" }}
                 </div>
               </div>
 
               <div class="kp-item-actions">
-                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}">Открыть</a>
-                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}?print=1">Печать</a>
+                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}">{% trans "Открыть" %}</a>
+                <a class="btn btn-compact" href="{% url 'kp:print' kp.id %}?print=1">{% trans "Печать" %}</a>
 
                 <form method="post" action="{% url 'kp:make_active' kp.id %}">
                   {% csrf_token %}
-                  <button class="btn btn-compact" type="submit">Активировать</button>
+                  <button class="btn btn-compact" type="submit">{% trans "Активировать" %}</button>
                 </form>
               </div>
             </div>
@@ -167,7 +176,7 @@
         </div>
       {% else %}
         <div class="card">
-          <div class="muted">История пустая.</div>
+          <div class="muted">{% trans "История пустая." %}</div>
         </div>
       {% endif %}
     </div>
@@ -179,13 +188,13 @@
 <div class="modal-backdrop" id="customerModal" style="display:none;">
   <div class="modal" role="dialog" aria-modal="true" style="max-width:560px;">
     <div class="modal-header">
-      <div class="modal-title">Выбор клиента</div>
+      <div class="modal-title">{% trans "Выбор клиента" %}</div>
       <button class="modal-close" type="button" onclick="closeCustomerModal()">✕</button>
     </div>
 
     <div class="card">
       <div class="muted" style="font-size:12px; margin-bottom:8px;">
-        Выбери клиента и создастся/откроется черновик КП
+        {% trans "Выбери клиента и создастся/откроется черновик КП" %}
       </div>
 
       <div class="kp-pick-list">
@@ -195,17 +204,17 @@
             <input type="hidden" name="customer_id" value="{{ u.id }}">
             <button class="kp-pick" type="submit">
               <div class="kp-pick-title">{{ u.username }}</div>
-              <div class="kp-pick-sub muted">id: {{ u.id }}</div>
+              <div class="kp-pick-sub muted">{% trans "id:" %} {{ u.id }}</div>
             </button>
           </form>
         {% empty %}
-          <div class="muted">Клиентов нет.</div>
+          <div class="muted">{% trans "Клиентов нет." %}</div>
         {% endfor %}
       </div>
     </div>
 
     <div class="modal-actions">
-      <button class="btn" type="button" onclick="closeCustomerModal()">Закрыть</button>
+      <button class="btn" type="button" onclick="closeCustomerModal()">{% trans "Закрыть" %}</button>
     </div>
   </div>
 </div>

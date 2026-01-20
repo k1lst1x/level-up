@@ -1,43 +1,44 @@
 {# templates/kp/customer_request.html #}
 {% extends "base.html" %}
-{% block title %}Заявка на КП{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Заявка на КП" %}{% endblock %}
 
 {% block content %}
   <div class="card">
-    <div class="kp-builder-title" style="font-weight:900;">Заявка отправлена менеджеру</div>
+    <div class="kp-builder-title" style="font-weight:900;">{% trans "Заявка отправлена менеджеру" %}</div>
     <div class="muted" style="margin-top:6px;">
-      Менеджер увидит заявку в своём списке КП и свяжется с тобой.
+      {% trans "Менеджер увидит заявку в своём списке КП и свяжется с тобой." %}
     </div>
 
     <div style="margin-top:12px;">
-      <div class="muted" style="font-size:12px;">Номер заявки</div>
+      <div class="muted" style="font-size:12px;">{% trans "Номер заявки" %}</div>
       <div style="font-weight:900; font-size:18px;">#{{ kp.id }}</div>
     </div>
 
     <div style="margin-top:12px;">
-      <div class="muted" style="font-size:12px;">Итоговая сумма</div>
+      <div class="muted" style="font-size:12px;">{% trans "Итоговая сумма" %}</div>
       <div style="font-weight:900; font-size:22px;">{{ total_sum }} ₸</div>
     </div>
 
     <div class="card" style="margin-top:12px;">
-      <div style="font-weight:900;">Контакты, которые уйдут менеджеру</div>
+      <div style="font-weight:900;">{% trans "Контакты, которые уйдут менеджеру" %}</div>
       <div class="muted" style="margin-top:6px; font-size:12px;">
-        Email: <b>{{ contact.email|default:"—" }}</b><br>
-        Телефон: <b>{{ contact.phone|default:"—" }}</b><br>
-        Telegram: <b>{{ contact.telegram|default:"—" }}</b>
+        {% trans "Email:" %} <b>{{ contact.email|default:"—" }}</b><br>
+        {% trans "Телефон:" %} <b>{{ contact.phone|default:"—" }}</b><br>
+        {% trans "Telegram:" %} <b>{{ contact.telegram|default:"—" }}</b>
       </div>
       <div class="muted" style="margin-top:8px; font-size:12px;">
-        (Поля phone/telegram появятся, когда ты добавишь их в модель пользователя.)
+        {% trans "(Поля phone/telegram появятся, когда ты добавишь их в модель пользователя.)" %}
       </div>
     </div>
 
     <div class="muted" style="margin-top:12px; font-size:12px;">
-      Дальше будет “чат с ботом” и “добавление в телеграм”. Сейчас это просто заглушка, чтобы процесс работал.
+      {% trans "Дальше будет “чат с ботом” и “добавление в телеграм”. Сейчас это просто заглушка, чтобы процесс работал." %}
     </div>
 
     <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-      <a class="btn" href="{% url 'main:home' %}">Вернуться в категории</a>
-      <a class="btn btn-compact" href="{% url 'kp:kp' %}">Моё КП</a>
+      <a class="btn" href="{% url 'main:home' %}">{% trans "Вернуться в категории" %}</a>
+      <a class="btn btn-compact" href="{% url 'kp:kp' %}">{% trans "Моё КП" %}</a>
     </div>
   </div>
 
@@ -56,7 +57,7 @@
             {{ it.service.name }}
           </div>
           <div class="muted" style="font-size:12px;">
-            {{ it.qty }} шт · {{ it.price }} ₸
+            {% blocktrans with qty=it.qty price=it.price %}{{ qty }} шт · {{ price }} ₸{% endblocktrans %}
           </div>
         </div>
 
