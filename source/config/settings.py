@@ -3,10 +3,11 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "dev-secret-key"
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
+    "194.32.141.184",
+    "level-up-kz.duckdns.org",
+    "www.level-up-kz.duckdns.org",
 ]
 CSRF_TRUSTED_ORIGINS = [
     "http://level-up-kz.duckdns.org",

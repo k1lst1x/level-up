@@ -37,6 +37,7 @@
         data-service-id="{{ s.id }}"
         data-service-name="{{ s.name|escapejs }}"
         data-allow-multiple="{% if s.allow_multiple %}1{% else %}0{% endif %}"
+        data-instagram="{{ s.instagram_url|default:'' }}"
       >
         <div class="tile-media">
           {% if s.image %}
@@ -51,9 +52,17 @@
           <div class="tile-desc">
             {% if s.base_price %}<b>{{ s.base_price }}</b> ₸{% endif %}
             {% if s.unit %} · {{ s.unit }}{% endif %}
+            {% if s.instagram_url %}
+              <div class="tile-desc" style="margin-top:6px;">
+                <a href="{{ s.instagram_url }}" target="_blank" rel="noopener"
+                  style="font-weight:800; color:#7a5cff; text-decoration:none;">
+                  Instagram ↗
+                </a>
+              </div>
+            {% endif %}
           </div>
           {% if s.description %}
-            <div class="tile-desc">{{ s.description|truncatechars:90 }}</div>
+            <div class="tile-desc">{{ s.description|truncatechars:220 }}</div>
           {% endif %}
         </div>
       </div>
@@ -78,6 +87,17 @@
             {% trans "Выбери КП, в которую добавить услугу" %}
           </div>
         </div>
+
+        <div class="card" id="modalInstagramCard" style="margin-top:12px; display:none;">
+          <a id="modalInstagramLink"
+             href="#"
+             target="_blank"
+             rel="noopener"
+             class="btn"
+             style="text-decoration:none;">
+             📸 Посмотреть в Instagram
+          </a>
+        </div>        
 
         <!-- qty block -->
         <div class="card" id="qtyCard" style="margin-top:12px; display:none;">
@@ -167,6 +187,8 @@
 (function(){
   const modal = document.getElementById("addModal");
   const nameEl = document.getElementById("modalServiceName");
+  const instaCard = document.getElementById("modalInstagramCard");
+  const instaLink = document.getElementById("modalInstagramLink");
 
   const qtyCard = document.getElementById("qtyCard");
   const qtyValueEl = document.getElementById("qtyValue");
@@ -188,11 +210,17 @@
     if(modal) modal.style.display = "none";
   }
 
-  function openAddModal(serviceId, serviceName, allowMult){
+  function openAddModal(serviceId, serviceName, allowMult, instagramUrl){
     currentServiceId = serviceId;
     allowMultiple = !!allowMult;
 
-    if(nameEl) nameEl.textContent = serviceName || "";
+    if(instagramUrl){
+      instaCard.style.display = "block";
+      instaLink.href = instagramUrl;
+    } else {
+      instaCard.style.display = "none";
+      instaLink.href = "#";
+    }
 
     // привязываем action на конкретный serviceId
     document.querySelectorAll(".add-form").forEach(form => {
@@ -223,7 +251,8 @@
       const sid = tile.dataset.serviceId;
       const sname = tile.dataset.serviceName || "";
       const allow = tile.dataset.allowMultiple === "1";
-      openAddModal(sid, sname, allow);
+      const insta = tile.dataset.instagram || "";
+      openAddModal(sid, sname, allow, insta);
     });
   });
 
