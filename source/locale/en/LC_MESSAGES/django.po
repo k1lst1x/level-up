@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-21 20:04+0500\n"
+"POT-Creation-Date: 2026-01-21 20:49+0500\n"
 "PO-Revision-Date: 2026-01-20 22:38+0500\n"
 "Last-Translator:   <admin@admin.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -712,6 +712,12 @@ msgstr "Add service"
 #: .\main\templates\main\category_services.html:87
 msgid "Выбери КП, в которую добавить услугу"
 msgstr "Choose a proposal to add the service to"
+
+#: .\main\templates\main\category_services.html:98
+#, fuzzy
+#| msgid "Посмотреть кейсы"
+msgid "📸 Посмотреть в Instagram"
+msgstr "View case studies"
 
 #: .\main\templates\main\category_services.html:107
 msgid "Можно добавить несколько раз"
