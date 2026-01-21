@@ -32,6 +32,13 @@ class Service(models.Model):
     base_price = models.IntegerField(blank=True, null=True)
     unit = models.CharField(max_length=64, blank=True, default="")
 
+    instagram_url = models.URLField(
+        "Instagram ссылка",
+        blank=True,
+        default="",
+        help_text="Ссылка на Instagram (пример: https://instagram.com/...)"
+    )
+
     # Если False — в КП нельзя увеличить qty выше 1 (одноразовая услуга)
     allow_multiple = models.BooleanField(
         default=True,

@@ -17,6 +17,7 @@ class ServiceAdmin(admin.ModelAdmin):
         "name",
         "category",
         "base_price",
+        "instagram_url",
         "unit",
         "allow_multiple",
         "is_active",

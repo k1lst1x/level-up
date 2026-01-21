@@ -378,7 +378,7 @@ body {
   line-height: 1.25;
   color: var(--muted);
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1084,7 +1084,7 @@ body {
 }
 
 .cases-carousel .tile-media {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
 }
 
 .cases-fade-left,
@@ -1153,7 +1153,7 @@ body {
   }
 
   #cases .cases-carousel>.tile {
-    flex: 0 0 55%;
+    flex: 0 0 48%;
   }
 
   #cases .cases-arrow.left {
@@ -1162,6 +1162,12 @@ body {
 
   #cases .cases-arrow.right {
     right: 5px;
+  }
+}
+
+@media (max-width: 1024px) {
+  #cases .cases-carousel>.tile {
+    flex: 0 0 32%;
   }
 }
 
@@ -1482,14 +1488,13 @@ body::after {
 
 /* CASES: ширина карточек в ленте */
 #cases .cases-carousel>.tile {
-  flex: 0 0 40% !important;
-  /* было 45/55/62, сделай 38–45% */
+  flex: 0 0 24%;
 }
 
 /* мобилка */
 @media (max-width: 640px) {
   #cases .cases-carousel>.tile {
-    flex: 0 0 58% !important;
+    flex: 0 0 48%;
     /* сделай 52–62% (меньше % = короче) */
   }
 }

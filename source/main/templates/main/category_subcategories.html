@@ -47,7 +47,7 @@
           <div class="tile-title">{{ s.name }}</div>
 
           {% if s.description %}
-            <div class="tile-desc">{{ s.description|truncatechars:90 }}</div>
+            <div class="tile-desc">{{ s.description|truncatechars:220 }}</div>
           {% else %}
             <div class="tile-desc tile-desc--empty">{% trans "Без описания" %}</div>
           {% endif %}
