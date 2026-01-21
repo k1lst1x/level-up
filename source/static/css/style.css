@@ -2785,3 +2785,151 @@ a.btn:active {
     margin-bottom: 10px; /* Отступ между кнопками */
   }
 }
+
+/* =========================
+   LANGUAGE SWITCH (navbar)
+========================= */
+
+.lang-form {
+  margin: 0;
+}
+
+.lang-switch {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  height: 38px;
+  padding: 0 36px 0 14px;
+
+  border-radius: 12px;
+  border: 1px solid var(--purple-border);
+
+  background:
+    linear-gradient(180deg, var(--purple-2), var(--purple));
+  color: #fff;
+
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: .5px;
+
+  cursor: pointer;
+  outline: none;
+
+  box-shadow: 0 10px 26px var(--purple-glow);
+
+  /* стрелка */
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='white'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+}
+
+.lang-switch:hover {
+  filter: brightness(1.08) saturate(1.1);
+}
+
+.lang-switch:focus {
+  box-shadow:
+    0 0 0 3px var(--focus),
+    0 10px 26px var(--purple-glow);
+}
+
+.lang-switch option {
+  color: #000; /* внутри списка */
+  font-weight: 700;
+}
+
+/* компактнее на мобилке */
+@media (max-width: 520px) {
+  .lang-switch {
+    height: 36px;
+    padding: 0 32px 0 12px;
+    font-size: 12px;
+  }
+}
+
+/* =========================
+   LANGUAGE DROPDOWN (options)
+========================= */
+
+/* сам список при раскрытии */
+.lang-switch {
+  background-color: var(--purple); /* когда открыт */
+}
+
+/* пункты */
+.lang-switch option {
+  background: #0c0c12;   /* тёмный как твой dark-card */
+  color: #ffffff;
+  font-weight: 900;
+}
+
+/* выбранный пункт (работает в большинстве браузеров) */
+.lang-switch option:checked {
+  background: linear-gradient(180deg, #7a5cff, #6d4cff);
+  color: #fff;
+}
+
+/* наведение (Firefox / частично Chromium) */
+.lang-switch option:hover {
+  background: rgba(122, 92, 255, 0.35);
+  color: #fff;
+}
+
+/* если система светлая */
+html[data-theme="light"] .lang-switch option {
+  background: #ffffff;
+  color: #0b0b0f;
+}
+
+html[data-theme="light"] .lang-switch option:checked {
+  background: linear-gradient(180deg, #7a5cff, #6d4cff);
+  color: #fff;
+}
+
+/* ===== MODAL: одинаковый размер кнопок "Выйти" и "Закрыть" ===== */
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-actions .btn {
+  width: 100%;
+  height: 48px;              /* одинаковая высота */
+  padding: 0 16px;          /* одинаковые отступы */
+  font-size: 15px;
+  font-weight: 900;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* идеальное центрирование текста */
+  border-radius: 14px;
+}
+
+/* ===== MODAL ACTIONS: equal buttons ===== */
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-actions > * {
+  flex: 1;              /* И форма, и кнопка — одинаковая ширина */
+}
+
+.modal-actions form {
+  margin: 0;
+  display: flex;       /* чтобы кнопка внутри формы растягивалась */
+}
+
+.modal-actions form .btn,
+.modal-actions > .btn {
+  width: 100%;
+  height: 48px;        /* одинаковая высота */
+  padding: 0 16px;
+  font-weight: 900;
+  border-radius: 14px;
+}

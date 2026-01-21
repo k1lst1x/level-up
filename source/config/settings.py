@@ -4,14 +4,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "dev-secret-key"
 DEBUG = False
+
 ALLOWED_HOSTS = [
+    "ala-event.kz",
+    "www.ala-event.kz",
     "194.32.141.184",
-    "level-up-kz.duckdns.org",
-    "www.level-up-kz.duckdns.org",
 ]
+
 CSRF_TRUSTED_ORIGINS = [
-    "http://level-up-kz.duckdns.org",
-    "https://level-up-kz.duckdns.org",
+    "https://ala-event.kz",
+    "https://www.ala-event.kz",
 ]
 
 INSTALLED_APPS = [

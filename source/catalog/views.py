@@ -36,7 +36,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 
 
 class CategoryListViewSet(ReadOnlyModelViewSet):
-    queryset = Category.objects.all().order_by("sort_order", "name")
+    queryset = Category.objects.all().order_by("sort_order", "name_ru")
     serializer_class = CategorySerializer
 
 
@@ -46,6 +46,6 @@ class CategoryServicesAPIView(views.APIView):
     """
 
     def get(self, request, category_id: int):
-        qs = Service.objects.filter(category_id=category_id).order_by("sort_order", "name")
+        qs = Service.objects.filter(category_id=category_id).order_by("sort_order", "name_ru")
         data = ServiceSerializer(qs, many=True).data
         return Response(data, status=status.HTTP_200_OK)

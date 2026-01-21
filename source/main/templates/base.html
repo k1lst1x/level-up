@@ -30,10 +30,10 @@
     <div class="nav-right">
       {% get_current_language as CURRENT_LANGUAGE %}
 
-      <form action="{% url 'set_language' %}" method="post" style="margin:0;">
+      <form action="{% url 'set_language' %}" method="post" class="lang-form">
         {% csrf_token %}
-     <input name="next" type="hidden" value="{{ request.get_full_path }}">
-     <select name="language" onchange="this.form.submit()">
+        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+        <select name="language" class="lang-switch" onchange="this.form.submit()">      
         <option value="ru" {% if CURRENT_LANGUAGE == "ru" %}selected{% endif %}>{% trans "RU" %}</option>
         <option value="kk" {% if CURRENT_LANGUAGE == "kk" %}selected{% endif %}>{% trans "KZ" %}</option>
         <option value="en" {% if CURRENT_LANGUAGE == "en" %}selected{% endif %}>{% trans "EN" %}</option>
