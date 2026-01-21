@@ -2,14 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 14:41+0600\n"
-"PO-Revision-Date: 2026-01-19 11:40+0500\n"
+"PO-Revision-Date: 2026-01-20 22:38+0500\n"
 "Last-Translator:   <admin@admin.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -20,109 +20,109 @@ msgstr ""
 "X-Translated-Using: django-rosetta 0.10.3\n"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
-#, fuzzy
 #| msgid "КП"
 msgid "КП:"
 msgstr "Proposal"
 
 #: .\kp\templates\kp\admin_kp_detail.html
 msgid "КП → Черновик (админ)"
-msgstr ""
+msgstr "Proposal → Draft (Admin)"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\admin_kp_home.html
 #: .\main\templates\main\category_services.html
 msgid "Клиент:"
-msgstr ""
+msgstr "Client:"
 
 #: .\kp\templates\kp\admin_kp_detail.html
 msgid "К списку"
-msgstr ""
+msgstr "Back to list"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Отправить"
-msgstr ""
+msgstr "Send"
 
 #: .\kp\templates\kp\admin_kp_detail.html
 msgid "Параметры КП (автосейв)"
-msgstr ""
+msgstr "Proposal settings (auto-save)"
 
 #: .\kp\templates\kp\admin_kp_detail.html
 msgid "Ничего “сохранять” не надо, оно само."
-msgstr ""
+msgstr "No need to “save” anything — it’s automatic."
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Заголовок КП"
-msgstr ""
+msgstr "Proposal title"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Например: КП на мероприятие"
-msgstr ""
+msgstr "For example: Proposal for an event"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Шаблон / тип мероприятия"
-msgstr ""
+msgstr "Template / event type"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "— не менять —"
-msgstr ""
+msgstr "— do not change —"
 
 #: .\kp\templates\kp\admin_kp_detail.html
 msgid "Текущий:"
-msgstr ""
+msgstr "Current:"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 #: .\kp\templates\kp\print.html
 msgid "Название мероприятия"
-msgstr ""
+msgstr "Event name"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Например: Свадьба / Корпоратив"
-msgstr ""
+msgstr "For example: Wedding / Corporate event"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 #: .\kp\templates\kp\print.html
 msgid "Дата и время"
-msgstr ""
+msgstr "Date and time"
 
 #: .\kp\templates\kp\admin_kp_detail.html
 msgid "Локация (2GIS ссылка или текст)"
-msgstr ""
+msgstr "Location (2GIS link or text)"
 
 #: .\kp\templates\kp\admin_kp_detail.html
 msgid "https://2gis.kz/... или просто адрес/название"
 msgstr ""
+"https://2gis.kz/\n"
+"... or just the address/name"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\admin_kp_home.html
-#, fuzzy
 #| msgid "Закрыть"
 msgid "Открыть"
-msgstr "Close"
+msgstr "Open"
 
 #: .\kp\templates\kp\admin_kp_detail.html
 msgid "Если это не ссылка, откроется поиск в 2GIS."
-msgstr ""
+msgstr "If it’s not a link, 2GIS search will open."
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 #: .\kp\templates\kp\print.html
 msgid "Описание / заметки"
-msgstr ""
+msgstr "Description / notes"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Короткое описание"
-msgstr ""
+msgstr "Short description"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Услуги в КП"
-msgstr ""
+msgstr "Services in the proposal"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Добавляй через Категории → Услуги."
-msgstr ""
+msgstr "Add them via Categories → Services."
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 #: .\main\templates\main\kp.html
 msgid "Очистить КП"
-msgstr ""
+msgstr "Clear the proposal"
 
 #: .\kp\templates\kp\admin_kp_detail.html
 #: .\kp\templates\kp\customer_request.html
@@ -133,31 +133,31 @@ msgstr ""
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 #: .\main\templates\main\kp.html
 msgid "Убрать"
-msgstr ""
+msgstr "Remove"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Пока пусто. Иди в категории и добавь услуги."
-msgstr ""
+msgstr "It’s empty for now. Go to categories and add services."
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Добавить услуги"
-msgstr ""
+msgstr "Add services"
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Сохранение..."
-msgstr ""
+msgstr "Saving..."
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Сохранено."
-msgstr ""
+msgstr "Saved."
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Не сохранилось."
-msgstr ""
+msgstr "Not saved."
 
 #: .\kp\templates\kp\admin_kp_detail.html .\kp\templates\kp\builder.html
 msgid "Ошибка сети."
-msgstr ""
+msgstr "Network error."
 
 #: .\kp\templates\kp\admin_kp_home.html .\main\templates\base.html
 #: .\main\templates\main\category_services.html .\main\templates\main\kp.html
@@ -166,37 +166,36 @@ msgstr "Proposal"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Коммерческие предложения"
-msgstr ""
+msgstr "Commercial proposals"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Тут ты админ. Клиенты сюда не попадают."
-msgstr ""
+msgstr "You are an admin here. Clients don’t have access to this page."
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "KP tabs"
-msgstr ""
+msgstr "Proposal tabs"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Активные"
-msgstr ""
+msgstr "Active"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Заявки"
-msgstr ""
+msgstr "Requests"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "История"
-msgstr ""
+msgstr "History"
 
 #: .\kp\templates\kp\admin_kp_home.html
-#, fuzzy
 #| msgid "Аккаунт"
 msgid "Создать"
-msgstr "Account"
+msgstr "Create"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "KP, которые сейчас у тебя в работе:"
-msgstr ""
+msgstr "Proposals you’re currently working on:"
 
 #: .\kp\templates\kp\admin_kp_home.html
 #, python-format
@@ -205,23 +204,23 @@ msgstr ""
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Шаблон:"
-msgstr ""
+msgstr "Template:"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Обновлено:"
-msgstr ""
+msgstr "Updated:"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Печать"
-msgstr ""
+msgstr "Print"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Активных черновиков нет. Нажми “Создать”."
-msgstr ""
+msgstr "No active drafts. Click “Create”."
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Запросы от клиентов:"
-msgstr ""
+msgstr "Client requests:"
 
 #: .\kp\templates\kp\admin_kp_home.html
 #, python-format
@@ -230,23 +229,23 @@ msgstr ""
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Статус:"
-msgstr ""
+msgstr "Status:"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Принять"
-msgstr ""
+msgstr "Accept"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Отклонить"
-msgstr ""
+msgstr "Reject"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Заявок нет."
-msgstr ""
+msgstr "No requests."
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Завершённые/отклонённые КП:"
-msgstr ""
+msgstr "Completed/Rejected proposals:"
 
 #: .\kp\templates\kp\admin_kp_home.html
 #, python-format
@@ -255,19 +254,19 @@ msgstr ""
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Активировать"
-msgstr ""
+msgstr "Activate"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "История пустая."
-msgstr ""
+msgstr "History is empty."
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Выбор клиента"
-msgstr ""
+msgstr "Select a client"
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Выбери клиента и создастся/откроется черновик КП"
-msgstr ""
+msgstr "Select a client and a draft proposal will be created/opened."
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "id:"
@@ -275,7 +274,7 @@ msgstr ""
 
 #: .\kp\templates\kp\admin_kp_home.html
 msgid "Клиентов нет."
-msgstr ""
+msgstr "No clients."
 
 #: .\kp\templates\kp\admin_kp_home.html .\kp\templates\kp\builder.html
 #: .\main\templates\base.html .\main\templates\main\category_services.html
@@ -284,57 +283,56 @@ msgstr "Close"
 
 #: .\kp\templates\kp\builder.html
 msgid "Роль: менеджер (админ)."
-msgstr ""
+msgstr "Role: Manager (Admin)."
 
 #: .\kp\templates\kp\builder.html
 msgid "Статус: заявка от клиента."
-msgstr ""
+msgstr "Status: Client request."
 
 #: .\kp\templates\kp\builder.html
 msgid "Роль: клиент. “Отправить” отправляет КП менеджеру."
-msgstr ""
+msgstr "Role: Client. “Send” submits the proposal to the manager."
 
 #: .\kp\templates\kp\builder.html
 msgid "Назад в КП"
-msgstr ""
+msgstr "Back to proposal"
 
 #: .\kp\templates\kp\builder.html
-#, fuzzy
 #| msgid "Категории"
 msgid "В категории"
-msgstr "Categories"
+msgstr "To categories"
 
 #: .\kp\templates\kp\builder.html
 msgid "Открыть для печати"
-msgstr ""
+msgstr "Open for printing"
 
 #: .\kp\templates\kp\builder.html
 msgid "Фото / обложка КП"
-msgstr ""
+msgstr "Proposal photo / cover"
 
 #: .\kp\templates\kp\builder.html
 msgid "Загрузи изображение (баннер/обложка)."
-msgstr ""
+msgstr "Upload an image (banner/cover)."
 
 #: .\kp\templates\kp\builder.html
 msgid "Загрузить фото"
-msgstr ""
+msgstr "Upload photo"
 
 #: .\kp\templates\kp\builder.html
 msgid "Нажми, чтобы загрузить фото"
-msgstr ""
+msgstr "Click to upload a photo"
 
 #: .\kp\templates\kp\builder.html
 msgid "KP photo"
-msgstr ""
+msgstr "Proposal photo"
 
 #: .\kp\templates\kp\builder.html
 msgid "Фото не загружено"
-msgstr ""
+msgstr "No photo uploaded"
 
 #: .\kp\templates\kp\builder.html
 msgid "Загрузка фото"
-msgstr ""
+msgstr "Uploading photo"
 
 #: .\kp\templates\kp\builder.html .\main\templates\base.html
 msgid "Close"
@@ -343,26 +341,27 @@ msgstr "Close"
 #: .\kp\templates\kp\builder.html
 msgid "Нажми “Загрузить фото”, выбери файл и он загрузится автоматически."
 msgstr ""
+"Click “Upload photo”, choose a file, and it will upload automatically."
 
 #: .\kp\templates\kp\builder.html
 msgid "Это КП из истории. Редактирование выключено."
-msgstr ""
+msgstr "This proposal is from history. Editing is disabled."
 
 #: .\kp\templates\kp\builder.html .\kp\templates\kp\print.html
 msgid "Параметры КП"
-msgstr ""
+msgstr "Proposal settings"
 
 #: .\kp\templates\kp\builder.html .\kp\templates\kp\print.html
 msgid "Адрес проведения"
-msgstr ""
+msgstr "Event address"
 
 #: .\kp\templates\kp\builder.html
 msgid "Например: Алматы, ул. Абая 10"
-msgstr ""
+msgstr "For example: Almaty, Abay St. 10"
 
 #: .\kp\templates\kp\builder.html .\kp\templates\kp\print.html
 msgid "Ссылка на адрес (2ГИС/Google)"
-msgstr ""
+msgstr "Address link (2GIS/Google)"
 
 #: .\kp\templates\kp\builder.html
 msgid "https://2gis.kz/..."
@@ -370,7 +369,7 @@ msgstr ""
 
 #: .\kp\templates\kp\builder.html .\kp\templates\kp\print.html
 msgid "Ссылка на Drive"
-msgstr ""
+msgstr "Drive link"
 
 #: .\kp\templates\kp\builder.html
 msgid "https://drive.google.com/..."
@@ -378,94 +377,98 @@ msgstr ""
 
 #: .\kp\templates\kp\builder.html .\kp\templates\kp\print\_services.html
 msgid "Без фото"
-msgstr ""
+msgstr "No photo"
 
 #: .\kp\templates\kp\builder.html
 msgid "шт"
-msgstr ""
+msgstr "pcs"
 
 #: .\kp\templates\kp\builder.html
 msgid "Уменьшить"
-msgstr ""
+msgstr "Decrease"
 
 #: .\kp\templates\kp\builder.html
 msgid "Увеличить"
-msgstr ""
+msgstr "Increase"
 
 #: .\kp\templates\kp\builder.html
 msgid "Итог по КП"
-msgstr ""
+msgstr "Proposal total"
 
 #: .\kp\templates\kp\builder.html
 msgid "Финальная стоимость рассчитывается автоматически."
-msgstr ""
+msgstr "The final cost is calculated automatically."
 
 #: .\kp\templates\kp\builder.html .\kp\templates\kp\print\_services.html
 msgid "Сумма услуг"
-msgstr ""
+msgstr "Services subtotal"
 
 #: .\kp\templates\kp\builder.html .\kp\templates\kp\print\_services.html
 #, python-format
 msgid "Комиссия агенства 20%%"
-msgstr ""
+msgstr "Agency fee 20%%"
 
 #: .\kp\templates\kp\builder.html .\kp\templates\kp\print\_services.html
 msgid "ИТОГО"
-msgstr ""
+msgstr "TOTAL"
 
 #: .\kp\templates\kp\builder.html
 msgid "Готово?"
-msgstr ""
+msgstr "Ready?"
 
 #: .\kp\templates\kp\builder.html
 msgid "Нажми “Завершить”, чтобы закрыть черновик и отправить его в историю."
-msgstr ""
+msgstr "Click “Finish” to close the draft and move it to history."
 
 #: .\kp\templates\kp\builder.html
 msgid "Нажми “Отправить”, чтобы отправить КП менеджеру на рассмотрение."
-msgstr ""
+msgstr "Click “Send” to submit the proposal to the manager for review."
 
 #: .\kp\templates\kp\builder.html
 msgid "Завершить"
-msgstr ""
+msgstr "Finish"
 
 #: .\kp\templates\kp\builder.html
 msgid ""
-"Это КП из истории. Если хочешь продолжить работу, нажми “Сделать активным” в "
-"Истории на странице /kp/."
+"Это КП из истории. Если хочешь продолжить работу, нажми “Сделать активным” в"
+" Истории на странице /kp/."
 msgstr ""
+"This proposal is in history. If you want to continue working on it, click "
+"“Make active” in History on the /kp/ page."
 
 #: .\kp\templates\kp\builder.html
 msgid "Ошибка"
-msgstr ""
+msgstr "Error"
 
 #: .\kp\templates\kp\builder.html
 msgid "Не сохранилось"
-msgstr ""
+msgstr "Not saved"
 
 #: .\kp\templates\kp\customer_request.html
 msgid "Заявка на КП"
-msgstr ""
+msgstr "Proposal request"
 
 #: .\kp\templates\kp\customer_request.html
 msgid "Заявка отправлена менеджеру"
-msgstr ""
+msgstr "The request has been sent to the manager"
 
 #: .\kp\templates\kp\customer_request.html
 msgid "Менеджер увидит заявку в своём списке КП и свяжется с тобой."
 msgstr ""
+"The manager will see the request in their proposal list and will contact "
+"you."
 
 #: .\kp\templates\kp\customer_request.html
 msgid "Номер заявки"
-msgstr ""
+msgstr "Request ID"
 
 #: .\kp\templates\kp\customer_request.html
 msgid "Итоговая сумма"
-msgstr ""
+msgstr "Total amount"
 
 #: .\kp\templates\kp\customer_request.html
 msgid "Контакты, которые уйдут менеджеру"
-msgstr ""
+msgstr "Contact details sent to the manager"
 
 #: .\kp\templates\kp\customer_request.html
 msgid "Email:"
@@ -473,7 +476,7 @@ msgstr ""
 
 #: .\kp\templates\kp\customer_request.html
 msgid "Телефон:"
-msgstr ""
+msgstr "Phone:"
 
 #: .\kp\templates\kp\customer_request.html
 msgid "Telegram:"
@@ -483,44 +486,46 @@ msgstr ""
 msgid ""
 "(Поля phone/telegram появятся, когда ты добавишь их в модель пользователя.)"
 msgstr ""
+"(The phone/telegram fields will appear once you add them to the user model.)"
 
 #: .\kp\templates\kp\customer_request.html
 msgid ""
 "Дальше будет “чат с ботом” и “добавление в телеграм”. Сейчас это просто "
 "заглушка, чтобы процесс работал."
 msgstr ""
+"Next, there will be a “chat with the bot” and “adding to Telegram”. For now,"
+" this is just a placeholder so the process works."
 
 #: .\kp\templates\kp\customer_request.html
-#, fuzzy
 #| msgid "Категории"
 msgid "Вернуться в категории"
-msgstr "Categories"
+msgstr "Back to categories"
 
 #: .\kp\templates\kp\customer_request.html
 msgid "Моё КП"
-msgstr ""
+msgstr "My proposal"
 
 #: .\kp\templates\kp\print.html .\kp\templates\kp\print\_header.html
 msgid "КП №"
-msgstr ""
+msgstr "Proposal №"
 
 #: .\kp\templates\kp\print.html .\main\templates\main\category_services.html
 #: .\main\templates\main\category_subcategories.html
 #: .\main\templates\main\home.html
 msgid "Назад"
-msgstr ""
+msgstr "Back"
 
 #: .\kp\templates\kp\print.html
 msgid "Скачать PDF"
-msgstr ""
+msgstr "Download PDF"
 
 #: .\kp\templates\kp\print.html
 msgid "Обложка КП"
-msgstr ""
+msgstr "Proposal cover"
 
 #: .\kp\templates\kp\print.html
 msgid "Фото не загружено."
-msgstr ""
+msgstr "No photo uploaded."
 
 #: .\kp\templates\kp\print.html .\main\templates\base.html
 msgid "Заказчик"
@@ -528,77 +533,77 @@ msgstr "Customer"
 
 #: .\kp\templates\kp\print.html
 msgid "ФИО"
-msgstr ""
+msgstr "Full name"
 
 #: .\kp\templates\kp\print.html .\main\templates\registration\register.html
 msgid "Телефон"
-msgstr ""
+msgstr "Phone"
 
 #: .\kp\templates\kp\print.html
 msgid "Исполнитель"
-msgstr ""
+msgstr "Provider"
 
 #: .\kp\templates\kp\print.html
 msgid "ФИО / Название"
-msgstr ""
+msgstr "Full name / Company name"
 
 #: .\kp\templates\kp\print\_footer.html
 msgid "Исполнитель:"
-msgstr ""
+msgstr "Contractor:"
 
 #: .\kp\templates\kp\print\_footer.html
 msgid "Контакты:"
-msgstr ""
+msgstr "Contacts:"
 
 #: .\kp\templates\kp\print\_header.html
 msgid "Коммерческое предложение"
-msgstr ""
+msgstr "Commercial proposal"
 
 #: .\kp\templates\kp\print\_header.html
 msgid "Дата:"
-msgstr ""
+msgstr "Date:"
 
 #: .\kp\templates\kp\print\_header.html
 msgid "Время:"
-msgstr ""
+msgstr "Time:"
 
 #: .\kp\templates\kp\print\_services.html
 #: .\main\templates\main\category_services.html
 msgid "Услуги"
-msgstr ""
+msgstr "Services"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Состав и стоимость"
-msgstr ""
+msgstr "Breakdown and cost"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Услуга"
-msgstr ""
+msgstr "Service"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Описание не указано."
-msgstr ""
+msgstr "No description provided."
 
 #: .\kp\templates\kp\print\_services.html
 #: .\main\templates\main\category_services.html
 msgid "Количество"
-msgstr ""
+msgstr "Quantity"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Цена"
-msgstr ""
+msgstr "Price"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Скидка"
-msgstr ""
+msgstr "Discount"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Сумма"
-msgstr ""
+msgstr "Amount"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Услуги не добавлены."
-msgstr ""
+msgstr "No services added."
 
 #: .\main\templates\base.html .\main\templates\main\categories.html
 #: .\main\templates\main\home.html
@@ -646,172 +651,169 @@ msgid "Выйти"
 msgstr "Log out"
 
 #: .\main\templates\main\categories.html .\main\templates\main\home.html
-#, fuzzy
 #| msgid "Категории"
 msgid "Поиск категории…"
-msgstr "Categories"
+msgstr "Search in category"
 
 #: .\main\templates\main\categories.html
 #: .\main\templates\main\category_services.html
 #: .\main\templates\main\category_subcategories.html
 #: .\main\templates\main\home.html
 msgid "Искать"
-msgstr ""
+msgstr "To look for"
 
 #: .\main\templates\main\categories.html
 #: .\main\templates\main\category_services.html
 #: .\main\templates\main\home.html
 msgid "Сброс"
-msgstr ""
+msgstr "Reset"
 
 #: .\main\templates\main\categories.html .\main\templates\main\home.html
 msgid "Без изображения"
-msgstr ""
+msgstr "No image"
 
 #: .\main\templates\main\categories.html .\main\templates\main\home.html
 msgid "Описание не задано"
-msgstr ""
+msgstr "No description provided"
 
 #: .\main\templates\main\categories.html .\main\templates\main\home.html
 msgid "Ничего не найдено."
-msgstr ""
+msgstr "Nothing found."
 
 #: .\main\templates\main\category_services.html
 msgid "Поиск услуг"
-msgstr ""
+msgstr "Service search"
 
 #: .\main\templates\main\category_services.html
 #: .\main\templates\main\category_subcategories.html
 msgid "Нет фото"
-msgstr ""
+msgstr "No photo"
 
 #: .\main\templates\main\category_services.html
 msgid "Услуг нет."
-msgstr ""
+msgstr "No services."
 
 #: .\main\templates\main\category_services.html
 msgid "Добавить услугу"
-msgstr ""
+msgstr "Add service"
 
 #: .\main\templates\main\category_services.html
 msgid "Выбери КП, в которую добавить услугу"
-msgstr ""
+msgstr "Choose a proposal to add the service to"
 
 #: .\main\templates\main\category_services.html
 msgid "Можно добавить несколько раз"
-msgstr ""
+msgstr "You can add it multiple times"
 
 #: .\main\templates\main\category_services.html
 msgid "Создать новое КП"
-msgstr ""
+msgstr "Create a new proposal"
 
 #: .\main\templates\main\category_services.html
 msgid "Добавить и продолжить"
-msgstr ""
+msgstr "Add and continue"
 
 #: .\main\templates\main\category_services.html
 msgid "Добавить и открыть"
-msgstr ""
+msgstr "Add and open"
 
 #: .\main\templates\main\category_services.html
 msgid "Черновиков КП нет. Создай новое КП."
-msgstr ""
+msgstr "There are no draft proposals. Create a new proposal."
 
 #: .\main\templates\main\category_subcategories.html
-#, fuzzy
 #| msgid "Категории"
 msgid "Подкатегории"
-msgstr "Categories"
+msgstr "Subcategories"
 
 #: .\main\templates\main\category_subcategories.html
-#, fuzzy
 #| msgid "Категории"
 msgid "Поиск подкатегорий"
-msgstr "Categories"
+msgstr "Search subcategories"
 
 #: .\main\templates\main\category_subcategories.html
 msgid "Без описания"
-msgstr ""
+msgstr "No description"
 
 #: .\main\templates\main\category_subcategories.html
 msgid "Подкатегорий пока нет."
-msgstr ""
+msgstr "There are no subcategories yet."
 
 #: .\main\templates\main\crm.html
 msgid "Клиенты и контакты. Телефон обязателен, остальное по желанию."
-msgstr ""
+msgstr "Clients and contacts. Phone is required, the rest is optional."
 
 #: .\main\templates\main\crm.html
 msgid "Поиск: ФИО / компания / сфера / телефон…"
-msgstr ""
+msgstr "Search: name / company / industry / phone..."
 
 #: .\main\templates\main\crm.html
 msgid "Добавить клиента"
-msgstr ""
+msgstr "Add client"
 
 #: .\main\templates\main\crm.html
 msgid "Новый клиент"
-msgstr ""
+msgstr "New client"
 
 #: .\main\templates\main\crm.html
 msgid "ФИО / Название клиента"
-msgstr ""
+msgstr "Full name / Client name (or: Full name / Company name)"
 
 #: .\main\templates\main\crm.html
 msgid "Иван Иванов / TOO Ромашка"
-msgstr ""
+msgstr "Ivan Ivanov / Romashka LLP"
 
 #: .\main\templates\main\crm.html
 msgid "Телефон (обязательно)"
-msgstr ""
+msgstr "Phone (required)"
 
 #: .\main\templates\main\crm.html
 msgid "WhatsApp (необязательно)"
-msgstr ""
+msgstr "WhatsApp (optional)"
 
 #: .\main\templates\main\crm.html
 msgid "Email (необязательно)"
-msgstr ""
+msgstr "Email (optional)"
 
 #: .\main\templates\main\crm.html
 msgid "Telegram (необязательно)"
-msgstr ""
+msgstr "Telegram (optional)"
 
 #: .\main\templates\main\crm.html
 msgid "@username или t.me/username"
-msgstr ""
+msgstr "@username or t.me/username"
 
 #: .\main\templates\main\crm.html
 msgid "Компания (необязательно)"
-msgstr ""
+msgstr "Company (optional)"
 
 #: .\main\templates\main\crm.html
 msgid "Сфера (необязательно)"
-msgstr ""
+msgstr "Industry (optional)"
 
 #: .\main\templates\main\crm.html
 msgid "свадьбы / корпораты / IT"
-msgstr ""
+msgstr "weddings / corporate events / IT"
 
 #: .\main\templates\main\crm.html
 msgid "Теги (через запятую)"
-msgstr ""
+msgstr "Tags (comma-separated)"
 
 #: .\main\templates\main\crm.html
 msgid "VIP, теплый, свадьба"
-msgstr ""
+msgstr "VIP, warm lead, wedding"
 
 #: .\main\templates\main\crm.html
 msgid "Сохранить"
-msgstr ""
+msgstr "Save"
 
 #: .\main\templates\main\crm.html
 msgid "Отмена"
-msgstr ""
+msgstr "Cancel"
 
 #: .\main\templates\main\home.html
 msgid "Главная"
-msgstr ""
+msgstr "Home"
 
 #: .\main\templates\main\home.html
 msgid "Мы знаем, как сделать ваше мероприятие незабываемым"
@@ -819,233 +821,242 @@ msgstr "We know how to make your event unforgettable"
 
 #: .\main\templates\main\home.html .\main\templates\main\kp_examples.html
 msgid "Рассчитать стоимость"
-msgstr ""
+msgstr "Calculate the cost"
 
 #: .\main\templates\main\home.html
 msgid "Посмотреть кейсы"
-msgstr ""
+msgstr "View case studies"
 
 #: .\main\templates\main\home.html
 msgid "Наши кейсы"
-msgstr ""
+msgstr "Our case studies"
 
 #: .\main\templates\main\home.html
 msgid "Вперёд"
-msgstr ""
+msgstr "Next"
 
 #: .\main\templates\main\home.html
 msgid "Свадьба • 80 гостей"
-msgstr ""
+msgstr "Wedding • 80 guests"
 
 #: .\main\templates\main\home.html
 msgid "Корпоратив • награждение"
-msgstr ""
+msgstr "Corporate event • awards ceremony"
 
 #: .\main\templates\main\home.html
 msgid "День рождения • private"
-msgstr ""
+msgstr "Birthday • private"
 
 #: .\main\templates\main\home.html
 msgid "Концерт • шоу"
-msgstr ""
+msgstr "Concert • show"
 
 #: .\main\templates\main\home.html
 msgid "Свадьба • 140 гостей"
-msgstr ""
+msgstr "Wedding • 140 guests"
 
 #: .\main\templates\main\home.html
 msgid "Корпоратив • конференция"
-msgstr ""
+msgstr "Corporate event • conference"
 
 #: .\main\templates\main\home.html
 msgid "Частное • gala dinner"
-msgstr ""
+msgstr "Private • gala dinner"
 
 #: .\main\templates\main\home.html
 msgid "Корпоратив • team party"
-msgstr ""
+msgstr "Corporate event • team party"
 
 #: .\main\templates\main\home.html
 msgid "Смотреть все кейсы"
-msgstr ""
+msgstr "View all cases"
 
 #: .\main\templates\main\home.html
 msgid "Как проходит работа"
-msgstr ""
+msgstr "How it works"
 
 #: .\main\templates\main\home.html
 msgid "Бриф и задача"
-msgstr ""
+msgstr "Brief & goals"
 
 #: .\main\templates\main\home.html
 msgid ""
 "Вместе с вами прорабатываем ключевые моменты: формат, цели и ожидания "
 "мероприятия."
 msgstr ""
+"Together we define the key details: event format, goals, and expectations."
 
 #: .\main\templates\main\home.html
 msgid "Подготовка  "
-msgstr ""
+msgstr "Preparation"
 
 #: .\main\templates\main\home.html
 msgid ""
 "Создаём несколько концепций, прорабатываем сценарий и фиксируем бюджет, "
 "чтобы всё было прозрачно."
 msgstr ""
+"We develop several concepts, plan the script, and confirm the budget — "
+"everything stays transparent."
 
 #: .\main\templates\main\home.html
 msgid "Подготовка"
-msgstr ""
+msgstr "Coordination"
 
 #: .\main\templates\main\home.html
 msgid ""
 "Координируем все этапы подготовки: от команды до таймингов, гарантируя "
 "безупречную организацию."
 msgstr ""
+"We coordinate every step — from the team to the timing — to ensure flawless "
+"execution."
 
 #: .\main\templates\main\home.html
 msgid "Проведение"
-msgstr ""
+msgstr "Event day"
 
 #: .\main\templates\main\home.html
 msgid ""
-"Полная координация и контроль, чтобы вы могли сосредоточиться на отдыхе — мы "
-"решаем все вопросы."
+"Полная координация и контроль, чтобы вы могли сосредоточиться на отдыхе — мы"
+" решаем все вопросы."
 msgstr ""
+"Full coordination and control so you can relax — we handle everything."
 
 #: .\main\templates\main\home.html
 msgid "Из чего складывается стоимость"
-msgstr ""
+msgstr "What affects the cost"
 
 #: .\main\templates\main\home.html
 msgid "Формат "
-msgstr ""
+msgstr "Format"
 
 #: .\main\templates\main\home.html
 msgid "Свадьбы, корпоративы, любые мероприятия."
-msgstr ""
+msgstr "Weddings, corporate events — any format."
 
 #: .\main\templates\main\home.html
 msgid "Команда"
-msgstr ""
+msgstr "Team"
 
 #: .\main\templates\main\home.html
 msgid "Ведущий, артисты, техперсонал."
-msgstr ""
+msgstr "Host, performers, technical crew."
 
 #: .\main\templates\main\home.html
 msgid "Оборудование"
-msgstr ""
+msgstr "Equipment"
 
 #: .\main\templates\main\home.html
 msgid "Свет, звук, экраны, спецэффекты."
-msgstr ""
+msgstr "Lighting, sound, screens, special effects."
 
 #: .\main\templates\main\home.html
 msgid "Тайинг, подрядчики, реквизиты."
-msgstr ""
+msgstr "Schedule, vendors, props."
 
 #: .\main\templates\main\home.html
 msgid "Хотите программу под ваш формат?"
-msgstr ""
+msgstr "Want a program tailored to your event?"
 
 #: .\main\templates\main\home.html
 msgid "Предложим 2–3 варианта с бюджетом и таймингом."
-msgstr ""
+msgstr "We’ll offer 2–3 options with budget and timing."
 
 #: .\main\templates\main\home.html
 msgid "Получить варианты"
-msgstr ""
+msgstr "Get option"
 
 #: .\main\templates\main\home.html
 msgid "Часто задаваемые вопросы"
-msgstr ""
+msgstr "Frequently Asked Questions"
 
 #: .\main\templates\main\home.html
 msgid "Сколько времени нужно на подготовку?"
-msgstr ""
+msgstr "How much time do you need to prepare?"
 
 #: .\main\templates\main\home.html
 msgid "Обычно от 7 дней. Срочные проекты тоже берём, если есть окно."
 msgstr ""
+"Usually from 7 days. We can also take urgent projects if we have "
+"availability."
 
 #: .\main\templates\main\home.html
 msgid "Можно уложиться в конкретный бюджет?"
-msgstr ""
+msgstr "Can you fit a specific budget?"
 
 #: .\main\templates\main\home.html
 msgid "Да. Предложим варианты под рамку и честно скажем, где компромисс."
 msgstr ""
+"Yes. We’ll suggest options within your budget and clearly explain where "
+"compromises may be needed."
 
 #: .\main\templates\main\home.html
 msgid "Вы работаете «под ключ»?"
-msgstr ""
+msgstr "Do you offer full-service event planning?"
 
 #: .\main\templates\main\home.html
 msgid "Да. От сценария и сметы до координации на площадке."
-msgstr ""
+msgstr "Yes — from the concept and budget to on-site coordination."
 
 #: .\main\templates\main\home.html
 msgid "Что если что-то пойдёт не так?"
-msgstr ""
+msgstr "What if something goes wrong?"
 
 #: .\main\templates\main\home.html
 msgid "Все нюансы решаются командой здесь и сейчас."
-msgstr ""
+msgstr "Our team handles any issues on the spot, in real time."
 
 #: .\main\templates\main\home.html
 msgid "Контакты"
-msgstr ""
+msgstr "Contacts"
 
 #: .\main\templates\main\home.html
 msgid "Напишите или позвоните — обсудим формат и предложим варианты."
-msgstr ""
+msgstr "Message or call us — we’ll discuss your event and suggest options."
 
 #: .\main\templates\main\home.html .\main\templates\registration\register.html
 msgid "Почта"
-msgstr ""
+msgstr "Email"
 
 #: .\main\templates\main\home.html
 msgid "Мы находимся"
-msgstr ""
+msgstr "We are located at"
 
 #: .\main\templates\main\home.html
 msgid "Алматы, Улица Жубанова, 3а"
-msgstr ""
+msgstr "Almaty, Zhubanova Street, 3A"
 
 #: .\main\templates\main\kp.html
 msgid "КП → Черновик"
-msgstr ""
+msgstr "Proposal → Draft"
 
 #: .\main\templates\main\kp.html
 msgid "Итого:"
-msgstr ""
+msgstr "Total:"
 
 #: .\main\templates\main\kp.html
-#, fuzzy
 #| msgid "Категории"
 msgid "Перейти в категории"
-msgstr "Categories"
+msgstr "Go to categories"
 
 #: .\main\templates\main\kp.html
 msgid "Создать КП"
-msgstr ""
+msgstr "Create proposal"
 
 #: .\main\templates\main\kp.html
 msgid "Чтобы создать КП, сначала добавь услуги."
-msgstr ""
+msgstr "To create a proposal, add services first."
 
 #: .\main\templates\main\kp.html
 msgid "Ты собираешь услуги, а менеджер подтверждает и связывается с тобой."
-msgstr ""
+msgstr "You select the services, and a manager will confirm and contact you."
 
 #: .\main\templates\main\kp.html
 msgid "Черновик КП"
-msgstr ""
+msgstr "Draft proposal"
 
 #: .\main\templates\main\kp.html
 msgid "Черновик ещё не создан."
-msgstr ""
+msgstr "he draft hasn’t been created yet."
 
 #: .\main\templates\main\kp.html
 #, python-format
@@ -1057,229 +1068,230 @@ msgstr ""
 
 #: .\main\templates\main\kp.html
 msgid "скидка"
-msgstr ""
+msgstr "Discount"
 
 #: .\main\templates\main\kp.html
 msgid "Пока пусто. Иди в подкатегорию и нажми “Выбрать”."
-msgstr ""
+msgstr "It’s empty for now. Go to subcategories and click “Select”."
 
 #: .\main\templates\main\kp_examples.html
 msgid "Примеры коммерческих предложений"
-msgstr ""
+msgstr "Proposal examples"
 
 #: .\main\templates\main\kp_examples.html
 msgid ""
 "Ниже — три варианта формата мероприятий. Каждый проект собирается "
 "индивидуально."
 msgstr ""
+"Below are three event format options. Each project is tailored individually."
 
 #: .\main\templates\main\kp_examples.html
 msgid "Минимальный формат"
-msgstr ""
+msgstr "Basic package"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎈 Минимальный формат"
-msgstr ""
+msgstr "🎈 Basic package"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Подойдёт для камерных мероприятий и частных событий"
-msgstr ""
+msgstr "Perfect for intimate events and private occasions"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎤 Ведущий / координатор"
-msgstr ""
+msgstr "🎤 Host / Coordinator"
 
 #: .\main\templates\main\kp_examples.html
 msgid "📝 Базовый сценарий"
-msgstr ""
+msgstr "📝 Basic event script"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎵 Музыкальное сопровождение"
-msgstr ""
+msgstr "🎵 Music accompanimen"
 
 #: .\main\templates\main\kp_examples.html
 msgid "💡 Минимальный свет"
-msgstr ""
+msgstr "💡 Basic lighting"
 
 #: .\main\templates\main\kp_examples.html
 msgid "✅ Контроль мероприятия"
-msgstr ""
+msgstr "✅ Event coordination"
 
 #: .\main\templates\main\kp_examples.html
 msgid "от 300 000 ₸"
-msgstr ""
+msgstr "from 300,000 ₸"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Подходит для дней рождений, небольших корпоративов, private-вечеринок."
-msgstr ""
+msgstr "Suitable for birthdays, small corporate events, and private parties."
 
 #: .\main\templates\main\kp_examples.html
 msgid "Оптимальный формат"
-msgstr ""
+msgstr "Optimal package"
 
 #: .\main\templates\main\kp_examples.html
 msgid "⭐ Оптимальный формат"
-msgstr ""
+msgstr "⭐ Optimal package"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Самый популярный вариант для мероприятий под ключ"
-msgstr ""
+msgstr "The most popular turnkey event package"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎤 Ведущий + координатор"
-msgstr ""
+msgstr "🎤 Host + Coordinator"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎨 Проработка концепции"
-msgstr ""
+msgstr "🎨 Concept development"
 
 #: .\main\templates\main\kp_examples.html
 msgid "📋 Сценарий и тайминг"
-msgstr ""
+msgstr "📋 Script & timing"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🔊 Свет + звук"
-msgstr ""
+msgstr "🔊 Lighting + sound"
 
 #: .\main\templates\main\kp_examples.html
 msgid "💃 Артисты / шоу-блок"
-msgstr ""
+msgstr "💃Performers / show segment"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🛠 Репетиции и контроль"
-msgstr ""
+msgstr "🛠 Rehearsals & coordination"
 
 #: .\main\templates\main\kp_examples.html
 msgid "от 700 000 ₸"
-msgstr ""
+msgstr "from 700,000 ₸"
 
 #: .\main\templates\main\kp_examples.html
 msgid ""
 "Подходит для свадеб, корпоративов, презентаций, крупных частных событий."
 msgstr ""
+"Suitable for weddings, corporate events, presentations, and large private "
+"events."
 
 #: .\main\templates\main\kp_examples.html
 msgid "Премиальный формат"
-msgstr ""
+msgstr "Premium package"
 
 #: .\main\templates\main\kp_examples.html
 msgid "👑 Премиальный формат"
-msgstr ""
+msgstr "👑 Premium package"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Большие проекты, шоу-программы и масштабные события"
-msgstr ""
+msgstr "Large-scale projects, show programs, and major events"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎬 Продюсер проекта"
-msgstr ""
+msgstr "🎬 Project producer"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🚀 Авторская концепция"
-msgstr ""
+msgstr "🚀 Custom concept"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🕺 Команда артистов"
-msgstr ""
+msgstr "🕺 Team of performers"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎆 Сцена, экраны, спецэффекты"
-msgstr ""
+msgstr "🎆 Stage, screens, special effects"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🏗 Полный продакшн"
-msgstr ""
+msgstr "🏗 Full production"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎥 Режиссура мероприятия"
-msgstr ""
+msgstr "🎥 Event directing"
 
 #: .\main\templates\main\kp_examples.html
 msgid "от 1 500 000 ₸"
-msgstr ""
+msgstr "from 1,500,000 ₸"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Подходит для концертов, форумов, брендинговых и имиджевых мероприятий."
 msgstr ""
+"Suitable for concerts, forums, branding events, and corporate image events."
 
 #: .\main\templates\main\kp_examples.html
 msgid "Хотите рассчитать точную стоимость?"
-msgstr ""
+msgstr "Want to calculate the exact cost?"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Соберите своё КП и получите персональный расчёт."
-msgstr ""
+msgstr "Build your proposal and get a personalized quote."
 
 #: .\main\templates\main\kp_examples.html
 msgid "На главную"
-msgstr ""
+msgstr "Home"
 
 #: .\main\templates\registration\login.html
 msgid "Вход"
-msgstr ""
+msgstr "Login"
 
 #: .\main\templates\registration\login.html
-#, fuzzy
 #| msgid "Аккаунт"
 msgid "Вход в аккаунт"
-msgstr "Account"
+msgstr "Account login"
 
 #: .\main\templates\registration\login.html
 msgid "Войдите, чтобы продолжить работу"
-msgstr ""
+msgstr "Sign in to continue"
 
 #: .\main\templates\registration\login.html
 msgid "Неверный логин или пароль"
-msgstr ""
+msgstr "Incorrect username or password"
 
 #: .\main\templates\registration\login.html
 #: .\main\templates\registration\register.html
 msgid "Логин"
-msgstr ""
+msgstr "Username"
 
 #: .\main\templates\registration\login.html
 #: .\main\templates\registration\register.html
 msgid "Пароль"
-msgstr ""
+msgstr "Password"
 
 #: .\main\templates\registration\login.html
 #: .\main\templates\registration\register.html
 msgid "Войти"
-msgstr ""
+msgstr "Log in"
 
 #: .\main\templates\registration\login.html
-#, fuzzy
 #| msgid "Аккаунт"
 msgid "Нет аккаунта?"
-msgstr "Account"
+msgstr "Don’t have an account?"
 
 #: .\main\templates\registration\login.html
 #: .\main\templates\registration\register.html
 msgid "Зарегистрироваться"
-msgstr ""
+msgstr "Sign up"
 
 #: .\main\templates\registration\register.html
 msgid "Регистрация"
-msgstr ""
+msgstr "Registration"
 
 #: .\main\templates\registration\register.html
-#, fuzzy
 #| msgid "Аккаунт"
 msgid "Создать аккаунт"
-msgstr "Account"
+msgstr "Create an account"
 
 #: .\main\templates\registration\register.html
 msgid "Заполните данные для регистрации"
-msgstr ""
+msgstr "Fill in your details to sign up"
 
 #: .\main\templates\registration\register.html
 msgid "Проверьте правильность заполнения формы"
-msgstr ""
+msgstr "Please check the form for errors"
 
 #: .\main\templates\registration\register.html
 msgid "Повторите пароль"
-msgstr ""
+msgstr "Confirm password"
 
 #: .\main\templates\registration\register.html
 msgid "Уже есть аккаунт?"
-msgstr ""
+msgstr "Already have an account?"

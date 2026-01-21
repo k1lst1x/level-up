@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 14:39+0600\n"
-"PO-Revision-Date: 2026-01-19 15:42+0500\n"
+"PO-Revision-Date: 2026-01-20 22:08+0500\n"
 "Last-Translator:   <admin@admin.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -539,73 +539,73 @@ msgstr "Фото жүктелмеген."
 
 #: .\kp\templates\kp\print.html .\main\templates\registration\register.html
 msgid "Телефон"
-msgstr ""
+msgstr "Телефон"
 
 #: .\kp\templates\kp\print.html
 msgid "Исполнитель"
-msgstr ""
+msgstr "Орындаушы"
 
 #: .\kp\templates\kp\print.html
 msgid "ФИО / Название"
-msgstr ""
+msgstr "Аты-жөні / Атауы"
 
 #: .\kp\templates\kp\print\_footer.html
 msgid "Исполнитель:"
-msgstr ""
+msgstr "Орындаушы:"
 
 #: .\kp\templates\kp\print\_footer.html
 msgid "Контакты:"
-msgstr ""
+msgstr "Байланыс деректері:"
 
 #: .\kp\templates\kp\print\_header.html
 msgid "Коммерческое предложение"
-msgstr ""
+msgstr "Коммерциялық ұсыныс"
 
 #: .\kp\templates\kp\print\_header.html
 msgid "Дата:"
-msgstr ""
+msgstr "Күні:"
 
 #: .\kp\templates\kp\print\_header.html
 msgid "Время:"
-msgstr ""
+msgstr "Уақыты:"
 
 #: .\kp\templates\kp\print\_services.html
 #: .\main\templates\main\category_services.html
 msgid "Услуги"
-msgstr ""
+msgstr "Қызметтер"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Состав и стоимость"
-msgstr ""
+msgstr "Құрамы және құны"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Услуга"
-msgstr ""
+msgstr "Қызмет"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Описание не указано."
-msgstr ""
+msgstr "Сипаттама көрсетілмеген."
 
 #: .\kp\templates\kp\print\_services.html
 #: .\main\templates\main\category_services.html
 msgid "Количество"
-msgstr ""
+msgstr "Саны"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Цена"
-msgstr ""
+msgstr "Бағасы"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Скидка"
-msgstr ""
+msgstr "Жеңілдік"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Сумма"
-msgstr ""
+msgstr "Сома"
 
 #: .\kp\templates\kp\print\_services.html
 msgid "Услуги не добавлены."
-msgstr ""
+msgstr "Қызметтер қосылмаған."
 
 #: .\main\templates\base.html .\main\templates\main\categories.html
 #: .\main\templates\main\home.html
@@ -653,172 +653,170 @@ msgid "Выйти"
 msgstr "Шығу"
 
 #: .\main\templates\main\categories.html .\main\templates\main\home.html
-#, fuzzy
 #| msgid "Категории"
 msgid "Поиск категории…"
-msgstr "Санаттар"
+msgstr "Санаттарды іздеу…"
 
 #: .\main\templates\main\categories.html
 #: .\main\templates\main\category_services.html
 #: .\main\templates\main\category_subcategories.html
 #: .\main\templates\main\home.html
 msgid "Искать"
-msgstr ""
+msgstr "Іздеу"
 
 #: .\main\templates\main\categories.html
 #: .\main\templates\main\category_services.html
 #: .\main\templates\main\home.html
 msgid "Сброс"
-msgstr ""
+msgstr "Тазалау"
 
 #: .\main\templates\main\categories.html .\main\templates\main\home.html
 msgid "Без изображения"
-msgstr ""
+msgstr "Тазалау"
 
 #: .\main\templates\main\categories.html .\main\templates\main\home.html
 msgid "Описание не задано"
-msgstr ""
+msgstr "Сипаттама жоқ"
 
 #: .\main\templates\main\categories.html .\main\templates\main\home.html
 msgid "Ничего не найдено."
-msgstr ""
+msgstr "Ештеңе табылмады."
 
 #: .\main\templates\main\category_services.html
 msgid "Поиск услуг"
-msgstr ""
+msgstr "Қызметтерді іздеу"
 
 #: .\main\templates\main\category_services.html
 #: .\main\templates\main\category_subcategories.html
 msgid "Нет фото"
-msgstr ""
+msgstr "Фото жоқ"
 
 #: .\main\templates\main\category_services.html
 msgid "Услуг нет."
-msgstr ""
+msgstr "Қызметтер жоқ."
 
 #: .\main\templates\main\category_services.html
 msgid "Добавить услугу"
-msgstr ""
+msgstr "Қызмет қосу"
 
 #: .\main\templates\main\category_services.html
 msgid "Выбери КП, в которую добавить услугу"
-msgstr ""
+msgstr "Қызмет қосатын КП-ны таңда"
 
 #: .\main\templates\main\category_services.html
 msgid "Можно добавить несколько раз"
-msgstr ""
+msgstr "Бірнеше рет қосуға болады"
 
 #: .\main\templates\main\category_services.html
 msgid "Создать новое КП"
-msgstr ""
+msgstr "Жаңа КП жасау"
 
 #: .\main\templates\main\category_services.html
 msgid "Добавить и продолжить"
-msgstr ""
+msgstr "Қосу және жалғастыру"
 
 #: .\main\templates\main\category_services.html
 msgid "Добавить и открыть"
-msgstr ""
+msgstr "Қосу және ашу"
 
 #: .\main\templates\main\category_services.html
 msgid "Черновиков КП нет. Создай новое КП."
-msgstr ""
+msgstr "КП жобалары жоқ. Жаңа КП жаса."
 
 #: .\main\templates\main\category_subcategories.html
-#, fuzzy
 #| msgid "Категории"
 msgid "Подкатегории"
-msgstr "Санаттар"
+msgstr "Ішкі санаттар"
 
 #: .\main\templates\main\category_subcategories.html
-#, fuzzy
 #| msgid "Категории"
 msgid "Поиск подкатегорий"
-msgstr "Санаттар"
+msgstr "Ішкі санаттарды іздеу"
 
 #: .\main\templates\main\category_subcategories.html
 msgid "Без описания"
-msgstr ""
+msgstr "Сипаттамасыз"
 
 #: .\main\templates\main\category_subcategories.html
 msgid "Подкатегорий пока нет."
-msgstr ""
+msgstr "Әзірге ішкі санаттар жоқ."
 
 #: .\main\templates\main\crm.html
 msgid "Клиенты и контакты. Телефон обязателен, остальное по желанию."
 msgstr ""
+"Клиенттер және байланыс деректері. Телефон міндетті, қалғаны қалауыңызша."
 
 #: .\main\templates\main\crm.html
 msgid "Поиск: ФИО / компания / сфера / телефон…"
-msgstr ""
+msgstr "Іздеу: Аты-жөні / компания / сала / телефон..."
 
 #: .\main\templates\main\crm.html
 msgid "Добавить клиента"
-msgstr ""
+msgstr "Клиент қосу"
 
 #: .\main\templates\main\crm.html
 msgid "Новый клиент"
-msgstr ""
+msgstr "Жаңа клиент"
 
 #: .\main\templates\main\crm.html
 msgid "ФИО / Название клиента"
-msgstr ""
+msgstr "Жаңа клиент"
 
 #: .\main\templates\main\crm.html
 msgid "Иван Иванов / TOO Ромашка"
-msgstr ""
+msgstr "Иван Иванов / «Ромашка» ЖШС"
 
 #: .\main\templates\main\crm.html
 msgid "Телефон (обязательно)"
-msgstr ""
+msgstr "Телефон (міндетті)"
 
 #: .\main\templates\main\crm.html
 msgid "WhatsApp (необязательно)"
-msgstr ""
+msgstr "WhatsApp (міндетті емес)"
 
 #: .\main\templates\main\crm.html
 msgid "Email (необязательно)"
-msgstr ""
+msgstr "Email (міндетті емес)"
 
 #: .\main\templates\main\crm.html
 msgid "Telegram (необязательно)"
-msgstr ""
+msgstr "Telegram (міндетті емес)"
 
 #: .\main\templates\main\crm.html
 msgid "@username или t.me/username"
-msgstr ""
+msgstr "@username немесе t.me/username"
 
 #: .\main\templates\main\crm.html
 msgid "Компания (необязательно)"
-msgstr ""
+msgstr "Компания (міндетті емес)"
 
 #: .\main\templates\main\crm.html
 msgid "Сфера (необязательно)"
-msgstr ""
+msgstr "Сала (міндетті емес)"
 
 #: .\main\templates\main\crm.html
 msgid "свадьбы / корпораты / IT"
-msgstr ""
+msgstr "тойлар / корпоративтер / IT"
 
 #: .\main\templates\main\crm.html
 msgid "Теги (через запятую)"
-msgstr ""
+msgstr "Тегтер (үтір арқылы)"
 
 #: .\main\templates\main\crm.html
 msgid "VIP, теплый, свадьба"
-msgstr ""
+msgstr "VIP, жылы, той"
 
 #: .\main\templates\main\crm.html
 msgid "Сохранить"
-msgstr ""
+msgstr "Сақтау"
 
 #: .\main\templates\main\crm.html
 msgid "Отмена"
-msgstr ""
+msgstr "Болдырмау"
 
 #: .\main\templates\main\home.html
 msgid "Главная"
-msgstr ""
+msgstr "Басты бет"
 
 #: .\main\templates\main\home.html
 msgid "Мы знаем, как сделать ваше мероприятие незабываемым"
@@ -826,233 +824,244 @@ msgstr "Біз сіздің шараңызды қалай ұмытылмас е�
 
 #: .\main\templates\main\home.html .\main\templates\main\kp_examples.html
 msgid "Рассчитать стоимость"
-msgstr ""
+msgstr "Құнын есептеу"
 
 #: .\main\templates\main\home.html
 msgid "Посмотреть кейсы"
-msgstr ""
+msgstr "Кейстерді көру"
 
 #: .\main\templates\main\home.html
 msgid "Наши кейсы"
-msgstr ""
+msgstr "Біздің кейстер"
 
 #: .\main\templates\main\home.html
 msgid "Вперёд"
-msgstr ""
+msgstr "Алға"
 
 #: .\main\templates\main\home.html
 msgid "Свадьба • 80 гостей"
-msgstr ""
+msgstr "Той • 80 қонақ"
 
 #: .\main\templates\main\home.html
 msgid "Корпоратив • награждение"
-msgstr ""
+msgstr "Корпоратив • марапаттау"
 
 #: .\main\templates\main\home.html
 msgid "День рождения • private"
-msgstr ""
+msgstr "Туған күн • private"
 
 #: .\main\templates\main\home.html
 msgid "Концерт • шоу"
-msgstr ""
+msgstr "Концерт • шоу"
 
 #: .\main\templates\main\home.html
 msgid "Свадьба • 140 гостей"
-msgstr ""
+msgstr "Той • 140 қонақ"
 
 #: .\main\templates\main\home.html
 msgid "Корпоратив • конференция"
-msgstr ""
+msgstr "Корпоратив • конференция"
 
 #: .\main\templates\main\home.html
 msgid "Частное • gala dinner"
-msgstr ""
+msgstr "Жеке • gala dinner"
 
 #: .\main\templates\main\home.html
 msgid "Корпоратив • team party"
-msgstr ""
+msgstr "Корпоратив • team party"
 
 #: .\main\templates\main\home.html
 msgid "Смотреть все кейсы"
-msgstr ""
+msgstr "Барлық кейстерді көру"
 
 #: .\main\templates\main\home.html
 msgid "Как проходит работа"
-msgstr ""
+msgstr "Жұмыс қалай өтеді"
 
 #: .\main\templates\main\home.html
 msgid "Бриф и задача"
-msgstr ""
+msgstr "Бриф және тапсырма"
 
 #: .\main\templates\main\home.html
 msgid ""
 "Вместе с вами прорабатываем ключевые моменты: формат, цели и ожидания "
 "мероприятия."
 msgstr ""
+"Сізбен бірге іс-шараның негізгі тұстарын нақтылаймыз: форматы, мақсаты және "
+"күтілетін нәтижелері."
 
 #: .\main\templates\main\home.html
 msgid "Подготовка  "
-msgstr ""
+msgstr "Дайындық"
 
 #: .\main\templates\main\home.html
 msgid ""
 "Создаём несколько концепций, прорабатываем сценарий и фиксируем бюджет, "
 "чтобы всё было прозрачно."
 msgstr ""
+"Бірнеше концепция ұсынамыз, сценарийді пысықтаймыз және бәрі түсінікті болуы"
+" үшін бюджетті бекітеміз."
 
 #: .\main\templates\main\home.html
 msgid "Подготовка"
-msgstr ""
+msgstr "Дайындық"
 
 #: .\main\templates\main\home.html
 msgid ""
 "Координируем все этапы подготовки: от команды до таймингов, гарантируя "
 "безупречную организацию."
 msgstr ""
+"Командадан бастап таймингке дейін дайындықтың барлық кезеңін үйлестіріп, "
+"мінсіз ұйымдастыруды қамтамасыз етеміз."
 
 #: .\main\templates\main\home.html
 msgid "Проведение"
-msgstr ""
+msgstr "Өткізу"
 
 #: .\main\templates\main\home.html
 msgid ""
 "Полная координация и контроль, чтобы вы могли сосредоточиться на отдыхе — мы"
 " решаем все вопросы."
 msgstr ""
+"Сіз демалысқа көңіл бөлуіңіз үшін толық үйлестіру және бақылау жасаймыз — "
+"барлық мәселені біз шешеміз."
 
 #: .\main\templates\main\home.html
 msgid "Из чего складывается стоимость"
-msgstr ""
+msgstr "Баға неден құралады"
 
 #: .\main\templates\main\home.html
 msgid "Формат "
-msgstr ""
+msgstr "Формат"
 
 #: .\main\templates\main\home.html
 msgid "Свадьбы, корпоративы, любые мероприятия."
-msgstr ""
+msgstr "Үйлену тойы, корпоративтер, кез келген іс-шаралар."
 
 #: .\main\templates\main\home.html
 msgid "Команда"
-msgstr ""
+msgstr "Команда"
 
 #: .\main\templates\main\home.html
 msgid "Ведущий, артисты, техперсонал."
-msgstr ""
+msgstr "Жүргізуші, әртістер, техникалық персонал."
 
 #: .\main\templates\main\home.html
 msgid "Оборудование"
-msgstr ""
+msgstr "Жабдықтар"
 
 #: .\main\templates\main\home.html
 msgid "Свет, звук, экраны, спецэффекты."
-msgstr ""
+msgstr "Жарық, дыбыс, экрандар, арнайы эффектілер."
 
 #: .\main\templates\main\home.html
 msgid "Тайинг, подрядчики, реквизиты."
-msgstr ""
+msgstr "Тайминг, мердігерлер, реквизиттер."
 
 #: .\main\templates\main\home.html
 msgid "Хотите программу под ваш формат?"
-msgstr ""
+msgstr "Форматыңызға сай бағдарлама керек пе?"
 
 #: .\main\templates\main\home.html
 msgid "Предложим 2–3 варианта с бюджетом и таймингом."
-msgstr ""
+msgstr "Бюджет пен таймингті ескеріп, 2–3 нұсқа ұсынамыз."
 
 #: .\main\templates\main\home.html
 msgid "Получить варианты"
-msgstr ""
+msgstr "Нұсқаларды алу"
 
 #: .\main\templates\main\home.html
 msgid "Часто задаваемые вопросы"
-msgstr ""
+msgstr "Жиі қойылатын сұрақтар"
 
 #: .\main\templates\main\home.html
 msgid "Сколько времени нужно на подготовку?"
-msgstr ""
+msgstr "Дайындыққа қанша уақыт қажет?"
 
 #: .\main\templates\main\home.html
 msgid "Обычно от 7 дней. Срочные проекты тоже берём, если есть окно."
 msgstr ""
+"Әдетте 7 күннен бастап. Уақытымыз болса, шұғыл жобаларды да қабылдаймыз."
 
 #: .\main\templates\main\home.html
 msgid "Можно уложиться в конкретный бюджет?"
-msgstr ""
+msgstr "Белгілі бір бюджетке сыйғызуға бола ма?"
 
 #: .\main\templates\main\home.html
 msgid "Да. Предложим варианты под рамку и честно скажем, где компромисс."
 msgstr ""
+"Иә. Бюджет шеңберіне сай нұсқаларды ұсынамыз және қай жерде ымыра қажет "
+"екенін ашық айтамыз."
 
 #: .\main\templates\main\home.html
 msgid "Вы работаете «под ключ»?"
-msgstr ""
+msgstr "«Толық қызмет» көрсетесіздер ме?"
 
 #: .\main\templates\main\home.html
 msgid "Да. От сценария и сметы до координации на площадке."
-msgstr ""
+msgstr "Иә. Сценарий мен сметадан бастап, алаңдағы үйлестіруге дейін."
 
 #: .\main\templates\main\home.html
 msgid "Что если что-то пойдёт не так?"
-msgstr ""
+msgstr "Егер бірдеңе дұрыс болмай қалса ше?"
 
 #: .\main\templates\main\home.html
 msgid "Все нюансы решаются командой здесь и сейчас."
-msgstr ""
+msgstr "Барлық мәселелерді команда сол сәтте-ақ шешеді."
 
 #: .\main\templates\main\home.html
 msgid "Контакты"
-msgstr ""
+msgstr "Байланыс"
 
 #: .\main\templates\main\home.html
 msgid "Напишите или позвоните — обсудим формат и предложим варианты."
 msgstr ""
+"Жазыңыз немесе қоңырау шалыңыз — форматты талқылап, нұсқаларды ұсынамыз."
 
 #: .\main\templates\main\home.html .\main\templates\registration\register.html
 msgid "Почта"
-msgstr ""
+msgstr "Электрондық пошта"
 
 #: .\main\templates\main\home.html
 msgid "Мы находимся"
-msgstr ""
+msgstr "Біз мына жерде орналасқанбыз"
 
 #: .\main\templates\main\home.html
 msgid "Алматы, Улица Жубанова, 3а"
-msgstr ""
+msgstr "Алматы, Жұбанов көшесі, 3а"
 
 #: .\main\templates\main\kp.html
 msgid "КП → Черновик"
-msgstr ""
+msgstr "КП → Жоба"
 
 #: .\main\templates\main\kp.html
 msgid "Итого:"
-msgstr ""
+msgstr "Жалпы:"
 
 #: .\main\templates\main\kp.html
-#, fuzzy
 #| msgid "Категории"
 msgid "Перейти в категории"
-msgstr "Санаттар"
+msgstr "Санаттарға өту"
 
 #: .\main\templates\main\kp.html
 msgid "Создать КП"
-msgstr ""
+msgstr "КП жасау"
 
 #: .\main\templates\main\kp.html
 msgid "Чтобы создать КП, сначала добавь услуги."
-msgstr ""
+msgstr "КП жасау үшін алдымен қызметтерді қосыңыз."
 
 #: .\main\templates\main\kp.html
 msgid "Ты собираешь услуги, а менеджер подтверждает и связывается с тобой."
-msgstr ""
+msgstr "Сен қызметтерді таңдайсың, ал менеджер растап, сенімен байланысады."
 
 #: .\main\templates\main\kp.html
 msgid "Черновик КП"
-msgstr ""
+msgstr "КП жобасы"
 
 #: .\main\templates\main\kp.html
 msgid "Черновик ещё не создан."
-msgstr ""
+msgstr "Жоба әлі жасалған жоқ."
 
 #: .\main\templates\main\kp.html
 #, python-format
@@ -1064,229 +1073,230 @@ msgstr ""
 
 #: .\main\templates\main\kp.html
 msgid "скидка"
-msgstr ""
+msgstr "жеңілдік"
 
 #: .\main\templates\main\kp.html
 msgid "Пока пусто. Иди в подкатегорию и нажми “Выбрать”."
-msgstr ""
+msgstr "Әзірге бос. Ішкі санатқа өтіп, «Таңдау» түймесін бас."
 
 #: .\main\templates\main\kp_examples.html
 msgid "Примеры коммерческих предложений"
-msgstr ""
+msgstr "Коммерциялық ұсыныстардың үлгілері"
 
 #: .\main\templates\main\kp_examples.html
 msgid ""
 "Ниже — три варианта формата мероприятий. Каждый проект собирается "
 "индивидуально."
 msgstr ""
+"Төменде іс-шара форматының үш нұсқасы берілген. Әр жоба жеке құрастырылады."
 
 #: .\main\templates\main\kp_examples.html
 msgid "Минимальный формат"
-msgstr ""
+msgstr "Ең ықшам формат"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎈 Минимальный формат"
-msgstr ""
+msgstr "📌 Ең ықшам формат"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Подойдёт для камерных мероприятий и частных событий"
-msgstr ""
+msgstr "Шағын іс-шаралар мен жеке кештерге қолайлы"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎤 Ведущий / координатор"
-msgstr ""
+msgstr "🎤 Жүргізуші / үйлестіруші"
 
 #: .\main\templates\main\kp_examples.html
 msgid "📝 Базовый сценарий"
-msgstr ""
+msgstr "📝 Негізгі сценарий"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎵 Музыкальное сопровождение"
-msgstr ""
+msgstr "🎵 Музыкалық сүйемелдеу"
 
 #: .\main\templates\main\kp_examples.html
 msgid "💡 Минимальный свет"
-msgstr ""
+msgstr "💡 Ең қарапайым жарық"
 
 #: .\main\templates\main\kp_examples.html
 msgid "✅ Контроль мероприятия"
-msgstr ""
+msgstr "✅ Іс-шараны бақылау"
 
 #: .\main\templates\main\kp_examples.html
 msgid "от 300 000 ₸"
-msgstr ""
+msgstr "300 000 ₸ бастап"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Подходит для дней рождений, небольших корпоративов, private-вечеринок."
-msgstr ""
+msgstr "Туған күндерге, шағын корпоративтерге, private-кештерге қолайлы."
 
 #: .\main\templates\main\kp_examples.html
 msgid "Оптимальный формат"
-msgstr ""
+msgstr "Оңтайлы формат"
 
 #: .\main\templates\main\kp_examples.html
 msgid "⭐ Оптимальный формат"
-msgstr ""
+msgstr "⭐ Оңтайлы формат"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Самый популярный вариант для мероприятий под ключ"
-msgstr ""
+msgstr "Іс-шараны толық ұйымдастыруға арналған ең танымал нұсқа"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎤 Ведущий + координатор"
-msgstr ""
+msgstr "🎤 Жүргізуші + үйлестіруші"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎨 Проработка концепции"
-msgstr ""
+msgstr "🎨 Тұжырымдаманы әзірлеу"
 
 #: .\main\templates\main\kp_examples.html
 msgid "📋 Сценарий и тайминг"
-msgstr ""
+msgstr "📋 Сценарий және тайминг"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🔊 Свет + звук"
-msgstr ""
+msgstr "🔊 Жарық + дыбыс"
 
 #: .\main\templates\main\kp_examples.html
 msgid "💃 Артисты / шоу-блок"
-msgstr ""
+msgstr "💃 Артистер / шоу-блок"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🛠 Репетиции и контроль"
-msgstr ""
+msgstr "🛠 Репетициялар және бақылау"
 
 #: .\main\templates\main\kp_examples.html
 msgid "от 700 000 ₸"
-msgstr ""
+msgstr "700 000 ₸ бастап"
 
 #: .\main\templates\main\kp_examples.html
 msgid ""
 "Подходит для свадеб, корпоративов, презентаций, крупных частных событий."
 msgstr ""
+"Үйлену тойларына, корпоративтерге, презентацияларға және ірі жеке іс-"
+"шараларға қолайлы."
 
 #: .\main\templates\main\kp_examples.html
 msgid "Премиальный формат"
-msgstr ""
+msgstr "Премиум формат"
 
 #: .\main\templates\main\kp_examples.html
 msgid "👑 Премиальный формат"
-msgstr ""
+msgstr "👑 Премиум формат"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Большие проекты, шоу-программы и масштабные события"
-msgstr ""
+msgstr "Ірі жобалар, шоу-бағдарламалар және ауқымды іс-шаралар"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎬 Продюсер проекта"
-msgstr ""
+msgstr "🎬 Жоба продюсері"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🚀 Авторская концепция"
-msgstr ""
+msgstr "🚀 Авторлық тұжырымдама"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🕺 Команда артистов"
-msgstr ""
+msgstr "🕺 Артистер командасы"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎆 Сцена, экраны, спецэффекты"
-msgstr ""
+msgstr "🎆 Сахна, экрандар, арнайы эффектілер"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🏗 Полный продакшн"
-msgstr ""
+msgstr "🏗 Толық продакшн"
 
 #: .\main\templates\main\kp_examples.html
 msgid "🎥 Режиссура мероприятия"
-msgstr ""
+msgstr "🎥 Іс-шара режиссурасы"
 
 #: .\main\templates\main\kp_examples.html
 msgid "от 1 500 000 ₸"
-msgstr ""
+msgstr "1 500 000 ₸ бастап"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Подходит для концертов, форумов, брендинговых и имиджевых мероприятий."
 msgstr ""
+"Концерттерге, форумдарға, брендингтік және имидждік іс-шараларға қолайлы."
 
 #: .\main\templates\main\kp_examples.html
 msgid "Хотите рассчитать точную стоимость?"
-msgstr ""
+msgstr "Нақты құнын есептегіңіз келе ме?"
 
 #: .\main\templates\main\kp_examples.html
 msgid "Соберите своё КП и получите персональный расчёт."
-msgstr ""
+msgstr "Өз КП-ңызды құрастырып, жеке есептеуді алыңыз."
 
 #: .\main\templates\main\kp_examples.html
 msgid "На главную"
-msgstr ""
+msgstr "Басты бетке"
 
 #: .\main\templates\registration\login.html
 msgid "Вход"
-msgstr ""
+msgstr "Кіру"
 
 #: .\main\templates\registration\login.html
-#, fuzzy
 #| msgid "Аккаунт"
 msgid "Вход в аккаунт"
-msgstr "Аккаунт"
+msgstr "Аккаунтқа кіру"
 
 #: .\main\templates\registration\login.html
 msgid "Войдите, чтобы продолжить работу"
-msgstr ""
+msgstr "Жұмысты жалғастыру үшін кіріңіз"
 
 #: .\main\templates\registration\login.html
 msgid "Неверный логин или пароль"
-msgstr ""
+msgstr "Логин немесе құпиясөз қате"
 
 #: .\main\templates\registration\login.html
 #: .\main\templates\registration\register.html
 msgid "Логин"
-msgstr ""
+msgstr "Логин"
 
 #: .\main\templates\registration\login.html
 #: .\main\templates\registration\register.html
 msgid "Пароль"
-msgstr ""
+msgstr "Құпиясөз"
 
 #: .\main\templates\registration\login.html
 #: .\main\templates\registration\register.html
 msgid "Войти"
-msgstr ""
+msgstr "Кіру"
 
 #: .\main\templates\registration\login.html
-#, fuzzy
 #| msgid "Аккаунт"
 msgid "Нет аккаунта?"
-msgstr "Аккаунт"
+msgstr "Аккаунтыңыз жоқ па?"
 
 #: .\main\templates\registration\login.html
 #: .\main\templates\registration\register.html
 msgid "Зарегистрироваться"
-msgstr ""
+msgstr "Тіркелу"
 
 #: .\main\templates\registration\register.html
 msgid "Регистрация"
-msgstr ""
+msgstr "Тіркелу"
 
 #: .\main\templates\registration\register.html
-#, fuzzy
 #| msgid "Аккаунт"
 msgid "Создать аккаунт"
-msgstr "Аккаунт"
+msgstr "Аккаунт ашу"
 
 #: .\main\templates\registration\register.html
 msgid "Заполните данные для регистрации"
-msgstr ""
+msgstr "Тіркелу үшін деректерді толтырыңыз"
 
 #: .\main\templates\registration\register.html
 msgid "Проверьте правильность заполнения формы"
-msgstr ""
+msgstr "Форманың дұрыс толтырылғанын тексеріңіз"
 
 #: .\main\templates\registration\register.html
 msgid "Повторите пароль"
-msgstr ""
+msgstr "Құпиясөзді қайталаңыз"
 
 #: .\main\templates\registration\register.html
 msgid "Уже есть аккаунт?"
-msgstr ""
+msgstr "Аккаунтыңыз бар ма?"
