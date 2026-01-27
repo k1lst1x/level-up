@@ -255,7 +255,7 @@ body{
 
 .svc-photo{
   width:100%;
-  height: 220px;
+  height: 250px;
   border-radius: 18px;
   overflow:hidden;
   border: 1px solid rgba(17,17,24,.14);
@@ -435,11 +435,11 @@ body{
   margin-top:10px;
 }
 
-@media print{
+/* @media print{
   section.block:nth-of-type(3){
     page-break-before: always;
   }
-}
+} */
 
 .footer-line{
   display:flex;
@@ -556,7 +556,7 @@ body{
   }
 
   .svc-photo{
-    height: 140px;
+    height: 220px;
   }
 
   .svc-title{
@@ -695,5 +695,19 @@ body{
 @media print {
   .total-box { 
     page-break-before: always;
+  }
+  /* убираем все декоративные тени в PDF */
+  .card,
+  .svc-card,
+  .pill,
+  .total-box,
+  .svc-row,
+  .cover-frame {
+    box-shadow: none !important;
+  }
+
+  /* иногда браузер рисует «ореол» из-за backdrop-filter */
+  .card {
+    backdrop-filter: none !important;
   }
 }
