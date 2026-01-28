@@ -2933,3 +2933,41 @@ html[data-theme="light"] .lang-switch option:checked {
   font-weight: 900;
   border-radius: 14px;
 }
+
+/* =========================
+   MODAL FIX — zoom / 125% / 150%
+   Кнопки всегда доступны
+========================= */
+
+.modal--scroll {
+  max-height: 92dvh;              /* вместо 82vh */
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body {
+  flex: 1 1 auto;                 /* занимает всё доступное место */
+  overflow-y: auto;               /* ВАЖНО: прокрутка тут */
+  overflow-x: hidden;
+  padding-right: 6px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* старый внутренний скролл делаем обычным блоком */
+.modal-scroll {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* футер всегда виден */
+.modal-actions--sticky {
+  position: sticky;
+  bottom: 0;
+}
+
+/* страховка для сильного зума */
+@media (max-height: 700px) {
+  .modal--scroll {
+    max-height: 96dvh;
+  }
+}
