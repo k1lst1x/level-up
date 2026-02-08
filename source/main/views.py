@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.utils.translation import get_language
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
@@ -47,16 +48,33 @@ def _normalize_words(text: str) -> list[str]:
     return list(bases)
 
 
+def _lang_suffix() -> str:
+    lang = (get_language() or "ru").lower()
+    if lang.startswith("kk"):
+        return "kk"
+    if lang.startswith("en"):
+        return "en"
+    return "ru"
+
+
 def _category_search_q(search: str) -> Q:
     words = _normalize_words(search)
 
     q = Q()
     for w in words:
         q |= (
-            Q(name__icontains=w) |
-            Q(description__icontains=w) |
-            Q(services__name__icontains=w) |
-            Q(services__description__icontains=w)
+            Q(name_ru__icontains=w) |
+            Q(name_kk__icontains=w) |
+            Q(name_en__icontains=w) |
+            Q(description_ru__icontains=w) |
+            Q(description_kk__icontains=w) |
+            Q(description_en__icontains=w) |
+            Q(services__name_ru__icontains=w) |
+            Q(services__name_kk__icontains=w) |
+            Q(services__name_en__icontains=w) |
+            Q(services__description_ru__icontains=w) |
+            Q(services__description_kk__icontains=w) |
+            Q(services__description_en__icontains=w)
         )
 
     return q
@@ -67,24 +85,51 @@ def _service_search_q(search: str) -> Q:
 
     q = Q()
     for w in words:
-        q |= Q(name__icontains=w) | Q(description__icontains=w)
+        q |= (
+            Q(name_ru__icontains=w) |
+            Q(name_kk__icontains=w) |
+            Q(name_en__icontains=w) |
+            Q(description_ru__icontains=w) |
+            Q(description_kk__icontains=w) |
+            Q(description_en__icontains=w)
+        )
 
     return q
 
+
 def _search_q(search: str) -> Q:
-    return Q(name__icontains=search) | Q(description__icontains=search)
+    # универсальный поиск по услугам
+    return (
+        Q(name_ru__icontains=search) |
+        Q(name_kk__icontains=search) |
+        Q(name_en__icontains=search) |
+        Q(description_ru__icontains=search) |
+        Q(description_kk__icontains=search) |
+        Q(description_en__icontains=search)
+    )
+
 
 def _order_by_if_exists(qs, *fields: str):
     model_fields = {f.name for f in qs.model._meta.get_fields()}
     safe = []
 
+    suffix = _lang_suffix()
+
     for f in fields:
         raw = f[1:] if f.startswith("-") else f
-        if raw in model_fields:
-            safe.append(f)
+
+        # если просим "name" -> заменяем на name_ru/name_en/name_kk
+        if raw == "name":
+            raw = f"name_{suffix}"
+            if f.startswith("-"):
+                raw = "-" + raw
+
+        if raw.lstrip("-") in model_fields:
+            safe.append(raw)
 
     if not safe:
-        safe = ["name"]
+        # дефолтная сортировка тоже должна быть корректной
+        safe = [f"name_{suffix}"]
 
     return qs.order_by(*safe)
 
