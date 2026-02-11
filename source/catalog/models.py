@@ -61,6 +61,16 @@ class Service(models.Model):
 
     image = models.ImageField(upload_to="services/", blank=True, null=True)
 
+    # ✅ дополнительные фото (для галереи в модалке)
+    image_2 = models.ImageField(upload_to="services/", blank=True, null=True)
+    image_3 = models.ImageField(upload_to="services/", blank=True, null=True)
+    image_4 = models.ImageField(upload_to="services/", blank=True, null=True)
+    image_5 = models.ImageField(upload_to="services/", blank=True, null=True)
+    image_6 = models.ImageField(upload_to="services/", blank=True, null=True)
+
+    # ✅ YouTube ссылка (будем выводить iframe если заполнено)
+    youtube_url = models.URLField(blank=True, default="")
+
     base_price = models.IntegerField(blank=True, null=True)
     unit = models.CharField(max_length=64, blank=True, default="")
 

@@ -36,8 +36,18 @@
         style="cursor:pointer;"
         data-service-id="{{ s.id }}"
         data-service-name="{{ s.name|escapejs }}"
+        data-service-desc="{{ s.description|default:''|escapejs }}"
+        data-service-price="{% if s.base_price %}{{ s.base_price }}{% endif %}"
+        data-service-unit="{{ s.unit|default:''|escapejs }}"
         data-allow-multiple="{% if s.allow_multiple %}1{% else %}0{% endif %}"
         data-instagram="{{ s.instagram_url|default:'' }}"
+        data-image1="{% if s.image %}{{ s.image.url }}{% endif %}"
+        data-image2="{% if s.image_2 %}{{ s.image_2.url }}{% endif %}"
+        data-image3="{% if s.image_3 %}{{ s.image_3.url }}{% endif %}"
+        data-image4="{% if s.image_4 %}{{ s.image_4.url }}{% endif %}"
+        data-image5="{% if s.image_5 %}{{ s.image_5.url }}{% endif %}"
+        data-image6="{% if s.image_6 %}{{ s.image_6.url }}{% endif %}"
+        data-youtube="{{ s.youtube_url|default:'' }}"
       >
         <div class="tile-media">
           {% if s.image %}
@@ -97,7 +107,27 @@
              style="text-decoration:none;">
              {% trans "📸 Посмотреть в Instagram" %}
           </a>
-        </div>        
+        </div>
+
+        <!-- media block -->
+        <div class="card" id="modalMediaCard" style="margin-top:12px; display:none;">
+          <div class="modal-media-grid" id="modalMediaGrid"></div>
+
+          <!-- description block -->
+          <div class="modal-desc" id="modalDesc" style="display:none;"></div>
+
+          <div class="modal-video-wrap" id="modalVideoWrap" style="display:none;">
+            <iframe
+              id="modalYoutubeIframe"
+              class="modal-youtube"
+              src=""
+              frameborder="0"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
 
         <!-- qty block -->
         <div class="card" id="qtyCard" style="margin-top:12px; display:none;">
@@ -183,12 +213,36 @@
   </div>
 </div>
 
+<!-- ================= IMAGE SLIDER (FULLSCREEN) ================= -->
+<div class="modal-backdrop" id="imgSlider" style="display:none;">
+  <div class="img-slider">
+
+    <button class="img-slider-close" type="button" onclick="closeImgSlider()">✕</button>
+
+    <button class="img-slider-arrow left" type="button" onclick="prevImg()">‹</button>
+    <button class="img-slider-arrow right" type="button" onclick="nextImg()">›</button>
+
+    <div class="img-slider-stage" id="imgSliderStage">
+      <img id="imgSliderTarget" src="" alt="preview">
+    </div>
+
+    <div class="img-slider-dots" id="imgSliderDots"></div>
+  </div>
+</div>
+
 <script>
 (function(){
   const modal = document.getElementById("addModal");
   const nameEl = document.getElementById("modalServiceName");
+
   const instaCard = document.getElementById("modalInstagramCard");
   const instaLink = document.getElementById("modalInstagramLink");
+
+  const mediaCard = document.getElementById("modalMediaCard");
+  const mediaGrid = document.getElementById("modalMediaGrid");
+  const modalDesc = document.getElementById("modalDesc");
+  const videoWrap = document.getElementById("modalVideoWrap");
+  const youtubeIframe = document.getElementById("modalYoutubeIframe");
 
   const qtyCard = document.getElementById("qtyCard");
   const qtyValueEl = document.getElementById("qtyValue");
@@ -196,9 +250,18 @@
   const minusBtn = document.getElementById("qtyMinus");
   const plusBtn = document.getElementById("qtyPlus");
 
-  let currentServiceId = null;
+  // ====== SLIDER ELEMENTS ======
+  const imgSlider = document.getElementById("imgSlider");
+  const imgSliderTarget = document.getElementById("imgSliderTarget");
+  const imgSliderDots = document.getElementById("imgSliderDots");
+  const imgSliderStage = document.getElementById("imgSliderStage");
+
   let allowMultiple = false;
   let qty = 1;
+
+  // slider state
+  let sliderImages = [];
+  let sliderIndex = 0;
 
   function setQty(nextQty){
     qty = Math.max(1, parseInt(nextQty || 1, 10) || 1);
@@ -206,13 +269,136 @@
     document.querySelectorAll(".qty-input").forEach(inp => inp.value = String(qty));
   }
 
-  window.closeAddModal = function(){
-    if(modal) modal.style.display = "none";
+  function safeClearIframe(){
+    if(youtubeIframe){
+      youtubeIframe.src = "";
+    }
   }
 
-  function openAddModal(serviceId, serviceName, allowMult, instagramUrl){
-    currentServiceId = serviceId;
+  function youtubeToEmbed(url){
+    if(!url) return "";
+
+    try {
+      url = url.trim();
+
+      if(url.includes("youtu.be/")){
+        const id = url.split("youtu.be/")[1].split("?")[0].split("&")[0];
+        return id ? `https://www.youtube.com/embed/${id}` : "";
+      }
+
+      if(url.includes("watch?v=")){
+        const id = url.split("watch?v=")[1].split("&")[0];
+        return id ? `https://www.youtube.com/embed/${id}` : "";
+      }
+
+      if(url.includes("/embed/")){
+        return url;
+      }
+
+      return "";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  // ============================
+  // SLIDER LOGIC
+  // ============================
+
+  function renderDots(){
+    if(!imgSliderDots) return;
+
+    imgSliderDots.innerHTML = "";
+
+    sliderImages.forEach((src, idx) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "img-dot" + (idx === sliderIndex ? " active" : "");
+      dot.addEventListener("click", () => {
+        sliderIndex = idx;
+        updateSlider();
+      });
+      imgSliderDots.appendChild(dot);
+    });
+  }
+
+  function updateSlider(){
+    if(!imgSliderTarget) return;
+    if(sliderImages.length === 0) return;
+
+    imgSliderTarget.src = sliderImages[sliderIndex];
+    renderDots();
+  }
+
+  window.openImgSlider = function(images, startIndex){
+    sliderImages = (images || []).filter(x => x && x.trim().length > 0);
+    sliderIndex = Math.max(0, parseInt(startIndex || 0, 10) || 0);
+
+    if(sliderIndex >= sliderImages.length) sliderIndex = 0;
+
+    if(sliderImages.length === 0) return;
+
+    updateSlider();
+    if(imgSlider) imgSlider.style.display = "flex";
+  }
+
+  window.closeImgSlider = function(){
+    if(imgSlider) imgSlider.style.display = "none";
+    if(imgSliderTarget) imgSliderTarget.src = "";
+    sliderImages = [];
+    sliderIndex = 0;
+    if(imgSliderDots) imgSliderDots.innerHTML = "";
+  }
+
+  window.nextImg = function(){
+    if(sliderImages.length <= 1) return;
+    sliderIndex = (sliderIndex + 1) % sliderImages.length;
+    updateSlider();
+  }
+
+  window.prevImg = function(){
+    if(sliderImages.length <= 1) return;
+    sliderIndex = (sliderIndex - 1 + sliderImages.length) % sliderImages.length;
+    updateSlider();
+  }
+
+  // swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  if(imgSliderStage){
+    imgSliderStage.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    imgSliderStage.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+
+      const diff = touchStartX - touchEndX;
+
+      if(Math.abs(diff) < 40) return;
+
+      if(diff > 0){
+        window.nextImg();
+      } else {
+        window.prevImg();
+      }
+    });
+  }
+
+  // ============================
+  // MAIN MODAL LOGIC
+  // ============================
+
+  window.closeAddModal = function(){
+    if(modal) modal.style.display = "none";
+    safeClearIframe();
+  }
+
+  function openAddModal(serviceId, serviceName, serviceDesc, allowMult, instagramUrl, images, youtubeUrl){
     allowMultiple = !!allowMult;
+
+    if(nameEl) nameEl.textContent = serviceName || "";
 
     if(instagramUrl){
       instaCard.style.display = "block";
@@ -222,13 +408,11 @@
       instaLink.href = "#";
     }
 
-    // привязываем action на конкретный serviceId
     document.querySelectorAll(".add-form").forEach(form => {
       const kpId = form.dataset.kp;
       form.action = `/kp/${kpId}/add/${serviceId}/`;
     });
 
-    // qty UI
     if(allowMultiple){
       qtyCard.style.display = "block";
       qtyHintEl.textContent = qtyHintEl.dataset.multiText || "Можно добавить несколько раз";
@@ -236,23 +420,90 @@
       minusBtn.disabled = false;
       plusBtn.disabled = false;
     } else {
-      // услуга одноразовая: qty всегда 1, UI прячем
       qtyCard.style.display = "none";
       setQty(1);
       minusBtn.disabled = true;
       plusBtn.disabled = true;
     }
 
+    mediaGrid.innerHTML = "";
+    let hasMedia = false;
+
+    const filteredImages = (images || []).filter(x => x && x.trim().length > 0);
+
+    filteredImages.forEach((src, index) => {
+      hasMedia = true;
+
+      const el = document.createElement("div");
+      el.className = "modal-media-img";
+
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "photo";
+
+      img.addEventListener("click", (e) => {
+        e.stopPropagation();
+        window.openImgSlider(filteredImages, index);
+      });
+
+      el.appendChild(img);
+      mediaGrid.appendChild(el);
+    });
+
+    if(serviceDesc && serviceDesc.trim().length > 0){
+      modalDesc.style.display = "block";
+      modalDesc.textContent = serviceDesc;
+      hasMedia = true;
+    } else {
+      modalDesc.style.display = "none";
+      modalDesc.textContent = "";
+    }
+
+    const embed = youtubeToEmbed(youtubeUrl || "");
+    if(embed){
+      hasMedia = true;
+      videoWrap.style.display = "block";
+      youtubeIframe.src = embed;
+    } else {
+      videoWrap.style.display = "none";
+      safeClearIframe();
+    }
+
+    if(hasMedia){
+      mediaCard.style.display = "block";
+    } else {
+      mediaCard.style.display = "none";
+    }
+
     if(modal) modal.style.display = "flex";
   }
 
+  // click on tile opens modal
   document.querySelectorAll(".js-service").forEach(tile => {
     tile.addEventListener("click", () => {
       const sid = tile.dataset.serviceId;
       const sname = tile.dataset.serviceName || "";
+      const desc = tile.dataset.serviceDesc || "";
       const allow = tile.dataset.allowMultiple === "1";
       const insta = tile.dataset.instagram || "";
-      openAddModal(sid, sname, allow, insta);
+
+      const img1 = tile.dataset.image1 || "";
+      const img2 = tile.dataset.image2 || "";
+      const img3 = tile.dataset.image3 || "";
+      const img4 = tile.dataset.image4 || "";
+      const img5 = tile.dataset.image5 || "";
+      const img6 = tile.dataset.image6 || "";
+      const yt = tile.dataset.youtube || "";
+
+      openAddModal(
+        sid,
+        sname,
+        desc,
+        allow,
+        insta,
+        [img1, img2, img3, img4, img5, img6],
+        yt
+      );
     });
   });
 
@@ -267,12 +518,29 @@
   });
 
   document.addEventListener("keydown", (e) => {
-    if(e.key === "Escape") window.closeAddModal();
+    if(e.key === "Escape"){
+      if(imgSlider && imgSlider.style.display === "flex"){
+        window.closeImgSlider();
+      } else {
+        window.closeAddModal();
+      }
+    }
+
+    if(imgSlider && imgSlider.style.display === "flex"){
+      if(e.key === "ArrowRight") window.nextImg();
+      if(e.key === "ArrowLeft") window.prevImg();
+    }
   });
 
   if(modal){
     modal.addEventListener("click", (e) => {
       if(e.target === modal) window.closeAddModal();
+    });
+  }
+
+  if(imgSlider){
+    imgSlider.addEventListener("click", (e) => {
+      if(e.target === imgSlider) window.closeImgSlider();
     });
   }
 })();

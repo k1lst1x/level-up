@@ -52,7 +52,10 @@ class ServiceAdmin(admin.ModelAdmin):
         ("Параметры услуги", {
             "fields": ("base_price", "unit", "allow_multiple", "instagram_url")
         }),
-        ("Медиа и статус", {
-            "fields": ("image", "sort_order", "is_active")
+        ("Медиа (фото + видео)", {
+            "fields": ("image", "image_2", "image_3", "image_4", "image_5", "image_6", "youtube_url")
+        }),
+        ("Статус и сортировка", {
+            "fields": ("sort_order", "is_active")
         }),
     )
