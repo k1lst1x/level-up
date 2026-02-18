@@ -3,6 +3,8 @@
 {% load i18n %}
 {% block title %}{% trans "КП" %}{% endblock %}
 
+{% block extra_css %}{% load static %}<link rel="stylesheet" href="{% static 'css/pages/kp.css' %}">{% endblock %}
+
 {% block content %}
   <div class="card">
     <div class="muted" style="font-size:13px;">{% trans "КП → Черновик" %}</div>

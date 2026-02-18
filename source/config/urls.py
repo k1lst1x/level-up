@@ -11,6 +11,9 @@ urlpatterns = [
 
     path("", include("main.urls")),
 
+    # Portfolio
+    path("portfolio/", include("portfolio.urls")),
+
     # KP (WEB + API внутри kp.urls)
     path("kp/", include("kp.urls")),
 

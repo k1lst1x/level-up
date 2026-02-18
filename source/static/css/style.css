@@ -2145,166 +2145,6 @@ a.btn:active {
 }
 
 /* =========================
-   CONTACTS (premium block)
-========================= */
-
-#contacts {
-  display: flex;
-  justify-content: center;
-}
-
-.contacts-card {
-  width: 100%;
-  padding: 20px !important;
-}
-
-.contacts-head {
-  text-align: center;
-  margin-bottom: 14px;
-}
-
-.contacts-sub {
-  font-size: 14px;
-  margin-top: 6px;
-}
-
-/* сетка контактов */
-.contacts-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 14px;
-}
-
-/* карточка контакта */
-.contact-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  padding: 14px 10px;
-  border-radius: 16px;
-
-  background: var(--card);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-
-  text-decoration: none;
-  color: var(--text);
-
-  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-}
-
-.contact-item:hover {
-  border-color: var(--focus-border);
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
-  transform: translateY(-1px);
-}
-
-.contact-item:active {
-  transform: scale(0.98);
-}
-
-/* иконка */
-.contact-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: linear-gradient(180deg, var(--purple-2), var(--purple));
-  box-shadow: 0 10px 26px var(--purple-glow);
-}
-
-.contact-icon img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-
-  /* если иконки ЧЁРНЫЕ — инвертируем, чтобы были видны */
-  filter: brightness(0) invert(1);
-}
-
-/* если текстовая иконка (@) */
-.contact-icon-text {
-  color: #fff;
-  font-weight: 900;
-  font-size: 18px;
-}
-
-/* подпись */
-.contact-label {
-  font-weight: 800;
-  font-size: 13px;
-}
-
-/* адрес */
-.contacts-address {
-  margin-top: 16px;
-  display: flex;
-  justify-content: center;
-}
-
-.addr-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 12px 16px;
-  border-radius: 16px;
-
-  background: var(--card);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
-
-.addr-ico {
-  font-size: 18px;
-}
-
-.addr-title {
-  font-weight: 800;
-  font-size: 13px;
-}
-
-.addr-sub {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* ===== MOBILE ===== */
-
-@media (max-width: 720px) {
-  .contacts-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 520px) {
-  .contacts-card {
-    padding: 16px !important;
-  }
-
-  .contact-item {
-    padding: 14px 8px;
-  }
-
-  .contact-label {
-    font-size: 14px;
-  }
-
-  .addr-card {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-/* =========================
    KP PRICE INPUT (mobile-first)
 ========================= */
 
@@ -2550,12 +2390,12 @@ a.btn:active {
 ========================= */
 
 /* секция поиска */
-.search-row {
+.crm-page .search-row {
   flex-direction: column;
   gap: 10px;
 }
 
-.crm-add-btn {
+.crm-page .crm-add-btn {
   width: 100%;
   font-weight: 900;
   font-size: 15px;
@@ -2563,35 +2403,35 @@ a.btn:active {
 }
 
 /* сетка всегда 1 колонка */
-#crmGrid {
+.crm-page #crmGrid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 14px;
 }
 
 /* карточка клиента */
-#crmGrid .tile {
+.crm-page #crmGrid .tile {
   border-radius: 18px;
 }
 
-#crmGrid .tile-body {
+.crm-page #crmGrid .tile-body {
   padding: 14px 14px 12px;
 }
 
 /* имя */
-#crmGrid .tile-title {
+.crm-page #crmGrid .tile-title {
   font-size: 17px;
   font-weight: 900;
 }
 
 /* строки инфы */
-#crmGrid .tile-desc {
+.crm-page #crmGrid .tile-desc {
   font-size: 14px;
   line-height: 1.35;
 }
 
 /* кнопки контактов */
-.crm-actions .btn {
+.crm-page .crm-actions .btn {
   height: 48px;
   border-radius: 16px;
   font-weight: 900;
@@ -2599,30 +2439,30 @@ a.btn:active {
 }
 
 /* иконки */
-.crm-actions img.ico {
+.crm-page .crm-actions img.ico {
   width: 20px;
   height: 20px;
   filter: brightness(0) invert(1);
 }
 
 /* мета */
-#crmMeta {
+.crm-page #crmMeta {
   font-size: 13px;
   margin-bottom: 4px;
 }
 
 /* ===== МОДАЛКА (мобилка) ===== */
 
-.modal {
+.crm-page .modal {
   border-radius: 22px;
 }
 
-.modal-title {
+.crm-page .modal-title {
   font-size: 17px;
   font-weight: 900;
 }
 
-.modal-actions .btn {
+.crm-page .modal-actions .btn {
   height: 48px;
   font-size: 15px;
   font-weight: 900;
@@ -2630,7 +2470,7 @@ a.btn:active {
 }
 
 /* поля формы крупнее */
-.modal .search-input {
+.crm-page .modal .search-input {
   padding: 12px 14px;
   font-size: 16px;
   border-radius: 14px;
@@ -2640,32 +2480,32 @@ a.btn:active {
 
 @media (max-width: 520px) {
 
-  .page-title {
+  .crm-page .page-title {
     font-size: 20px;
   }
 
-  .page-subtitle {
+  .crm-page .page-subtitle {
     font-size: 14px;
   }
 
-  .search-row {
+  .crm-page .search-row {
     gap: 12px;
   }
 
-  .crm-actions {
+  .crm-page .crm-actions {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .crm-actions .btn {
+  .crm-page .crm-actions .btn {
     height: 52px;
   }
 
-  .modal {
+  .crm-page .modal {
     max-width: 100%;
     padding: 14px;
   }
 
-  .modal-body {
+  .crm-page .modal-body {
     padding: 10px 0;
   }
 }

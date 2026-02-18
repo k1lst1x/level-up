@@ -3,485 +3,427 @@
 {% load static %}
 {% load i18n %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/home.css' %}">
+{% endblock %}
+
 {% block title %}{% trans "Главная" %}{% endblock %}
 
 {% block content %}
 
-{# 1) HERO #}
-<section class="hero card" id="top">
-  <div class="hero-bg" aria-hidden="true"></div>
-
-  <div class="hero-content">
-    <h1 class="hero-title">
-      {% trans "Мы знаем, как сделать ваше мероприятие незабываемым" %}
+{# ======== 1) HERO SECTION ======== #}
+<section class="hero-fullwidth">
+  <div class="hero-bg-img">
+    <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
+      <source src="{% static 'img/home/hero-event.MP4' %}" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-dark-overlay"></div>
+  <div class="hero-center-content">
+    <h1 class="hero-big-title">
+      {% trans "СОБЕРИ СВОЕ" %}<br>{% trans "МЕРОПРИЯТИЕ МЕЧТЫ" %}
     </h1>
+    <p class="hero-small-text">
+      {% trans "ПЛАТФОРМА ДЛЯ СОЗДАНИЯ" %}<br>{% trans "АБСОЛЮТНО ЛЮБОГО СОБЫТИЯ" %}
+    </p>
 
-    <div class="hero-subtitle"></div>
+    {# Админ-документы #}
 
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="{% url 'kp:kp' %}" data-ev="home_hero_calc_click">
-        {% trans "Рассчитать стоимость" %}
-      </a>
-      <a class="btn btn-primary" href="#cases" data-ev="home_hero_cases_click">
-        {% trans "Посмотреть кейсы" %}
-      </a>
+    <div class="hero-doc-buttons">
+      <a href="#" class="hero-doc-btn">{% trans "Чек-лист" %}</a>
+      <a href="#" class="hero-doc-btn">{% trans "Методичка" %}</a>
+      <a href="#" class="hero-doc-btn">{% trans "Бриф" %}</a>
+      <a href="#" class="hero-doc-btn">{% trans "Расходы" %}</a>
     </div>
+ 
 
-    <div class="hero-micro muted"></div>
+    {# ПОИСК #}
+    <div class="hero-search-bar">
+      <form method="get" action="{% url 'main:home' %}" class="hero-search-form">
+        <input
+          type="text"
+          name="search"
+          value="{{ search|escape|default:'' }}"
+          placeholder="{% trans 'Поиск по категориям…' %}"
+          class="hero-search-input"
+          autocomplete="off"
+        >
+        <button type="submit" class="search-btn-black">
+          {% trans "Найти" %}
+        </button>
+        {% if search %}
+        <a href="{% url 'main:home' %}" class="search-reset">× {% trans "Сброс" %}</a>
+        {% endif %}
+      </form>
+    </div>
   </div>
 </section>
 
 
-{# 2) КАТЕГОРИИ (на главной) #}
-<section class="home-section" id="services">
-  <div class="categories-page">
-    <div class="page-head">
-      <h2 class="page-title">{% trans "Категории" %}</h2>
-      <div class="page-subtitle muted"></div>
-
-      {# Поиск: лучше явно указывать action, чтобы не зависеть от URL этой страницы #}
-      <form method="get" action="{% url 'main:home' %}" class="search-row categories-search">
-        <input
-          type="text"
-          name="search"
-          value="{{ search|escape }}"
-          placeholder="{% trans 'Поиск категории…' %}"
-          class="search-input"
-        />
-        <button class="btn btn-compact" type="submit">{% trans "Искать" %}</button>
-
-        {% if search %}
-          <a class="btn btn-compact" href="{% url 'main:home' %}">{% trans "Сброс" %}</a>
-        {% endif %}
-      </form>
+{# ======== 2) КАТЕГОРИИ ======== #}
+<section class="section-categories" id="services">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">{% trans "Что мы предлагаем" %}</h2>
     </div>
-
-    <div class="grid grid-2 categories-grid">
+    <div class="categories-grid">
       {% for c in categories %}
-      {# ✅ БЕЗ подкатегорий: сразу на услуги категории #}
-      <a class="tile categories-tile" href="{% url 'main:category_services' c.id %}">
-        <div class="tile-media categories-tile-media">
+      <a class="category-tile" href="{% url 'main:category_services' c.id %}"
+         data-search="{{ c.name_ru|lower }} {{ c.name_kk|lower }} {{ c.name_en|lower }} {{ c.description_ru|lower }} {{ c.description_kk|lower }} {{ c.description_en|lower }}">
+        <div class="category-tile-img">
           {% if c.image %}
           <img src="{{ c.image.url }}" alt="{{ c.name }}" loading="lazy">
           {% else %}
-          <div class="tile-placeholder">{% trans "Без изображения" %}</div>
+          <div class="category-tile-placeholder">📦</div>
           {% endif %}
         </div>
-
-        <div class="tile-body">
-          <div class="tile-title">{{ c.name }}</div>
-          <div class="tile-desc {% if not c.description %}tile-desc--empty{% endif %}">
-            {% if c.description %}{{ c.description }}{% else %}{% trans "Описание не задано" %}{% endif %}
-          </div>
+        <div class="category-tile-info">
+          <h3>{{ c.name }}</h3>
+          <p>{% if c.description %}{{ c.description|truncatewords:10 }}{% else %}{% trans "Подробнее →" %}{% endif %}</p>
         </div>
       </a>
       {% empty %}
-      <div class="card muted" style="grid-column: 1 / -1;">
-        {% trans "Ничего не найдено." %}
-      </div>
+      <div class="empty-msg">{% trans "Категории не найдены" %}</div>
       {% endfor %}
     </div>
   </div>
 </section>
 
 
-{# 3) КЕЙСЫ (карусель) #}
-<section class="home-section" id="cases">
-  <div class="home-section-head">
-    <h2 class="home-section-title home-section-title1">{% trans "Наши кейсы" %}</h2>
-  </div>
-
-  <div class="cases-wrap" data-cases>
-    <div class="cases-fade-left" aria-hidden="true"></div>
-    <div class="cases-fade-right" aria-hidden="true"></div>
-
-    <button class="cases-arrow left" type="button" aria-label="{% trans 'Назад' %}" data-cases-prev>‹</button>
-    <button class="cases-arrow right" type="button" aria-label="{% trans 'Вперёд' %}" data-cases-next>›</button>
-
-    <div class="cases-carousel" data-cases-track>
-      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="wedding-80" data-ev="home_case_open">
-        <div class="tile-media">
-          <img src="/static/img/home/case-1.jpg" alt="{% trans 'Свадьба • 80 гостей' %}" loading="lazy">
-        </div>
-        <div class="tile-body">
-          <div class="tile-title">{% trans "Свадьба • 80 гостей" %}</div>
-          <div class="tile-desc"></div>
-        </div>
-      </a>
-
-      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="corp-awards" data-ev="home_case_open">
-        <div class="tile-media">
-          <img src="/static/img/home/case-2.jpg" alt="{% trans 'Корпоратив • награждение' %}" loading="lazy">
-        </div>
-        <div class="tile-body">
-          <div class="tile-title">{% trans "Корпоратив • награждение" %}</div>
-          <div class="tile-desc"></div>
-        </div>
-      </a>
-
-      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="birthday-private" data-ev="home_case_open">
-        <div class="tile-media">
-          <img src="/static/img/home/case-3.jpg" alt="{% trans 'День рождения • private' %}" loading="lazy">
-        </div>
-        <div class="tile-body">
-          <div class="tile-title">{% trans "День рождения • private" %}</div>
-          <div class="tile-desc"></div>
-        </div>
-      </a>
-
-      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="concert-show" data-ev="home_case_open">
-        <div class="tile-media">
-          <img src="/static/img/home/case-4.jpg" alt="{% trans 'Концерт • шоу' %}" loading="lazy">
-        </div>
-        <div class="tile-body">
-          <div class="tile-title">{% trans "Концерт • шоу" %}</div>
-          <div class="tile-desc"></div>
-        </div>
-      </a>
-
-      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="wedding-140" data-ev="home_case_open">
-        <div class="tile-media">
-          <img src="/static/img/home/case-5.jpg" alt="{% trans 'Свадьба • 140 гостей' %}" loading="lazy">
-        </div>
-        <div class="tile-body">
-          <div class="tile-title">{% trans "Свадьба • 140 гостей" %}</div>
-          <div class="tile-desc"></div>
-        </div>
-      </a>
-
-      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="corp-conf" data-ev="home_case_open">
-        <div class="tile-media">
-          <img src="/static/img/home/case-6.jpg" alt="{% trans 'Корпоратив • конференция' %}" loading="lazy">
-        </div>
-        <div class="tile-body">
-          <div class="tile-title">{% trans "Корпоратив • конференция" %}</div>
-          <div class="tile-desc"></div>
-        </div>
-      </a>
-
-      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="private-gala" data-ev="home_case_open">
-        <div class="tile-media">
-          <img src="/static/img/home/case-7.jpg" alt="{% trans 'Частное • gala dinner' %}" loading="lazy">
-        </div>
-        <div class="tile-body">
-          <div class="tile-title">{% trans "Частное • gala dinner" %}</div>
-          <div class="tile-desc"></div>
-        </div>
-      </a>
-
-      <a class="tile case-tile" href="https://www.instagram.com/iamjesuskhan/" data-case-id="corp-team" data-ev="home_case_open">
-        <div class="tile-media">
-          <img src="/static/img/home/case-8.jpg" alt="{% trans 'Корпоратив • team party' %}" loading="lazy">
-        </div>
-        <div class="tile-body">
-          <div class="tile-title">{% trans "Корпоратив • team party" %}</div>
-          <div class="tile-desc"></div>
-        </div>
-      </a>
-    </div>
-
-    <div class="home-actions">
-      <a class="btn btn-primary" href="https://www.instagram.com/iamjesuskhan/" target="_blank" rel="noopener noreferrer">
-        {% trans "Смотреть все кейсы" %}
-      </a>
-    </div>
-  </div>
-</section>
-
-{# 4) Как проходит работа (4 шага) #}
-<section class="home-section" id="process">
-  <div class="home-section-head">
-    <h2 class="home-section-title home-section-title1">{% trans "Как проходит работа" %}</h2>
-  </div>
-
-  <div class="process-flow">
-
-    <div class="process-step">
-      <div class="process-num">01</div>
-      <div class="process-card">
-        <h3>{% trans "Бриф и задача" %}</h3>
-        <p>{% trans "Вместе с вами прорабатываем ключевые моменты: формат, цели и ожидания мероприятия." %}</p>
+{# ======== 2.5) VIDEO BREAK ======== #}
+<section class="section-video">
+  <div class="container">
+    <div class="card">
+      <div class="modal-video-wrap" style="display:block;">
+        <iframe
+          class="modal-youtube"
+          src="https://www.youtube.com/embed/ZEJHMP_S0Rs?si=Oz4g2elyaMgIn3_g"
+          frameborder="0"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="process-step">
-      <div class="process-num">02</div>
-      <div class="process-card">
-        <h3>{% trans "Подготовка  " %}</h3>
-        <p>{% trans "Создаём несколько концепций, прорабатываем сценарий и фиксируем бюджет, чтобы всё было прозрачно." %}</p>
+
+{# ======== 3) КАК ПРОХОДИТ РАБОТА ======== #}
+<section class="section-process" id="process">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">{% trans "Как проходит работа" %}</h2>
+      <p class="section-subtitle">{% trans "Четыре простых шага к идеальному событию" %}</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <div class="process-box">
+          <h3>{% trans "Бриф и задача" %}</h3>
+          <p>{% trans "Вместе с вами прорабатываем ключевые моменты: формат, цели и ожидания." %}</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <div class="process-box">
+          <h3>{% trans "Подготовка" %}</h3>
+          <p>{% trans "Создаём концепции, прорабатываем сценарий и фиксируем бюджет." %}</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <div class="process-box">
+          <h3>{% trans "Координация" %}</h3>
+          <p>{% trans "Координируем все этапы: от команды до таймингов." %}</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <div class="process-box">
+          <h3>{% trans "Проведение" %}</h3>
+          <p>{% trans "Полный контроль: вы отдыхаете, мы решаем все вопросы." %}</p>
+        </div>
       </div>
     </div>
-
-    <div class="process-step">
-      <div class="process-num">03</div>
-      <div class="process-card">
-        <h3>{% trans "Подготовка" %}</h3>
-        <p>{% trans "Координируем все этапы подготовки: от команды до таймингов, гарантируя безупречную организацию." %}</p>
-      </div>
-    </div>
-
-    <div class="process-step">
-      <div class="process-num">04</div>
-      <div class="process-card">
-        <h3>{% trans "Проведение" %}</h3>
-        <p>{% trans "Полная координация и контроль, чтобы вы могли сосредоточиться на отдыхе — мы решаем все вопросы." %}</p>
-      </div>
-    </div>
-
   </div>
 </section>
 
-{# 5) Из чего складывается стоимость #}
-<section class="home-section" id="pricing-logic">
-  <div class="home-section-head">
-    <h2 class="home-section-title  home-section-title1">{% trans "Из чего складывается стоимость" %}</h2>
+
+{# ======== 4) ПАУЗНЫЙ БЛОК — СТОИМОСТЬ ======== #}
+<section class="banner-fullwidth banner-pricing">
+  <div class="banner-bg-img">
+    <img src="{% static 'img/home/pause-1.jpg' %}" alt="Event" loading="lazy">
   </div>
-
-  <div class="grid grid-2 home-grid-3">
-    <div class="card home-mini">
-      <div class="tile-title">{% trans "Формат " %}</div>
-      <div class="tile-desc">{% trans "Свадьбы, корпоративы, любые мероприятия." %}</div>
-    </div>
-    <div class="card home-mini">
-      <div class="tile-title">{% trans "Команда" %}</div>
-      <div class="tile-desc">{% trans "Ведущий, артисты, техперсонал." %}</div>
-    </div>
-    <div class="card home-mini">
-      <div class="tile-title">{% trans "Оборудование" %}</div>
-      <div class="tile-desc">{% trans "Свет, звук, экраны, спецэффекты." %}</div>
-    </div>
-    <div class="card home-mini">
-      <div class="tile-title">{% trans "Подготовка" %}</div>
-      <div class="tile-desc">{% trans "Тайинг, подрядчики, реквизиты." %}</div>
-    </div>
-  </div>
-
-  <div class="muted home-micro"></div>
-</section>
-
-{# 6) Финальный CTA #}
-<section class="home-section" id="final-cta">
-  <div class="card home-cta">
-    <div class="home-cta-title">{% trans "Хотите программу под ваш формат?" %}</div>
-    <div class="muted home-cta-sub">
-      {% trans "Предложим 2–3 варианта с бюджетом и таймингом." %}
-    </div>
-
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="{% url 'kp:kp' %}" data-ev="home_final_calc_click">{% trans "Рассчитать стоимость" %}</a>
-      <a class="btn btn-primary" href="{% url 'main:kp_examples' %}" data-ev="home_final_variants_click">
-        {% trans "Получить варианты" %}
+  <div class="banner-dark-overlay"></div>
+  <div class="banner-center-content">
+    <h2 class="banner-big-title">{% trans "Из чего складывается" %}<br>{% trans "стоимость вашего события" %}</h2>
+    <div class="banner-buttons">
+      <a href="{% url 'kp:kp' %}" class="banner-btn banner-btn-white">
+        {% trans "Рассчитать стоимость" %}
+      </a>
+      <a href="{% url 'main:kp_examples' %}" class="banner-btn banner-btn-white">
+        {% trans "Доступные пакеты" %}
       </a>
     </div>
-
-    <div class="muted hero-micro"></div>
   </div>
 </section>
 
-{# 7) FAQ #}
-<section class="home-section" id="faq">
-  <div class="home-section-head">
-    <h2 class="home-section-title">{% trans "Часто задаваемые вопросы" %}</h2>
-  </div>
 
-  <div class="faq-list">
-    <details class="card faq-item">
-      <summary class="faq-q">{% trans "Сколько времени нужно на подготовку?" %}</summary>
-      <div class="faq-a muted">{% trans "Обычно от 7 дней. Срочные проекты тоже берём, если есть окно." %}</div>
-    </details>
-
-    <details class="card faq-item">
-      <summary class="faq-q">{% trans "Можно уложиться в конкретный бюджет?" %}</summary>
-      <div class="faq-a muted">{% trans "Да. Предложим варианты под рамку и честно скажем, где компромисс." %}</div>
-    </details>
-
-    <details class="card faq-item">
-      <summary class="faq-q">{% trans "Вы работаете «под ключ»?" %}</summary>
-      <div class="faq-a muted">{% trans "Да. От сценария и сметы до координации на площадке." %}</div>
-    </details>
-
-    <details class="card faq-item">
-      <summary class="faq-q">{% trans "Что если что-то пойдёт не так?" %}</summary>
-      <div class="faq-a muted">{% trans "Все нюансы решаются командой здесь и сейчас." %}</div>
-    </details>
-  </div>
-</section>
-
-{# 8) CONTACTS #}
-<section class="home-section" id="contacts">
-  <div class="contacts-card card">
-
-    <div class="contacts-head">
-      <h2 class="home-section-title home-section-title1">{% trans "Контакты" %}</h2>
-      <p class="muted contacts-sub">
-        {% trans "Напишите или позвоните — обсудим формат и предложим варианты." %}
-      </p>
+{# ======== 5) КЕЙСЫ — КАРУСЕЛЬ ======== #}
+<section class="section-cases" id="cases">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">{% trans "Мероприятия, которые мы создали" %}</h2>
+      <p class="section-subtitle">{% trans "Каждое событие — это история успеха" %}</p>
     </div>
-
-    <div class="contacts-grid">
-
-      <a class="contact-item" href="https://wa.me/77075822357" target="_blank" rel="noopener">
-        <span class="contact-icon">
-          <img src="{% static 'icons/whatsapp.svg' %}" alt="WhatsApp">
-        </span>
-        <span class="contact-label">WhatsApp</span>
+  </div>
+  <div class="cases-carousel-wrap">
+    <button class="cases-arrow cases-arrow-left" data-cases-prev aria-label="{% trans 'Предыдущий' %}">‹</button>
+    <button class="cases-arrow cases-arrow-right" data-cases-next aria-label="{% trans 'Следующий' %}">›</button>
+    <div class="cases-track" data-cases-track>
+      <a class="case-card" href="{% url 'portfolio:list' %}">
+        <img src="{% static 'img/home/case-1.jpg' %}" alt="Свадьба" loading="lazy">
+        <div class="case-card-info">
+          <h3>{% trans "Свадьба" %}</h3>
+          <p>80 {% trans "гостей" %}</p>
+        </div>
       </a>
-
-      <a class="contact-item" href="https://t.me/mor22m" target="_blank" rel="noopener">
-        <span class="contact-icon">
-          <img src="{% static 'icons/telegram.svg' %}" alt="Telegram">
-        </span>
-        <span class="contact-label">Telegram</span>
+      <a class="case-card" href="{% url 'portfolio:list' %}">
+        <img src="{% static 'img/home/case-2.jpg' %}" alt="Корпоратив" loading="lazy">
+        <div class="case-card-info">
+          <h3>{% trans "Корпоратив" %}</h3>
+          <p>150 {% trans "сотрудников" %}</p>
+        </div>
       </a>
-
-      <a class="contact-item" href="mailto:abdildaajzada@gmail.com">
-        <span class="contact-icon contact-icon-text">@</span>
-        <span class="contact-label">{% trans "Почта" %}</span>
+      <a class="case-card" href="{% url 'portfolio:list' %}">
+        <img src="{% static 'img/home/case-3.jpg' %}" alt="День рождения" loading="lazy">
+        <div class="case-card-info">
+          <h3>{% trans "День рождения" %}</h3>
+          <p>VIP {% trans "формат" %}</p>
+        </div>
       </a>
-
-      <a class="contact-item" href="https://www.instagram.com/iamjesuskhan/" target="_blank" rel="noopener">
-        <span class="contact-icon">
-          <img src="{% static 'icons/instagram.svg' %}" alt="Instagram">
-        </span>
-        <span class="contact-label">Instagram</span>
+      <a class="case-card" href="{% url 'portfolio:list' %}">
+        <img src="{% static 'img/home/case-4.jpg' %}" alt="Концерт" loading="lazy">
+        <div class="case-card-info">
+          <h3>{% trans "Концерт" %}</h3>
+          <p>500+ {% trans "зрителей" %}</p>
+        </div>
       </a>
-
-    </div>
-
-    <div class="contacts-address">
-      <a
-        class="addr-card"
-        href="https://2gis.kz/almaty/geo/9430047375041535/76.857007,43.236464"
-        target="_blank"
-        rel="noopener"
-        style="text-decoration:none; color:inherit;"
-      >
-        <span class="contact-icon">2GIS</span>
-        <div class="addr-text">
-          <div class="addr-title">{% trans "Мы находимся" %}</div>
-          <div class="addr-sub">{% trans "Алматы, Улица Жубанова, 3а" %}</div>
+      <a class="case-card" href="{% url 'portfolio:list' %}">
+        <img src="{% static 'img/home/case-5.jpg' %}" alt="Свадьба Премиум" loading="lazy">
+        <div class="case-card-info">
+          <h3>{% trans "Свадьба Премиум" %}</h3>
+          <p>140 {% trans "гостей" %}</p>
+        </div>
+      </a>
+      <a class="case-card" href="{% url 'portfolio:list' %}">
+        <img src="{% static 'img/home/case-6.jpg' %}" alt="Конференция" loading="lazy">
+        <div class="case-card-info">
+          <h3>{% trans "Конференция" %}</h3>
+          <p>{% trans "Бизнес-форум" %}</p>
         </div>
       </a>
     </div>
-
+  </div>
+  <div class="cases-cta">
+    <a class="btn-black" href="{% url 'portfolio:list' %}">{% trans "Смотреть все кейсы" %} →</a>
   </div>
 </section>
 
 
-{# JS: Cases carousel (стрелки + drag + dots + progress + snap) #}
+{# ======== 6) ПАУЗНЫЙ БЛОК — CTA ======== #}
+<section class="banner-fullwidth banner-cta">
+  <div class="banner-bg-img">
+    <img src="{% static 'img/home/pause-2.jpg' %}" alt="Event" loading="lazy">
+  </div>
+  <div class="banner-dark-overlay"></div>
+  <div class="banner-center-content">
+    <h2 class="banner-big-title">{% trans "Организация вашего" %}<br>{% trans "мероприятия под ключ" %}</h2>
+    <p class="banner-small-text">{% trans "Оставьте заявку и получите бесплатную консультацию" %}</p>
+    <div class="banner-buttons">
+      <a href="#contacts" class="banner-btn banner-btn-white">
+        {% trans "Оставить заявку" %}
+      </a>
+      <a href="/portfolio/" class="banner-btn banner-btn-outline">
+        {% trans "Доступные пакеты" %}
+      </a>
+    </div>
+  </div>
+</section>
+
+
+{# ======== 7) FAQ ======== #}
+<section class="section-faq" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">{% trans "Часто задаваемые вопросы" %}</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>{% trans "Сколько времени нужно на подготовку?" %}</summary>
+        <p>{% trans "Обычно от 7 дней. Зависит от масштаба мероприятия." %}</p>
+      </details>
+      <details class="faq-item">
+        <summary>{% trans "Можно уложиться в бюджет?" %}</summary>
+        <p>{% trans "Да, мы всегда предложим варианты под ваш бюджет." %}</p>
+      </details>
+      <details class="faq-item">
+        <summary>{% trans "Вы работаете под ключ?" %}</summary>
+        <p>{% trans "Да, от сценария до координации на площадке." %}</p>
+      </details>
+      <details class="faq-item">
+        <summary>{% trans "Что если что-то пойдёт не так?" %}</summary>
+        <p>{% trans "Наша команда решает все вопросы на месте." %}</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+
+{# ======== 8) КОНТАКТЫ ======== #}
+<section class="section-contacts" id="contacts">
+  <div class="container">
+    <div class="contacts-box">
+      <div class="section-head">
+        <h2 class="section-title">{% trans "Контакты" %}</h2>
+        <p class="section-subtitle">{% trans "Обсудим формат и предложим варианты" %}</p>
+      </div>
+      <div class="contacts-grid">
+        <a class="contact-item" href="https://wa.me/77075822357" target="_blank" rel="noopener">
+          <span class="contact-icon"><img src="{% static 'icons/whatsapp.svg' %}" alt="WhatsApp"></span>
+          <span>WhatsApp</span>
+        </a>
+        <a class="contact-item" href="https://t.me/mor22m" target="_blank" rel="noopener">
+          <span class="contact-icon"><img src="{% static 'icons/telegram.svg' %}" alt="Telegram"></span>
+          <span>Telegram</span>
+        </a>
+        <a class="contact-item" href="mailto:hello@ala-event.kz">
+          <span class="contact-icon contact-icon-at">@</span>
+          <span>Email</span>
+        </a>
+        <a class="contact-item" href="https://www.instagram.com/" target="_blank" rel="noopener">
+          <span class="contact-icon"><img src="{% static 'icons/instagram.svg' %}" alt="Instagram"></span>
+          <span>Instagram</span>
+        </a>
+      </div>
+      <div class="contacts-address">
+        <a class="address-link" href="https://2gis.kz/almaty" target="_blank" rel="noopener">
+          <span>📍</span>
+          <div>
+            <strong>{% trans "Мы находимся" %}</strong>
+            <span>{% trans "Алматы, ул. Жубанова, 3а" %}</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{# ======== JAVASCRIPT ======== #}
 <script>
+  function addNewDoc(type) {
+    if (!type) return;
+    alert('Добавлен документ: ' + type);
+  }
+
+  // ── Живой поиск категорий ──────────────────────────────────────
   (function () {
-    const root = document.querySelector('[data-cases]');
-    if (!root) return;
+    var input = document.querySelector('.hero-search-input');
+    var grid  = document.querySelector('.categories-grid');
+    if (!input || !grid) return;
 
-    const track = root.querySelector('[data-cases-track]');
-    const btnPrev = root.querySelector('[data-cases-prev]');
-    const btnNext = root.querySelector('[data-cases-next]');
+    var tiles = Array.from(grid.querySelectorAll('.category-tile'));
 
-    const dotsWrap = root.querySelector('[data-cases-dots]');
-    const dots = dotsWrap ? Array.from(dotsWrap.querySelectorAll('.cases-dot')) : [];
-
-    const bar = root.querySelector('[data-cases-progress]');
-    const counter = root.querySelector('[data-cases-counter]');
-
-    if (!track) return;
-
-    function gapPx() {
-      const styles = window.getComputedStyle(track);
-      const g = parseFloat(styles.columnGap || styles.gap || '12');
-      return Number.isFinite(g) ? g : 12;
+    // Элемент «ничего не найдено»
+    var noResult = grid.querySelector('.empty-msg');
+    if (!noResult) {
+      noResult = document.createElement('div');
+      noResult.className = 'empty-msg';
+      noResult.textContent = '{% trans "Категории не найдены" %}';
+      noResult.style.display = 'none';
+      grid.appendChild(noResult);
     }
 
-    function stepPx() {
-      const first = track.querySelector('.tile');
-      if (!first) return Math.max(280, track.clientWidth * 0.8);
-      return first.getBoundingClientRect().width + gapPx();
+    // Нормализация: нижний регистр + убираем лишние пробелы
+    function norm(s) {
+      return String(s || '').toLowerCase().replace(/[\s,]+/g, ' ').trim();
     }
 
-    function total() {
-      return track.querySelectorAll('.tile').length;
-    }
-
-    function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
-
-    function index() {
-      const s = stepPx();
-      const i = Math.round(track.scrollLeft / s);
-      return clamp(i, 0, total() - 1);
-    }
-
-    function setUI(i) {
-      const t = total();
-
-      if (dots.length) dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
-      if (counter) counter.textContent = (i + 1) + " / " + t;
-
-      if (bar) {
-        const pct = t <= 1 ? 100 : (i / (t - 1)) * 100;
-        bar.style.width = pct + "%";
+    // Стемминг слова — возвращает набор вариантов (само + без 1–3 букв с конца)
+    function stems(word) {
+      var result = [word];
+      for (var i = 1; i <= 3; i++) {
+        if (word.length - i >= 3) result.push(word.slice(0, -i));
       }
+      return result;
     }
 
-    function go(i) {
-      track.scrollTo({ left: i * stepPx(), behavior: 'smooth' });
+    // Разбивает запрос на массив слов (короче 2 букв отбрасываем)
+    function queryWords(q) {
+      return norm(q).split(' ').filter(function (w) { return w.length >= 2; });
     }
 
-    function by(dir) {
-      go(clamp(index() + dir, 0, total() - 1));
-    }
-
-    btnPrev && btnPrev.addEventListener('click', () => by(-1));
-    btnNext && btnNext.addEventListener('click', () => by(1));
-
-    if (dots.length) {
-      dots.forEach((d) => {
-        d.addEventListener('click', () => {
-          const i = parseInt(d.getAttribute('data-dot') || '0', 10);
-          go(clamp(i, 0, total() - 1));
+    // Проверяет, что ВСЕ слова запроса найдены в строке-стоге
+    function matches(haystack, words) {
+      return words.every(function (word) {
+        return stems(word).some(function (stem) {
+          return haystack.indexOf(stem) !== -1;
         });
       });
     }
 
-    let down = false;
-    let startX = 0;
-    let startLeft = 0;
+    input.addEventListener('input', function () {
+      var words = queryWords(this.value);
+      var visible = 0;
 
-    track.addEventListener('mousedown', (e) => {
-      down = true;
-      startX = e.pageX;
-      startLeft = track.scrollLeft;
-      track.style.scrollBehavior = 'auto';
+      tiles.forEach(function (tile) {
+        // Ищем по data-search (все языки), если нет — по видимому тексту
+        var hay = norm(tile.dataset.search || tile.textContent);
+        var show = words.length === 0 || matches(hay, words);
+        tile.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      noResult.style.display = (visible === 0 && words.length > 0) ? '' : 'none';
     });
-
-    window.addEventListener('mouseup', () => {
-      if (!down) return;
-      down = false;
-      track.style.scrollBehavior = '';
-      setTimeout(() => go(index()), 0);
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!down) return;
-      track.scrollLeft = startLeft - (e.pageX - startX);
-    });
-
-    let raf = 0;
-    track.addEventListener('scroll', () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setUI(index()));
-    }, { passive: true });
-
-    window.addEventListener('resize', () => setUI(index()));
-    setUI(index());
   })();
 
-  document.addEventListener('click', (e) => {
-    const el = e.target.closest('[data-ev]');
-    if (!el) return;
-    const ev = el.getAttribute('data-ev');
-    const format = el.getAttribute('data-format');
-    const caseId = el.getAttribute('data-case-id');
-  });
+  // Карусель кейсов
+  (function() {
+    const track = document.querySelector('[data-cases-track]');
+    if (!track) return;
+
+    const prevBtn = document.querySelector('[data-cases-prev]');
+    const nextBtn = document.querySelector('[data-cases-next]');
+
+    function getStep() {
+      const first = track.querySelector('.case-card');
+      if (!first) return 400;
+      const gap = parseFloat(getComputedStyle(track).gap) || 24;
+      return first.offsetWidth + gap;
+    }
+
+    prevBtn?.addEventListener('click', () => {
+      track.scrollBy({ left: -getStep(), behavior: 'smooth' });
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      track.scrollBy({ left: getStep(), behavior: 'smooth' });
+    });
+
+    function updateArrows() {
+      const atStart = track.scrollLeft <= 0;
+      const atEnd = Math.abs(track.scrollLeft + track.clientWidth - track.scrollWidth) < 2;
+      prevBtn?.classList.toggle('hidden', atStart);
+      nextBtn?.classList.toggle('hidden', atEnd);
+    }
+
+    track.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    updateArrows();
+  })();
 </script>
 
 {% endblock %}

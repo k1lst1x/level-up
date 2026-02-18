@@ -3,6 +3,8 @@
 {% load i18n %}
 {% block title %}{% trans "КП:" %} {{ kp.title }}{% endblock %}
 
+{% block extra_css %}{% load static %}<link rel="stylesheet" href="{% static 'css/pages/kp.css' %}">{% endblock %}
+
 {% block content %}
 {% with can_edit=is_editable %}
 

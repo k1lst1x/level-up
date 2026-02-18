@@ -1,0 +1,19 @@
+/* ================================================================
+   pages/crm.css — CRM page
+   ================================================================ */
+
+/* Action buttons row in each contact card */
+.crm-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* Icon inside btn-compact (phone/wa/tg icons) */
+.ico {
+  width: 18px;
+  height: 18px;
+  display: block;
+  flex-shrink: 0;
+}

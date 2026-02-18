@@ -10,7 +10,13 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>{% block title %}AlmznyiEvent{% endblock %}</title>
 
+  <link rel="stylesheet" href="{% static 'css/themes/theme-light.css' %}">
+  <link rel="stylesheet" href="{% static 'css/themes/theme-dark.css' %}">
+  <link rel="stylesheet" href="{% static 'css/core.css' %}">
+  <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block extra_css %}{% endblock %}
 </head>
 
 <body>
@@ -18,10 +24,11 @@
   <div class="navbar">
     <div class="nav-left">
       <a class="brand" href="{% url 'main:home' %}">{% trans "Категории" %}</a>
+      <a class="brand" href="{% url 'portfolio:list' %}">{% trans "Портфолио" %}</a>
       <a class="brand" href="{% url 'kp:kp' %}">{% trans "КП" %}</a>
 
       {% if request.user.is_authenticated and request.user.is_staff %}
-        <a class="brand" href="{% url 'main:crm' %}">{% trans "CRM" %}</a> <!-- Ссылка видна только админам -->
+        <a class="brand" href="{% url 'main:crm' %}">{% trans "CRM" %}</a>
       {% endif %}
 
       <div class="nav-links">
@@ -159,6 +166,7 @@
       });
     })();
   </script>
+  <script src="{% static 'js/live-search.js' %}" defer></script>
 
 </body>
 </html>

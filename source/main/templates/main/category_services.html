@@ -2,9 +2,11 @@
 {% load i18n %}
 {% block title %}{% trans "Услуги" %}{% endblock %}
 
+{% block extra_css %}{% load static %}<link rel="stylesheet" href="{% static 'css/pages/categories.css' %}">{% endblock %}
+
 {% block content %}
 
-<div id="svcPage">
+<div id="svcPage" data-live-search-root>
 
   <div class="page-head">
     <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
@@ -21,6 +23,7 @@
         value="{{ search }}"
         placeholder="{% trans "Поиск услуг" %}"
         class="search-input"
+        data-live-search-input
       />
       <button class="btn btn-compact" type="submit">{% trans "Искать" %}</button>
       {% if search %}
@@ -34,6 +37,8 @@
       <div
         class="tile tile--static js-service"
         style="cursor:pointer;"
+        data-live-search-item
+        data-search="{{ s.name_ru|lower }} {{ s.name_kk|lower }} {{ s.name_en|lower }} {{ s.description_ru|lower }} {{ s.description_kk|lower }} {{ s.description_en|lower }}"
         data-service-id="{{ s.id }}"
         data-service-name="{{ s.name|escapejs }}"
         data-service-desc="{{ s.description|default:''|escapejs }}"
@@ -74,11 +79,19 @@
           {% if s.description %}
             <div class="tile-desc">{{ s.description|truncatechars:220 }}</div>
           {% endif %}
+          <div class="service-tile-actions">
+            <a class="btn btn-compact js-service-open-link" href="{% url 'main:service_detail' s.id %}">
+              {% trans "Открыть" %}
+            </a>
+          </div>
         </div>
       </div>
     {% empty %}
       <div class="card"><div class="muted">{% trans "Услуг нет." %}</div></div>
     {% endfor %}
+    <div class="card muted live-search-empty" data-live-search-empty style="display:none;">
+      {% trans "Ничего не найдено." %}
+    </div>
   </div>
 
   <!-- ================= MODAL ================= -->
@@ -480,7 +493,11 @@
 
   // click on tile opens modal
   document.querySelectorAll(".js-service").forEach(tile => {
-    tile.addEventListener("click", () => {
+    tile.addEventListener("click", (e) => {
+      if (e.target.closest("a, button, input, textarea, select, label, form")) {
+        return;
+      }
+
       const sid = tile.dataset.serviceId;
       const sname = tile.dataset.serviceName || "";
       const desc = tile.dataset.serviceDesc || "";

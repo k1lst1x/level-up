@@ -1,5 +1,161 @@
 /* static/css/pages/kp.css */
 
+/* ================================================================
+   KP EXAMPLES PAGE  (.kp_examples.html)
+   ================================================================ */
+
+/* Generic section wrapper used in kp_examples */
+.home-section {
+  padding: 0.5%;
+}
+
+.home-section-head {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.home-section-title {
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 800;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+
+.home-section-title1 {
+  background: linear-gradient(135deg, var(--purple-2), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Utility */
+.center { text-align: center; }
+
+/* KP Examples grid */
+.kp-examples-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) { .kp-examples-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .kp-examples-grid { grid-template-columns: 1fr; } }
+
+.kp-example-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  padding: 20px;
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+              border-color var(--transition-base);
+}
+.kp-example-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: var(--color-accent);
+}
+.kp-example-card.featured {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+.kp-example-card.premium {
+  border-color: rgba(124, 92, 255, 0.55);
+}
+
+.kp-example-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  width: fit-content;
+}
+.kp-example-badge.basic   { background: rgba(100, 116, 139, 0.14); color: #64748b; }
+.kp-example-badge.pro     { background: rgba(124, 92, 255, 0.14); color: var(--color-accent); }
+.kp-example-badge.vip     { background: rgba(234, 179, 8, 0.14); color: #ca8a04; }
+
+.kp-example-media {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--tile-media-bg);
+}
+.kp-example-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-slow);
+}
+.kp-example-card:hover .kp-example-media img { transform: scale(1.05); }
+
+.kp-example-title {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+}
+.kp-example-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.kp-example-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+.kp-example-list li {
+  padding: 6px 10px;
+  background: var(--hover);
+  border-radius: var(--radius-sm);
+}
+
+.kp-example-price {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--color-accent);
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.kp-example-note {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* CTA block at bottom of kp_examples */
+.home-cta {
+  text-align: center;
+  padding: 50px 30px;
+}
+.home-cta-title {
+  font-size: clamp(20px, 3vw, 30px);
+  font-weight: 800;
+  margin: 0 0 10px;
+}
+.home-cta-sub {
+  font-size: 15px;
+  margin: 0 0 30px;
+}
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  background: linear-gradient(180deg, var(--purple-2), var(--purple));
+  border-color: var(--purple-border);
+  color: #fff;
+  box-shadow: 0 10px 26px var(--purple-glow);
+}
+
 /* ===== KP tabs + list ===== */
 .kp-tabs-wrap{
   margin-top: 12px;

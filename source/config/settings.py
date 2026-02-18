@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "kp",
     "crm",
     "main",
+    "portfolio",
 ]
 
 MIDDLEWARE = [

@@ -1,36 +1,86 @@
-/* static/css/themes/theme-light.css */
-/* ===== Light theme (default) ===== */
+/* ===== Light theme — all CSS custom properties ===== */
+:root {
 
-:root{
-  --bg: #f5f6fa;
-  --card: #ffffff;
-  --text: #111;
-  --muted: #6b7280;
-  --border: #e6e8ef;
-  --hover: #f1f3f9;
-  --shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  /* ---- Backgrounds ---- */
+  --bg:           #ffffff;
+  --bg-secondary: #fafafa;
+  --card:         #ffffff;
+  --navbar-bg:    rgba(255, 255, 255, 0.92);
 
-  /* фон-обои */
-  --wallpaper-image: none;
-  --wallpaper-opacity: 0;
+  /* ---- Text ---- */
+  --text:  #0b0b0f;
+  --muted: rgba(11, 11, 15, 0.55);
 
-  /* Цвет плиток (категории/подкатегории/исполнители) */
-  --tile-bg: #ffffff;
-  --tile-tint: #f3f6ff;
-  --tile-border: #e0e7ff;
-  --tile-hover: #eef2ff;
-  --tile-media-bg: #e9eeff;
+  /* ---- Borders & hover ---- */
+  --border: rgba(11, 11, 15, 0.12);
+  --hover:  rgba(11, 11, 15, 0.06);
 
-  /* кнопки */
-  --btn-bg: var(--card);
-  --btn-text: var(--text);
+  /* ---- Shadows ---- */
+  --shadow:    0 10px 26px rgba(15, 23, 42, 0.10);
+  --shadow-sm: 0 2px  8px  rgba(0,  0,  0, 0.06);
+  --shadow-md: 0 8px  24px rgba(0,  0,  0, 0.10);
+  --navbar-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+
+  /* ---- Tiles (category/service cards) ---- */
+  --tile-bg:       #ffffff;
+  --tile-tint:     #ffffff;
+  --tile-border:   rgba(11, 11, 15, 0.12);
+  --tile-hover:    rgba(11, 11, 15, 0.04);
+  --tile-media-bg: rgba(11, 11, 15, 0.06);
+
+  /* ---- Inputs ---- */
+  --input-bg:     #ffffff;
+  --input-border: rgba(11, 11, 15, 0.14);
+
+  /* ---- Buttons ---- */
+  --btn-bg:     var(--card);
+  --btn-text:   var(--text);
   --btn-border: var(--border);
 
-  /* поля */
-  --input-bg: var(--card);
-  --input-border: var(--border);
+  /* ---- Modals ---- */
+  --modal-backdrop: rgba(0, 0, 0, 0.55);
+  --modal-bg:       #ffffff;
+  --modal-border:   rgba(11, 11, 15, 0.14);
+  --modal-shadow:   0 18px 50px rgba(15, 23, 42, 0.22);
 
-  /* акцент */
-  --focus: rgba(99, 102, 241, 0.12);
-  --focus-border: #c7d2fe;
+  /* ---- Focus ring ---- */
+  --focus:        rgba(122, 92, 255, 0.16);
+  --focus-border: rgba(122, 92, 255, 0.60);
+
+  /* ---- Accent (purple / violet) ---- */
+  --color-accent:      #7c5cff;
+  --color-accent-hover:#6b4fe6;
+  --color-accent-glow: rgba(124, 92, 255, 0.35);
+  --purple:            #6d4cff;
+  --purple-2:          #7a5cff;
+  --purple-border:     rgba(122, 92, 255, 0.75);
+  --purple-glow:       rgba(122, 92, 255, 0.22);
+
+  /* ---- Spacing scale ---- */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  40px;
+  --space-2xl: 60px;
+  --space-3xl: 100px;
+
+  /* ---- Border radius ---- */
+  --radius-sm:   10px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --radius-full: 50px;
+
+  /* ---- Blur ---- */
+  --blur-sm: 8px;
+  --blur-md: 16px;
+  --blur-lg: 24px;
+
+  /* ---- Transitions ---- */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.45s ease;
+
+  /* ---- Legacy compat ---- */
+  --wallpaper-image: none;
 }

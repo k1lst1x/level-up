@@ -4,7 +4,12 @@
 
 {% block title %}CRM{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/crm.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="crm-page">
 
 <section class="card">
   <div class="page-head">
@@ -83,6 +88,7 @@
       <button class="btn btn-danger btn-compact" id="crmModalCancel" type="button">{% trans "Отмена" %}</button>
     </div>
   </div>
+</div>
 </div>
 
 <script>

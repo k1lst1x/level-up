@@ -1,6 +1,8 @@
 # main/views.py
 from __future__ import annotations
 
+from urllib.parse import parse_qs, urlparse
+
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.utils.translation import get_language
@@ -107,6 +109,34 @@ def _search_q(search: str) -> Q:
         Q(description_kk__icontains=search) |
         Q(description_en__icontains=search)
     )
+
+
+def _youtube_embed_url(raw_url: str) -> str:
+    url = (raw_url or "").strip()
+    if not url:
+        return ""
+
+    try:
+        parsed = urlparse(url)
+        host = (parsed.netloc or "").lower()
+        path = (parsed.path or "").strip("/")
+
+        video_id = ""
+
+        if "youtu.be" in host:
+            video_id = path.split("/")[0]
+        elif "youtube.com" in host:
+            if path.startswith("embed/"):
+                video_id = path.split("embed/", 1)[1].split("/")[0]
+            else:
+                video_id = parse_qs(parsed.query).get("v", [""])[0]
+
+        if not video_id:
+            return ""
+
+        return f"https://www.youtube.com/embed/{video_id}"
+    except Exception:
+        return ""
 
 
 def _order_by_if_exists(qs, *fields: str):
@@ -230,6 +260,43 @@ def category_services_page(request, category_id: int):
             "search": search,
             "draft_kps": draft_kps,
             "has_draft_kps": has_draft_kps,
+            "is_admin": is_admin,
+        },
+    )
+
+
+@login_required
+def service_detail_page(request, service_id: int):
+    is_admin = _is_admin(request.user)
+
+    services_qs = Service.objects.select_related("category")
+    if not is_admin:
+        services_qs = services_qs.filter(is_active=True, category__is_active=True)
+
+    service = get_object_or_404(services_qs, id=service_id)
+
+    images = []
+    for image in (
+        service.image,
+        service.image_2,
+        service.image_3,
+        service.image_4,
+        service.image_5,
+        service.image_6,
+    ):
+        if image:
+            try:
+                images.append(image.url)
+            except Exception:
+                pass
+
+    return render(
+        request,
+        "main/service_detail.html",
+        {
+            "service": service,
+            "images": images,
+            "youtube_embed": _youtube_embed_url(service.youtube_url),
             "is_admin": is_admin,
         },
     )

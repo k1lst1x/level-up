@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{ service.name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/categories.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="service-detail-page">
+  <div class="page-head">
+    <div class="page-head-top">
+      <div class="page-head-left">
+        <a class="btn btn-compact" href="{% url 'main:category_services' service.category_id %}">
+          {% trans "Назад" %}
+        </a>
+      </div>
+      <div class="page-head-center">
+        <h1 class="page-title">{{ service.name }}</h1>
+      </div>
+      <div class="page-head-right"></div>
+    </div>
+  </div>
+
+  <div class="service-detail-grid">
+    <section class="card">
+      <div class="service-detail-cover">
+        {% if service.image %}
+          <img src="{{ service.image.url }}" alt="{{ service.name }}">
+        {% elif images %}
+          <img src="{{ images.0 }}" alt="{{ service.name }}">
+        {% else %}
+          <div class="tile-placeholder">{% trans "Нет фото" %}</div>
+        {% endif %}
+      </div>
+
+      {% if images|length > 1 %}
+        <div class="service-detail-thumbs">
+          {% for image_url in images %}
+            <a class="service-detail-thumb" href="{{ image_url }}" target="_blank" rel="noopener">
+              <img src="{{ image_url }}" alt="{{ service.name }}">
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </section>
+
+    <section class="card service-detail-meta">
+      <h2 class="service-detail-name">{{ service.name }}</h2>
+
+      {% if service.base_price or service.unit %}
+        <div class="service-detail-price">
+          {% if service.base_price %}
+            <span class="service-detail-price-value">{{ service.base_price }} тг</span>
+          {% endif %}
+          {% if service.unit %}
+            <span class="service-detail-price-unit">· {{ service.unit }}</span>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if service.description %}
+        <div class="service-detail-description">{{ service.description|linebreaksbr }}</div>
+      {% else %}
+        <div class="muted">{% trans "Описание пока не добавлено." %}</div>
+      {% endif %}
+
+      <div class="service-detail-actions">
+        {% if service.instagram_url %}
+          <a class="btn btn-compact" href="{{ service.instagram_url }}" target="_blank" rel="noopener">
+            {% trans "Открыть Instagram" %}
+          </a>
+        {% endif %}
+        <a class="btn btn-compact" href="{% url 'main:category_services' service.category_id %}">
+          {% trans "К списку услуг" %}
+        </a>
+      </div>
+    </section>
+  </div>
+
+  {% if youtube_embed %}
+    <section class="card" style="margin-top:12px;">
+      <div class="modal-video-wrap" style="display:block;">
+        <iframe
+          class="modal-youtube"
+          src="{{ youtube_embed }}"
+          frameborder="0"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+  {% endif %}
+</div>
+{% endblock %}

@@ -41,3 +41,122 @@
     gap: 18px;
   }
 }
+
+/* Service card actions */
+.service-tile-actions {
+  margin-top: 12px;
+  display: flex;
+}
+
+.service-tile-actions .btn {
+  width: 100%;
+}
+
+/* Live search empty state */
+.live-search-empty {
+  grid-column: 1 / -1;
+}
+
+/* Service detail page */
+.service-detail-page {
+  padding-bottom: 12px;
+}
+
+.service-detail-grid {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 980px) {
+  .service-detail-grid {
+    grid-template-columns: 1.15fr 1fr;
+    align-items: start;
+  }
+}
+
+.service-detail-cover {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--tile-media-bg);
+}
+
+.service-detail-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.service-detail-thumbs {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.service-detail-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--tile-media-bg);
+}
+
+.service-detail-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.service-detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.service-detail-name {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 900;
+}
+
+.service-detail-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.service-detail-price-value {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.service-detail-price-unit {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.service-detail-description {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text);
+  white-space: pre-line;
+}
+
+.service-detail-actions {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.service-detail-actions .btn {
+  min-width: 180px;
+}

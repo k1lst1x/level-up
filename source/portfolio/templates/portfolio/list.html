@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Портфолио" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/portfolio.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-head" style="padding-top: var(--space-xl);">
+  <div class="page-head-top">
+    <div class="page-head-left"></div>
+    <div class="page-head-center">
+      <h1 class="page-title" style="font-size: 26px; font-weight: 900; letter-spacing: -0.02em;">
+        {% trans "Портфолио" %}
+      </h1>
+      <p class="page-subtitle">{% trans "Мероприятия, которые мы создали" %}</p>
+    </div>
+    <div class="page-head-right"></div>
+  </div>
+</div>
+
+{# ── Фильтр по категориям ── #}
+{% if categories %}
+<div class="pf-tabs-wrap">
+  <div class="pf-tabs">
+    <a class="pf-tab {% if not active_cat %}is-active{% endif %}"
+       href="{% url 'portfolio:list' %}">
+      {% trans "Все" %}
+    </a>
+    {% for cat in categories %}
+    <a class="pf-tab {% if active_cat == cat.id %}is-active{% endif %}"
+       href="{% url 'portfolio:list' %}?category={{ cat.id }}">
+      {{ cat.name }}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{# ── Сетка кейсов ── #}
+<div class="pf-grid">
+  {% for case in cases %}
+  {% with extra=case.photos.all %}
+  <a class="pf-card" href="{% url 'portfolio:detail' case.pk %}">
+
+    {# Фотоколлаж #}
+    <div class="pf-collage {% if extra %}has-extra{% endif %}">
+
+      {# Обложка #}
+      <div class="pf-collage-main">
+        {% if case.cover %}
+          <img src="{{ case.cover.url }}" alt="{{ case.title }}" loading="lazy">
+        {% elif extra %}
+          <img src="{{ extra.0.image.url }}" alt="{{ case.title }}" loading="lazy">
+        {% else %}
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;opacity:.2;">🎉</div>
+        {% endif %}
+      </div>
+
+      {# Доп. фото (до 2 шт.) #}
+      {% if extra %}
+        {% for photo in extra|slice:":2" %}
+        <div class="pf-collage-small">
+          <img src="{{ photo.image.url }}" alt="" loading="lazy">
+        </div>
+        {% endfor %}
+      {% endif %}
+
+      {# Значок категории #}
+      {% if case.category %}
+      <span class="pf-cat-badge">{{ case.category.name }}</span>
+      {% endif %}
+
+      {# Оверлей при ховере #}
+      <div class="pf-collage-overlay">
+        <span class="pf-overlay-btn">{% trans "Смотреть" %} →</span>
+      </div>
+    </div>
+
+    {# Текст карточки #}
+    <div class="pf-card-body">
+      <div class="pf-card-title">{{ case.title }}</div>
+      {% if case.description %}
+      <p class="pf-card-desc">{{ case.description }}</p>
+      {% endif %}
+    </div>
+
+  </a>
+  {% endwith %}
+  {% empty %}
+  <div class="pf-empty">{% trans "Кейсов пока нет" %}</div>
+  {% endfor %}
+</div>
+
+{% endblock %}
