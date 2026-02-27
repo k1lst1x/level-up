@@ -1,0 +1,73 @@
+{# templates/main/category_subcategories.html #}
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Подкатегории" %}{% endblock %}
+
+{% block extra_css %}{% load static %}<link rel="stylesheet" href="{% static 'css/pages/categories.css' %}">{% endblock %}
+
+{% block content %}
+<div data-live-search-root>
+<div class="page-head">
+  <div class="page-head-top">
+    <div class="page-head-left">
+      <a class="btn btn-compact" href="{% url 'main:home' %}">{% trans "Назад" %}</a>
+    </div>
+
+    <div class="page-head-center">
+      <h1 class="page-title">{{ category.name }}</h1>
+    </div>
+
+    <div class="page-head-right"></div>
+  </div>
+</div>
+
+
+  <div class="card">
+    <form method="get" class="search-row">
+      <input
+        type="text"
+        name="search"
+        value="{{ search }}"
+        placeholder="{% trans "Поиск подкатегорий" %}"
+        class="search-input"
+        data-live-search-input
+      />
+      <button class="btn btn-compact" type="submit">{% trans "Искать" %}</button>
+    </form>
+  </div>
+
+  <div class="grid grid-2" style="margin-top:12px;">
+    {% for s in subcategories %}
+      <a class="tile"
+         href="{% url 'main:subcategory_services' s.id %}"
+         data-live-search-item
+         data-search="{{ s.name|lower }} {{ s.description|default:''|lower }}">
+        <div class="tile-media">
+          {% if s.image %}
+            <img src="{{ s.image.url }}" alt="{{ s.name }}">
+          {% else %}
+            <div class="tile-placeholder">{% trans "Нет фото" %}</div>
+          {% endif %}
+        </div>
+
+        <div class="tile-body">
+          <div class="tile-title">{{ s.name }}</div>
+
+          {% if s.description %}
+            <div class="tile-desc">{{ s.description|truncatechars:220 }}</div>
+          {% else %}
+            <div class="tile-desc tile-desc--empty">{% trans "Без описания" %}</div>
+          {% endif %}
+        </div>
+      </a>
+    {% empty %}
+      <div class="card">
+        <div class="muted">{% trans "Подкатегорий пока нет." %}</div>
+      </div>
+    {% endfor %}
+    <div class="card muted live-search-empty" data-live-search-empty style="display:none;">
+      {% trans "Ничего не найдено." %}
+    </div>
+  </div>
+</div>
+{% endblock %}

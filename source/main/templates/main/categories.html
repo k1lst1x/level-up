@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Категории" %}{% endblock %}
+
+{% block extra_css %}{% load static %}<link rel="stylesheet" href="{% static 'css/pages/categories.css' %}">{% endblock %}
+
+{% block content %}
+
+  <div class="categories-page" data-live-search-root>
+
+    <div class="page-head">
+      <h1 class="page-title">{% trans "Категории" %}</h1>
+
+      <div class="page-subtitle muted">
+
+      </div>
+
+      <form method="get" class="search-row categories-search">
+        <input
+          type="text"
+          name="search"
+          value="{{ search }}"
+          placeholder="{% trans "Поиск категории…" %}"
+          class="search-input"
+          data-live-search-input
+        />
+        <button class="btn btn-compact" type="submit">{% trans "Искать" %}</button>
+
+        {# Кнопка “сбросить”, только если что-то введено #}
+        {% if search %}
+          <a class="btn btn-compact" href="{% url 'main:categories' %}">{% trans "Сброс" %}</a>
+        {% endif %}
+      </form>
+    </div>
+
+    <div class="grid grid-2 categories-grid">
+      {% for c in categories %}
+        <a class="tile categories-tile"
+           href="{% url 'main:category_services' c.id %}"
+           data-live-search-item
+           data-search="{{ c.name_ru|lower }} {{ c.name_kk|lower }} {{ c.name_en|lower }} {{ c.description_ru|lower }} {{ c.description_kk|lower }} {{ c.description_en|lower }}">
+          <div class="tile-media categories-tile-media">
+            {% if c.image %}
+              <img src="{{ c.image.url }}" alt="{{ c.name }}">
+            {% else %}
+              <div class="tile-placeholder">{% trans "Без изображения" %}</div>
+            {% endif %}
+          </div>
+
+          <div class="tile-body">
+            <div class="tile-title">{{ c.name }}</div>
+            <div class="tile-desc {% if not c.description %}tile-desc--empty{% endif %}">
+              {% if c.description %}{{ c.description }}{% else %}{% trans "Описание не задано" %}{% endif %}
+            </div>
+          </div>
+        </a>
+      {% empty %}
+        <div class="card muted" style="grid-column: 1 / -1;">
+          {% trans "Ничего не найдено." %}
+        </div>
+      {% endfor %}
+      <div class="card muted live-search-empty" data-live-search-empty style="display:none;">
+        {% trans "Ничего не найдено." %}
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}

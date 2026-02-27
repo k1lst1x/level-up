@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Примеры коммерческих предложений" %}{% endblock %}
+
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/pages/kp.css' %}">{% endblock %}
+
+{% block content %}
+
+<section class="home-section">
+  <div class="home-section-head">
+    <h1 class="home-section-title home-section-title1">{% trans "Примеры коммерческих предложений" %}</h1>
+    <p class="muted center">
+      {% blocktrans %}Ниже — три варианта формата мероприятий. Каждый проект собирается индивидуально.{% endblocktrans %}
+    </p>
+  </div>
+</section>
+
+<section class="home-section">
+  <div class="kp-examples-grid">
+
+    <!-- BASIC -->
+    <article class="card kp-example-card">
+      <div class="kp-example-badge basic">BASIC</div>
+
+      <div class="kp-example-media">
+        <img src="{% static 'img/kp/basic.jpg' %}" alt="{% trans "Минимальный формат" %}">
+      </div>
+
+      <h2 class="kp-example-title">{% trans "🎈 Минимальный формат" %}</h2>
+      <p class="kp-example-sub">{% trans "Подойдёт для камерных мероприятий и частных событий" %}</p>
+
+      <ul class="kp-example-list">
+        <li>{% trans "🎤 Ведущий / координатор" %}</li>
+        <li>{% trans "📝 Базовый сценарий" %}</li>
+        <li>{% trans "🎵 Музыкальное сопровождение" %}</li>
+        <li>{% trans "💡 Минимальный свет" %}</li>
+        <li>{% trans "✅ Контроль мероприятия" %}</li>
+      </ul>
+
+      <div class="kp-example-price">{% trans "от 300 000 ₸" %}</div>
+
+      <div class="kp-example-note muted">
+        {% trans "Подходит для дней рождений, небольших корпоративов, private-вечеринок." %}
+      </div>
+    </article>
+
+    <!-- STANDARD -->
+    <article class="card kp-example-card featured">
+      <div class="kp-example-badge pro">OPTIMAL</div>
+
+      <div class="kp-example-media">
+        <img src="{% static 'img/kp/standard.jpg' %}" alt="{% trans "Оптимальный формат" %}">
+      </div>
+
+      <h2 class="kp-example-title">{% trans "⭐ Оптимальный формат" %}</h2>
+      <p class="kp-example-sub">{% trans "Самый популярный вариант для мероприятий под ключ" %}</p>
+
+      <ul class="kp-example-list">
+        <li>{% trans "🎤 Ведущий + координатор" %}</li>
+        <li>{% trans "🎨 Проработка концепции" %}</li>
+        <li>{% trans "📋 Сценарий и тайминг" %}</li>
+        <li>{% trans "🔊 Свет + звук" %}</li>
+        <li>{% trans "💃 Артисты / шоу-блок" %}</li>
+        <li>{% trans "🛠 Репетиции и контроль" %}</li>
+      </ul>
+
+      <div class="kp-example-price">{% trans "от 700 000 ₸" %}</div>
+
+      <div class="kp-example-note muted">
+        {% trans "Подходит для свадеб, корпоративов, презентаций, крупных частных событий." %}
+      </div>
+    </article>
+
+    <!-- PREMIUM -->
+    <article class="card kp-example-card premium">
+      <div class="kp-example-badge vip">PREMIUM</div>
+
+      <div class="kp-example-media">
+        <img src="{% static 'img/kp/premium.jpg' %}" alt="{% trans "Премиальный формат" %}">
+      </div>
+
+      <h2 class="kp-example-title">{% trans "👑 Премиальный формат" %}</h2>
+      <p class="kp-example-sub">{% trans "Большие проекты, шоу-программы и масштабные события" %}</p>
+
+      <ul class="kp-example-list">
+        <li>{% trans "🎬 Продюсер проекта" %}</li>
+        <li>{% trans "🚀 Авторская концепция" %}</li>
+        <li>{% trans "🕺 Команда артистов" %}</li>
+        <li>{% trans "🎆 Сцена, экраны, спецэффекты" %}</li>
+        <li>{% trans "🏗 Полный продакшн" %}</li>
+        <li>{% trans "🎥 Режиссура мероприятия" %}</li>
+      </ul>
+
+      <div class="kp-example-price">{% trans "от 1 500 000 ₸" %}</div>
+
+      <div class="kp-example-note muted">
+        {% trans "Подходит для концертов, форумов, брендинговых и имиджевых мероприятий." %}
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="home-section">
+  <div class="card home-cta">
+    <div class="home-cta-title">{% trans "Хотите рассчитать точную стоимость?" %}</div>
+    <div class="muted home-cta-sub">
+      {% trans "Соберите своё КП и получите персональный расчёт." %}
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{% url 'kp:kp' %}">{% trans "Рассчитать стоимость" %}</a>
+      <a class="btn" href="{% url 'main:home' %}">{% trans "На главную" %}</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,662 @@
+/* ================================================================
+   mobile.css — Mobile & Small Screen Responsive Overrides
+   Загружается ПОСЛЕДНИМ — перекрывает page-specific стили.
+
+   Breakpoints:
+     768px — планшет / большой телефон
+     640px — телефон
+     480px — малый телефон
+     380px — очень маленький телефон
+   ================================================================ */
+
+
+/* ----------------------------------------------------------------
+   NAVBAR — компактнее на мобилке
+   ---------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .navbar {
+    padding: 0 12px;
+    gap: 6px;
+  }
+
+  .nav-left {
+    gap: 4px;
+  }
+
+  .nav-right {
+    gap: 8px;
+  }
+
+  .lang-switch {
+    height: 34px;
+    padding: 0 28px 0 10px;
+    font-size: 12px;
+  }
+
+  .theme-btn,
+  .user-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+@media (max-width: 380px) {
+  /* На очень маленьких экранах убираем переключатель языка */
+  .lang-form {
+    display: none;
+  }
+
+  .brand {
+    font-size: 12px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   CONTAINER — меньше паддинг на маленьких экранах
+   ---------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 14px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   SECTION PADDING — 100px слишком много на мобилке
+   ---------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .section-categories,
+  .section-cases,
+  .section-contacts,
+  .section-faq {
+    padding: var(--space-2xl) 0; /* 60px вместо 100px */
+  }
+
+  .section-head {
+    margin-bottom: var(--space-lg); /* 24px */
+  }
+
+  .section-title {
+    font-size: clamp(22px, 6vw, 32px);
+  }
+
+  .section-subtitle {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: clamp(20px, 7vw, 28px);
+    margin-bottom: 8px;
+  }
+
+  .section-subtitle {
+    font-size: 13px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   HERO — font-size 25px на hero-doc-btn — критическая ошибка
+   ---------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero-doc-btn {
+    font-size: 16px; /* было 25px — огромный на мобилке */
+    padding: 8px 16px;
+  }
+
+  .hero-doc-buttons {
+    gap: 8px;
+    margin: 20px 0 20px;
+  }
+
+  .hero-small-text {
+    margin-top: 14px;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-fullwidth {
+    --hero-pt: 8%;
+    --hero-search-pb: 8%;
+  }
+
+  .hero-doc-btn {
+    font-size: 14px;
+    padding: 7px 12px;
+  }
+
+  .hero-doc-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .hero-doc-btn {
+    text-align: center;
+    justify-content: center;
+    white-space: normal;
+  }
+
+  .hero-center-content {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   INPUTS — 60px высоковато; + font-size ≥ 16px предотвращает
+   автозум на iOS при фокусе
+   ---------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .search-input,
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  select {
+    height: 50px;
+    font-size: 16px;
+  }
+
+  .hero-search-input {
+    font-size: 16px;
+  }
+
+  .search-btn-black {
+    padding: 0 20px;
+    font-size: 13px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   КНОПКИ
+   ---------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .btn {
+    height: 44px;
+    padding: 0 18px;
+    font-size: 13px;
+  }
+
+  /* Banner buttons — стекируем вертикально */
+  .banner-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .banner-btn {
+    width: 100%;
+    min-width: 0;
+    height: 48px;
+    font-size: 14px;
+    padding: 0 20px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   FAQ — крупный паддинг и шрифт уменьшаем
+   ---------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .faq-list {
+    gap: 8px;
+  }
+
+  .faq-item summary {
+    padding: 16px 18px;
+    font-size: 15px;
+    gap: 10px;
+  }
+
+  .faq-item p {
+    padding: 14px 18px 18px;
+    font-size: 13px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   BANNER — слишком большой вертикальный паддинг на мобилке
+   ---------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .banner-fullwidth {
+    min-height: 360px;
+  }
+
+  .banner-center-content {
+    padding: 56px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-center-content {
+    padding: 44px 16px;
+  }
+
+  .banner-small-text {
+    font-size: 14px;
+    margin-top: 12px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   PAGE HEAD TOP — grid 1fr auto 1fr сложно на малом экране
+   ---------------------------------------------------------------- */
+@media (max-width: 560px) {
+  .page-head-top {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "left right"
+      "center center";
+    row-gap: 8px;
+  }
+
+  .page-head-left  { grid-area: left; }
+  .page-head-center { grid-area: center; justify-self: start; }
+  .page-head-right { grid-area: right; }
+
+  .page-head-center .page-title {
+    text-align: left;
+    white-space: normal;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   SERVICE DETAIL — кнопки на всю ширину на мобилке
+   ---------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .service-detail-actions {
+    flex-direction: column;
+  }
+
+  .service-detail-actions .btn {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .service-detail-name {
+    font-size: 20px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   KP ITEM + HOME CTA — лишний паддинг убираем
+   ---------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .kp-item {
+    padding: 18px 16px;
+  }
+
+  .home-cta {
+    padding: 32px 16px;
+  }
+
+  .kp-example-card {
+    padding: 16px;
+  }
+
+  .kp-example-title {
+    font-size: 16px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   PORTFOLIO TABS — горизонтальный скролл на мобилке
+   ---------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .pf-tabs-wrap {
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    margin-bottom: var(--space-lg);
+  }
+
+  .pf-tabs-wrap::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pf-tabs {
+    flex-wrap: nowrap;
+    border-radius: var(--radius-lg);
+    width: auto;
+  }
+
+  .pf-tab {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   PORTFOLIO DETAIL — выравнивание и шрифты
+   ---------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .pf-detail-head {
+    padding: var(--space-lg) 0 var(--space-md);
+    text-align: left;
+  }
+
+  .pf-detail-desc {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   CATEGORY SIDEBAR — компактные айтемы
+   ---------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .category-sidebar {
+    height: auto;
+    padding: 10px;
+  }
+
+  .category-name {
+    font-size: 14px;
+  }
+
+  .category-item {
+    padding: 10px 12px;
+    min-width: 140px;
+  }
+
+  .category-count {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   MODAL — bottom sheet на маленьких экранах
+   ---------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .modal-backdrop:not(.modal-backdrop--full) {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal-backdrop:not(.modal-backdrop--full) .modal {
+    max-width: 100%;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: var(--space-lg) var(--space-md)
+      calc(var(--space-lg) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   CONTACTS
+   ---------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .address-link {
+    padding: 12px 16px;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .address-link div {
+    text-align: center;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   GRID — чуть меньше gap на малом экране
+   ---------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .grid {
+    gap: 8px;
+  }
+
+  .pf-grid {
+    gap: 12px;
+  }
+
+  .categories-grid {
+    gap: 12px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   CRM ACTIONS
+   ---------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .crm-actions {
+    gap: 6px;
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   TOUCH TARGETS — минимум 44×44px для всех кликабельных элементов
+   ---------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .nav-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .contact-item {
+    min-height: 44px;
+  }
+
+  .pf-lightbox-close,
+  .pf-lightbox-arrow {
+    width: 48px;
+    height: 48px;
+  }
+
+  .pf-lightbox-prev { left: 12px; }
+  .pf-lightbox-next { right: 12px; }
+}
+
+
+/* ================================================================
+   HAMBURGER MENU — мобильная навигация
+   ================================================================ */
+
+/* ---- Кнопка бургера ---- */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.nav-burger:hover {
+  background: var(--hover);
+  border-color: var(--color-accent);
+}
+
+/* Три полоски */
+.burger-bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.18s ease, width 0.2s ease;
+  transform-origin: center;
+}
+
+/* Анимация → крестик */
+.nav-burger.is-open .burger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-burger.is-open .burger-bar:nth-child(2) {
+  opacity: 0;
+  width: 0;
+}
+.nav-burger.is-open .burger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---- Выпадающее меню ---- */
+.mobile-menu {
+  display: none; /* полностью скрыто на десктопе */
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-menu-link {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid transparent;
+  min-height: 52px;
+  transition: background var(--transition-fast), color var(--transition-fast),
+              border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+/* Стрелка-индикатор справа */
+.mobile-menu-link::after {
+  content: '›';
+  margin-left: auto;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--muted);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.mobile-menu-link:hover {
+  background: var(--hover);
+  border-color: var(--border);
+}
+
+.mobile-menu-link:hover::after {
+  color: var(--color-accent);
+  transform: translateX(3px);
+}
+
+.mobile-menu-link:active {
+  background: var(--tile-hover);
+  color: var(--color-accent);
+  transform: scale(0.99);
+}
+
+/* ---- Включаем на мобилке ---- */
+@media (max-width: 768px) {
+  /* Показываем бургер */
+  .nav-burger {
+    display: flex;
+  }
+
+  /* Прячем все nav-ссылки кроме первой (Главная = логотип) */
+  .nav-left .brand ~ .brand {
+    display: none;
+  }
+
+  /* Делаем первую ссылку чуть крупнее — она теперь логотип */
+  .nav-left .brand:first-child {
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
+
+  /* Мобильное меню — dropdown под навбаром */
+  .mobile-menu {
+    display: block;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    z-index: 99998;
+    background: var(--navbar-bg, var(--bg));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    padding: 12px 16px 20px;
+
+    /* Скрытое состояние */
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+
+  .mobile-menu.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+}
+
+
+/* ================================================================
+   BANNER BUTTONS — чёткое разделение primary / secondary на мобилке
+   ================================================================ */
+@media (max-width: 768px) {
+  /* Первая кнопка в баннере — яркий purple-CTA */
+  .banner-buttons .banner-btn:first-child {
+    background: linear-gradient(180deg, var(--purple-2), var(--purple));
+    border-color: var(--purple-border);
+    box-shadow: 0 8px 24px var(--purple-glow);
+    color: #fff;
+  }
+
+  .banner-buttons .banner-btn:first-child:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+  }
+
+  /* Вторая кнопка — outline */
+  .banner-buttons .banner-btn:not(:first-child) {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(8px);
+    color: #fff;
+  }
+}
+
+/* Тап-фидбек для всех кнопок */
+@media (hover: none) {
+  .btn:active,
+  .banner-btn:active,
+  .hero-doc-btn:active {
+    transform: scale(0.97);
+    filter: brightness(0.95);
+  }
+}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ case.title }} — {% trans "Портфолио" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/portfolio.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# ── Шапка кейса ── #}
+<div class="pf-detail-head">
+  <a class="pf-detail-back" href="{% url 'portfolio:list' %}">
+    ← {% trans "Все кейсы" %}
+  </a>
+
+  {% if case.category %}
+  <div>
+    <span class="pf-detail-cat">{{ case.category.name }}</span>
+  </div>
+  {% endif %}
+
+  <h1 class="pf-detail-title">{{ case.title }}</h1>
+
+  {% if case.description %}
+  <p class="pf-detail-desc">{{ case.description }}</p>
+  {% endif %}
+</div>
+
+<div class="pf-divider"></div>
+
+{# ── Галерея фото ── #}
+{% if photos or case.cover %}
+<div class="pf-masonry" id="pf-masonry">
+
+  {# Обложка первой если есть #}
+  {% if case.cover %}
+  <div class="pf-masonry-item" data-src="{{ case.cover.url }}">
+    <img src="{{ case.cover.url }}" alt="{{ case.title }}" loading="lazy">
+  </div>
+  {% endif %}
+
+  {% for photo in photos %}
+  <div class="pf-masonry-item" data-src="{{ photo.image.url }}">
+    <img src="{{ photo.image.url }}" alt="{{ case.title }}" loading="lazy">
+  </div>
+  {% endfor %}
+
+</div>
+{% else %}
+<div style="text-align:center; padding: 80px 20px; color: var(--muted);">
+  {% trans "Фотографии будут добавлены" %}
+</div>
+{% endif %}
+
+
+{# ── Лайтбокс ── #}
+<div class="pf-lightbox" id="pfLightbox">
+  <button class="pf-lightbox-close" id="pfLbClose" aria-label="{% trans 'Закрыть' %}">✕</button>
+  <button class="pf-lightbox-arrow pf-lightbox-prev" id="pfLbPrev" aria-label="{% trans 'Назад' %}">‹</button>
+  <img src="" alt="" id="pfLbImg">
+  <button class="pf-lightbox-arrow pf-lightbox-next" id="pfLbNext" aria-label="{% trans 'Вперёд' %}">›</button>
+</div>
+
+<script>
+(function () {
+  var items = Array.from(document.querySelectorAll('.pf-masonry-item'));
+  var lb    = document.getElementById('pfLightbox');
+  var img   = document.getElementById('pfLbImg');
+  var close = document.getElementById('pfLbClose');
+  var prev  = document.getElementById('pfLbPrev');
+  var next  = document.getElementById('pfLbNext');
+  var cur   = 0;
+
+  if (!items.length || !lb) return;
+
+  function open(idx) {
+    cur = (idx + items.length) % items.length;
+    img.src = items[cur].dataset.src || '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    img.src = '';
+  }
+
+  items.forEach(function (el, i) {
+    el.addEventListener('click', function () { open(i); });
+  });
+
+  close.addEventListener('click', closeLb);
+  prev.addEventListener('click', function () { open(cur - 1); });
+  next.addEventListener('click', function () { open(cur + 1); });
+
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb) closeLb();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')     closeLb();
+    if (e.key === 'ArrowLeft')  open(cur - 1);
+    if (e.key === 'ArrowRight') open(cur + 1);
+  });
+})();
+</script>
+
+{% endblock %}

@@ -1,0 +1,228 @@
+{% load static %}
+
+{% load i18n %}
+
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>{% block title %}AlmznyiEvent{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'css/themes/theme-light.css' %}">
+  <link rel="stylesheet" href="{% static 'css/themes/theme-dark.css' %}">
+  <link rel="stylesheet" href="{% static 'css/core.css' %}">
+  <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block extra_css %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/mobile.css' %}">
+</head>
+
+<body>
+
+  <div class="navbar">
+    <div class="nav-left">
+      <a class="brand" href="{% url 'main:home' %}">{% trans "Главная" %}</a>
+      <a class="brand" href="{% url 'main:category_services' 1 %}">{% trans "Категории" %}</a>
+      <a class="brand" href="{% url 'portfolio:list' %}">{% trans "Портфолио" %}</a>
+      <a class="brand" href="{% url 'kp:kp' %}">{% trans "КП" %}</a>
+
+      {% if request.user.is_authenticated and request.user.is_staff %}
+        <a class="brand" href="{% url 'main:crm' %}">{% trans "CRM" %}</a>
+      {% endif %}
+
+      <div class="nav-links">
+      </div>
+    </div>
+
+    <div class="nav-right">
+      {% get_current_language as CURRENT_LANGUAGE %}
+
+      <form action="{% url 'set_language' %}" method="post" class="lang-form">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+        <select name="language" class="lang-switch" onchange="this.form.submit()">      
+        <option value="ru" {% if CURRENT_LANGUAGE == "ru" %}selected{% endif %}>{% trans "RU" %}</option>
+        <option value="kk" {% if CURRENT_LANGUAGE == "kk" %}selected{% endif %}>{% trans "KZ" %}</option>
+        <option value="en" {% if CURRENT_LANGUAGE == "en" %}selected{% endif %}>{% trans "EN" %}</option>
+      </select>
+      </form>
+
+      {% if request.user.is_authenticated %}
+        <div class="user-chip">
+          <div class="user-chip-name">{{ request.user.username }}</div>
+          <div class="user-chip-role">
+            {% if request.user.is_staff %}{% trans "admin" %}{% else %}{% trans "customer" %}{% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      <button class="theme-btn" id="toggleTheme" type="button" title="{% trans "Тема" %}">🌙</button>
+
+      {% if request.user.is_authenticated %}
+        <button class="user-btn" id="openUserModal" type="button" title="{% trans "Аккаунт" %}">🧑</button>
+      {% endif %}
+
+      <button class="nav-burger" id="navBurger" type="button" aria-label="{% trans "Меню" %}" aria-expanded="false">
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav class="mobile-menu-links">
+      <a class="mobile-menu-link" href="{% url 'main:home' %}">{% trans "Главная" %}</a>
+      <a class="mobile-menu-link" href="{% url 'main:category_services' 1 %}">{% trans "Категории" %}</a>
+      <a class="mobile-menu-link" href="{% url 'portfolio:list' %}">{% trans "Портфолио" %}</a>
+      <a class="mobile-menu-link" href="{% url 'kp:kp' %}">{% trans "КП" %}</a>
+      {% if request.user.is_authenticated and request.user.is_staff %}
+        <a class="mobile-menu-link" href="{% url 'main:crm' %}">{% trans "CRM" %}</a>
+      {% endif %}
+    </nav>
+  </div>
+
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+
+  {% if request.user.is_authenticated %}
+    <div class="modal-backdrop" id="userModal" style="display:none;">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="userModalTitle">
+        <div class="modal-header">
+          <div class="modal-title" id="userModalTitle">{% trans "Аккаунт" %}</div>
+          <button class="modal-close" id="closeUserModal" type="button" aria-label="{% trans "Close" %}">✕</button>
+        </div>
+
+        <div class="card">
+          <div style="font-weight:900;">{{ request.user.username }}</div>
+          <div class="muted" style="margin-top:4px; font-size:13px;">
+            {% if request.user.is_staff %}{% trans "Админ" %}{% else %}{% trans "Заказчик" %}{% endif %}
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <form method="post" action="{% url 'logout' %}" style="margin:0;">
+            {% csrf_token %}
+            <button class="btn btn-danger btn-compact" type="submit">{% trans "Выйти" %}</button>
+          </form>
+          <button class="btn btn-compact" id="closeUserModal2" type="button">{% trans "Закрыть" %}</button>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <script>
+    (function () {
+      if (window.__zd_base_inited__) return;
+      window.__zd_base_inited__ = true;
+
+      var THEME_KEY = "zd_theme";
+      var htmlEl = document.documentElement;
+      var themeBtn = document.getElementById("toggleTheme");
+
+      function getSystemTheme() {
+        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      }
+
+      function applyTheme(theme) {
+        htmlEl.setAttribute("data-theme", theme);
+        if (themeBtn) themeBtn.textContent = (theme === "dark") ? "☀️" : "🌙";
+      }
+
+      function loadTheme() {
+        var saved = null;
+        try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+        applyTheme(saved || getSystemTheme());
+      }
+
+      function toggleTheme() {
+        var current = htmlEl.getAttribute("data-theme") || "light";
+        var next = (current === "dark") ? "light" : "dark";
+        try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+        applyTheme(next);
+      }
+
+      loadTheme();
+      if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
+
+      if (window.matchMedia) {
+        var mq = window.matchMedia("(prefers-color-scheme: dark)");
+        if (mq && mq.addEventListener) {
+          mq.addEventListener("change", function () {
+            var hasSaved = false;
+            try { hasSaved = !!localStorage.getItem(THEME_KEY); } catch (e) {}
+            if (!hasSaved) loadTheme();
+          });
+        }
+      }
+
+      var modal = document.getElementById("userModal");
+      var openBtn = document.getElementById("openUserModal");
+      var closeBtn = document.getElementById("closeUserModal");
+      var closeBtn2 = document.getElementById("closeUserModal2");
+
+      function openModal() { if (modal) modal.style.display = "flex"; }
+      function closeModal() { if (modal) modal.style.display = "none"; }
+
+      if (openBtn) openBtn.addEventListener("click", openModal);
+      if (closeBtn) openBtn && closeBtn.addEventListener("click", closeModal);
+      if (closeBtn2) closeBtn2.addEventListener("click", closeModal);
+
+      if (modal) {
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) closeModal();
+        });
+      }
+
+      // ---- Мобильное меню (бургер) ----
+      var navBurger = document.getElementById("navBurger");
+      var mobileMenu = document.getElementById("mobileMenu");
+
+      function openMobileMenu() {
+        if (navBurger) { navBurger.classList.add("is-open"); navBurger.setAttribute("aria-expanded", "true"); }
+        if (mobileMenu) { mobileMenu.classList.add("is-open"); mobileMenu.setAttribute("aria-hidden", "false"); }
+      }
+
+      function closeMobileMenu() {
+        if (navBurger) { navBurger.classList.remove("is-open"); navBurger.setAttribute("aria-expanded", "false"); }
+        if (mobileMenu) { mobileMenu.classList.remove("is-open"); mobileMenu.setAttribute("aria-hidden", "true"); }
+      }
+
+      if (navBurger) {
+        navBurger.addEventListener("click", function () {
+          mobileMenu && mobileMenu.classList.contains("is-open") ? closeMobileMenu() : openMobileMenu();
+        });
+      }
+
+      // Закрыть по клику вне меню
+      document.addEventListener("click", function (e) {
+        if (mobileMenu && mobileMenu.classList.contains("is-open")) {
+          if (!e.target.closest(".navbar") && !e.target.closest(".mobile-menu")) {
+            closeMobileMenu();
+          }
+        }
+      });
+
+      // Закрыть при переходе по ссылке внутри меню
+      if (mobileMenu) {
+        mobileMenu.querySelectorAll(".mobile-menu-link").forEach(function (link) {
+          link.addEventListener("click", closeMobileMenu);
+        });
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { closeModal(); closeMobileMenu(); }
+      });
+    })();
+  </script>
+  <script src="{% static 'js/live-search.js' %}" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,702 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Услуги" %}{% endblock %}
+
+{% block extra_css %}{% load static %}<link rel="stylesheet" href="{% static 'css/pages/categories.css' %}">{% endblock %}
+
+{% block content %}
+
+<div id="svcPage" class="category-services-page" data-live-search-root>
+
+  <div class="category-services-layout category-fullwidth">
+    <aside class="card category-sidebar">
+      <div class="category-sidebar-head">
+        <div>
+          <div class="category-sidebar-title">{% trans "Каталог услуг" %}</div>
+          <div class="category-sidebar-sub muted">{% trans "Категории" %}</div>
+        </div>
+      </div>
+
+      <nav class="category-list">
+        {% for c in categories %}
+          <a class="category-item {% if c.id == category.id %}is-active{% endif %}"
+             href="{% url 'main:category_services' c.id %}">
+            <span class="category-dot"></span>
+            <span class="category-name">{{ c.name }}</span>
+            <span class="category-count">{{ c.services_count }}</span>
+          </a>
+        {% endfor %}
+      </nav>
+    </aside>
+
+    <main class="category-main">
+      <div class="page-head category-head">
+        <div class="page-breadcrumb">
+          <a href="{% url 'main:home' %}">{% trans "Категории" %}</a>
+          <span>›</span>
+          <span>{{ category.name }}</span>
+        </div>
+
+        <div class="card category-search-card">
+          <form method="get" class="search-row">
+            <input
+              type="text"
+              name="search"
+              value="{{ search }}"
+              placeholder="{% trans "Поиск услуг" %}"
+              class="search-input"
+              data-live-search-input
+            />
+            <button class="btn btn-compact" type="submit">{% trans "Искать" %}</button>
+            {% if search %}
+              <a class="btn btn-compact" href="{% url 'main:category_services' category.id %}">{% trans "Сброс" %}</a>
+            {% endif %}
+          </form>
+        </div>
+
+        <h1 class="page-title" style="margin:0;">{{ category.name }}</h1>
+        {% if category.description %}
+          <div class="page-subtitle muted">{{ category.description }}</div>
+        {% endif %}
+      </div>
+
+      <div class="grid services-grid" style="margin-top:12px;">
+        {% for s in services %}
+          <div
+            class="tile tile--static service-tile js-service"
+            style="cursor:pointer;"
+            data-live-search-item
+            data-search="{{ s.name_ru|lower }} {{ s.name_kk|lower }} {{ s.name_en|lower }} {{ s.description_ru|lower }} {{ s.description_kk|lower }} {{ s.description_en|lower }}"
+            data-service-id="{{ s.id }}"
+            data-service-name="{{ s.name|escapejs }}"
+            data-service-desc="{{ s.description|default:''|escapejs }}"
+            data-service-price="{% if s.base_price %}{{ s.base_price }}{% endif %}"
+            data-service-unit="{{ s.unit|default:''|escapejs }}"
+            data-allow-multiple="{% if s.allow_multiple %}1{% else %}0{% endif %}"
+        data-instagram="{{ s.instagram_urls|default:s.instagram_url|default:'' }}"
+            data-image1="{% if s.image %}{{ s.image.url }}{% endif %}"
+            data-image2="{% if s.image_2 %}{{ s.image_2.url }}{% endif %}"
+            data-image3="{% if s.image_3 %}{{ s.image_3.url }}{% endif %}"
+            data-image4="{% if s.image_4 %}{{ s.image_4.url }}{% endif %}"
+            data-image5="{% if s.image_5 %}{{ s.image_5.url }}{% endif %}"
+            data-image6="{% if s.image_6 %}{{ s.image_6.url }}{% endif %}"
+            data-youtube="{{ s.youtube_url|default:'' }}"
+          >
+            <div class="tile-media service-tile-media">
+              {% if s.image %}
+                <img src="{{ s.image.url }}" alt="{{ s.name }}">
+              {% else %}
+                <div class="tile-placeholder">{% trans "Нет фото" %}</div>
+              {% endif %}
+            </div>
+
+            <div class="tile-body service-tile-body">
+              <div class="service-tile-head">
+                <div class="tile-title">{{ s.name }}</div>
+                {% if s.base_price %}
+                  <div class="service-price">
+                    {{ s.base_price }} ₸{% if s.unit %} / {{ s.unit }}{% endif %}
+                  </div>
+                {% endif %}
+              </div>
+
+              {% if s.description %}
+                <div class="tile-desc service-tile-desc">{{ s.description|truncatechars:220 }}</div>
+              {% endif %}
+
+              {% if s.instagram_url %}
+                <a href="{{ s.instagram_url }}" target="_blank" rel="noopener" class="service-instagram">
+                  Instagram ↗
+                </a>
+              {% endif %}
+
+              <div class="service-tile-actions">
+                <form method="post" action="{% url 'kp:add_to_active' s.id %}" class="service-add-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                  <input type="hidden" name="qty" value="1">
+                  <button class="btn btn-primary btn-compact" type="submit">
+                    + {% trans "Добавить в КП" %}
+                  </button>
+                </form>
+                <a class="service-open-link js-service-open-link" href="{% url 'main:service_detail' s.id %}">
+                  {% trans "Открыть" %}
+                </a>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="card"><div class="muted">{% trans "Услуг нет." %}</div></div>
+        {% endfor %}
+        <div class="card muted live-search-empty" data-live-search-empty style="display:none;">
+          {% trans "Ничего не найдено." %}
+        </div>
+      </div>
+    </main>
+
+    <aside class="kp-summary">
+      <div class="card kp-summary-card">
+        <div class="kp-summary-top">
+          <div class="kp-summary-title">{% trans "Смета события" %}</div>
+          {% if active_kp %}
+            <div class="kp-summary-sub muted">{{ active_kp.title }}</div>
+          {% endif %}
+        </div>
+        <div class="kp-summary-total">
+          <div class="kp-summary-label">{% trans "Предварительная стоимость" %}</div>
+          <div class="kp-summary-value">{{ kp_total }} ₸</div>
+        </div>
+      </div>
+
+      <div class="card kp-summary-card">
+        <div class="kp-summary-row">
+          <div class="kp-summary-title-sm">
+            {% trans "Выбранные услуги" %} ({{ kp_items|length }})
+          </div>
+        </div>
+
+        <div class="kp-summary-list">
+          {% for it in kp_items %}
+            <form method="post" action="{% url 'kp:remove_item' it.id %}" class="kp-summary-item">
+              {% csrf_token %}
+              <div class="kp-summary-name">{{ it.service.name }}</div>
+              <div class="kp-summary-meta muted">{{ it.qty }} × {{ it.price }} ₸</div>
+              <button class="kp-summary-remove" type="submit" aria-label="{% trans 'Удалить услугу' %}">✕</button>
+            </form>
+          {% empty %}
+            <div class="kp-summary-empty">
+              {% if active_kp %}
+                {% trans "Выберите услуги из списка, нажимая «Добавить в план»." %}
+              {% else %}
+                <a href="{% url 'kp:kp' %}" class="kp-summary-link">
+                  {% trans "Нет активного КП. Открой КП и выбери клиента." %}
+                </a>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if active_kp %}
+        <a class="btn btn-primary kp-summary-download" href="{% url 'kp:builder' active_kp.id %}">
+          {% trans "Перейти к заполнению КП" %}
+        </a>
+      {% else %}
+        <a class="btn btn-primary kp-summary-download" href="{% url 'kp:kp' %}">
+          {% trans "Перейти к заполнению КП" %}
+        </a>
+      {% endif %}
+    </aside>
+  </div>
+
+  <!-- ================= MODAL ================= -->
+  <div class="modal-backdrop modal-backdrop--full" id="addModal" style="display:none;">
+    <div class="modal modal--scroll modal-fullscreen">
+      <div class="modal-header modal-header--sticky">
+        <div class="modal-title">{% trans "Добавить услугу" %}</div>
+        <button class="modal-close" type="button" onclick="closeAddModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="card">
+          <div style="font-weight:900;" id="modalServiceName"></div>
+          <div class="muted" style="margin-top:6px;">
+          </div>
+        </div>
+
+        <!-- media block -->
+        <div class="card" id="modalMediaCard" style="margin-top:12px; display:none;">
+          <div class="modal-media-grid" id="modalMediaGrid"></div>
+
+          <!-- description block -->
+          <div class="modal-desc" id="modalDesc" style="display:none;"></div>
+
+          <div class="modal-instagram-grid" id="modalInstagramGrid" style="display:none;"></div>
+
+          <div class="modal-instagram-wrap" id="modalInstagramFallback" style="display:none;">
+            <a id="modalInstagramLink"
+               href="#"
+               target="_blank"
+               rel="noopener"
+               class="btn modal-instagram-btn"
+               style="text-decoration:none;">
+               {% trans "📸 Посмотреть в Instagram" %}
+            </a>
+          </div>
+
+          <div class="modal-youtube-link" id="modalYoutubeLinkWrap" style="display:none;">
+            <a id="modalYoutubeLink"
+               href="#"
+               target="_blank"
+               rel="noopener"
+               class="btn modal-youtube-btn"
+               style="text-decoration:none;">
+               {% trans "▶️ Смотреть на YouTube" %}
+            </a>
+          </div>
+        </div>
+
+        <!-- qty block -->
+        <div class="card" id="qtyCard" style="margin-top:12px; display:none;">
+          <div class="qty-row">
+            <div class="qty-left">
+              <div class="qty-title">{% trans "Количество" %}</div>
+              <div class="qty-sub muted" id="qtyHint" data-multi-text="{% trans "Можно добавить несколько раз" %}">{% trans "Можно добавить несколько раз" %}</div>
+            </div>
+
+            <div class="qty-controls">
+              <button class="qty-btn" type="button" id="qtyMinus">−</button>
+              <div class="qty-value" id="qtyValue">1</div>
+              <button class="qty-btn" type="button" id="qtyPlus">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <a href="{% url 'kp:kp' %}"
+             class="btn btn-primary"
+             style="width:100%;">
+            {% trans "Создать новое КП" %}
+          </a>
+        </div>
+
+        {% if draft_kps %}
+          <div class="modal-scroll" style="margin-top:12px;">
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              {% for kp in draft_kps %}
+                <div class="kp-choice-card">
+                  <div class="kp-choice-title">
+                    {{ kp.title|default:_("КП") }} · #{{ kp.id }}
+                  </div>
+                  <div class="kp-choice-sub muted">
+                    {% trans "Клиент:" %} {{ kp.customer.username }}
+                  </div>
+
+                  <div class="kp-choice-actions">
+                    <!-- add + stay -->
+                    <form method="post"
+                          action="{% url 'kp:add_to_kp' kp.id 0 %}"
+                          class="add-form add-form-stay"
+                          data-kp="{{ kp.id }}">
+                      {% csrf_token %}
+                      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                      <input type="hidden" name="qty" value="1" class="qty-input">
+                      <button class="btn btn-compact" type="submit">
+                        {% trans "Добавить и продолжить" %}
+                      </button>
+                    </form>
+
+                    <!-- add + open -->
+                    <form method="post"
+                          action="{% url 'kp:add_to_kp' kp.id 0 %}"
+                          class="add-form add-form-open"
+                          data-kp="{{ kp.id }}">
+                      {% csrf_token %}
+                      <input type="hidden" name="next" value="/kp/">
+                      <input type="hidden" name="qty" value="1" class="qty-input">
+                      <button class="btn btn-primary btn-compact" type="submit">
+                        {% trans "Добавить и открыть" %}
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}
+          <div class="card" style="margin-top:12px;">
+            <div class="muted">
+              {% trans "Черновиков КП нет. Создай новое КП." %}
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+
+      <div class="modal-actions modal-actions--sticky">
+        <button class="btn" type="button" onclick="closeAddModal()">{% trans "Закрыть" %}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= IMAGE SLIDER (FULLSCREEN) ================= -->
+<div class="modal-backdrop" id="imgSlider" style="display:none;">
+  <div class="img-slider">
+
+    <button class="img-slider-close" type="button" onclick="closeImgSlider()">✕</button>
+
+    <button class="img-slider-arrow left" type="button" onclick="prevImg()">‹</button>
+    <button class="img-slider-arrow right" type="button" onclick="nextImg()">›</button>
+
+    <div class="img-slider-stage" id="imgSliderStage">
+      <img id="imgSliderTarget" src="" alt="preview">
+    </div>
+
+    <div class="img-slider-dots" id="imgSliderDots"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const modal = document.getElementById("addModal");
+  const nameEl = document.getElementById("modalServiceName");
+
+  const instaGrid = document.getElementById("modalInstagramGrid");
+  const instaFallback = document.getElementById("modalInstagramFallback");
+  const instaLink = document.getElementById("modalInstagramLink");
+  const ytLinkWrap = document.getElementById("modalYoutubeLinkWrap");
+  const ytLink = document.getElementById("modalYoutubeLink");
+
+  const mediaCard = document.getElementById("modalMediaCard");
+  const mediaGrid = document.getElementById("modalMediaGrid");
+  const modalDesc = document.getElementById("modalDesc");
+  const videoWrap = null;
+  const youtubeIframe = null;
+
+  const qtyCard = document.getElementById("qtyCard");
+  const qtyValueEl = document.getElementById("qtyValue");
+  const qtyHintEl = document.getElementById("qtyHint");
+  const minusBtn = document.getElementById("qtyMinus");
+  const plusBtn = document.getElementById("qtyPlus");
+
+  // ====== SLIDER ELEMENTS ======
+  const imgSlider = document.getElementById("imgSlider");
+  const imgSliderTarget = document.getElementById("imgSliderTarget");
+  const imgSliderDots = document.getElementById("imgSliderDots");
+  const imgSliderStage = document.getElementById("imgSliderStage");
+
+  let allowMultiple = false;
+  let qty = 1;
+
+  // slider state
+  let sliderImages = [];
+  let sliderIndex = 0;
+
+  function setQty(nextQty){
+    qty = Math.max(1, parseInt(nextQty || 1, 10) || 1);
+    qtyValueEl.textContent = String(qty);
+    document.querySelectorAll(".qty-input").forEach(inp => inp.value = String(qty));
+  }
+
+  function safeClearIframe(){}
+
+  function normalizeUrl(raw){
+    try {
+      return (raw || "").trim();
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function youtubeToWatch(url){
+    url = normalizeUrl(url);
+    if(!url) return "";
+    if(url.includes("youtube.com") || url.includes("youtu.be")) return url;
+    return "";
+  }
+
+  function extractInstagramUrls(raw){
+    const src = normalizeUrl(raw);
+    if(!src) return [];
+
+    const parts = src
+      .split(/[\s,;]+/)
+      .map(s => s.trim())
+      .filter(Boolean);
+
+    const urls = [];
+    parts.forEach(u => {
+      if(u.includes("instagram.com/") && (u.includes("/p/") || u.includes("/reel/") || u.includes("/tv/"))){
+        urls.push(u.replace(/\/?$/, "/"));
+      }
+    });
+    return urls;
+  }
+
+  // ============================
+  // SLIDER LOGIC
+  // ============================
+
+  function renderDots(){
+    if(!imgSliderDots) return;
+
+    imgSliderDots.innerHTML = "";
+
+    sliderImages.forEach((src, idx) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "img-dot" + (idx === sliderIndex ? " active" : "");
+      dot.addEventListener("click", () => {
+        sliderIndex = idx;
+        updateSlider();
+      });
+      imgSliderDots.appendChild(dot);
+    });
+  }
+
+  function updateSlider(){
+    if(!imgSliderTarget) return;
+    if(sliderImages.length === 0) return;
+
+    imgSliderTarget.src = sliderImages[sliderIndex];
+    renderDots();
+  }
+
+  window.openImgSlider = function(images, startIndex){
+    sliderImages = (images || []).filter(x => x && x.trim().length > 0);
+    sliderIndex = Math.max(0, parseInt(startIndex || 0, 10) || 0);
+
+    if(sliderIndex >= sliderImages.length) sliderIndex = 0;
+
+    if(sliderImages.length === 0) return;
+
+    updateSlider();
+    if(imgSlider) imgSlider.style.display = "flex";
+  }
+
+  window.closeImgSlider = function(){
+    if(imgSlider) imgSlider.style.display = "none";
+    if(imgSliderTarget) imgSliderTarget.src = "";
+    sliderImages = [];
+    sliderIndex = 0;
+    if(imgSliderDots) imgSliderDots.innerHTML = "";
+  }
+
+  window.nextImg = function(){
+    if(sliderImages.length <= 1) return;
+    sliderIndex = (sliderIndex + 1) % sliderImages.length;
+    updateSlider();
+  }
+
+  window.prevImg = function(){
+    if(sliderImages.length <= 1) return;
+    sliderIndex = (sliderIndex - 1 + sliderImages.length) % sliderImages.length;
+    updateSlider();
+  }
+
+  // swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  if(imgSliderStage){
+    imgSliderStage.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    imgSliderStage.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+
+      const diff = touchStartX - touchEndX;
+
+      if(Math.abs(diff) < 40) return;
+
+      if(diff > 0){
+        window.nextImg();
+      } else {
+        window.prevImg();
+      }
+    });
+  }
+
+  // ============================
+  // MAIN MODAL LOGIC
+  // ============================
+
+  window.closeAddModal = function(){
+    if(modal) modal.style.display = "none";
+    safeClearIframe();
+  }
+
+  function openAddModal(serviceId, serviceName, serviceDesc, allowMult, instagramUrl, images, youtubeUrl){
+    allowMultiple = !!allowMult;
+
+    if(nameEl) nameEl.textContent = serviceName || "";
+
+    const instaUrls = extractInstagramUrls(instagramUrl);
+
+    if(instaGrid) instaGrid.innerHTML = "";
+    if(instaGrid) instaGrid.classList.remove("is-4");
+
+    if(instaUrls.length > 0){
+      if(instaGrid){
+        const show = instaUrls.slice(0, 4);
+        if(show.length >= 4) instaGrid.classList.add("is-4");
+        show.forEach((u) => {
+          const wrap = document.createElement("div");
+          wrap.className = "modal-instagram-item";
+
+          const iframe = document.createElement("iframe");
+          iframe.className = "modal-instagram-embed";
+          iframe.src = u + "embed";
+          iframe.loading = "lazy";
+          iframe.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
+          iframe.referrerPolicy = "strict-origin-when-cross-origin";
+          iframe.allowFullscreen = true;
+
+          wrap.appendChild(iframe);
+          instaGrid.appendChild(wrap);
+        });
+        instaGrid.style.display = "grid";
+      }
+      if(instaFallback) instaFallback.style.display = "none";
+    } else if (instagramUrl) {
+      if(instaFallback) instaFallback.style.display = "flex";
+      if(instaGrid) instaGrid.style.display = "none";
+      if(instaLink) instaLink.href = instagramUrl;
+    } else {
+      if(instaFallback) instaFallback.style.display = "none";
+      if(instaGrid) instaGrid.style.display = "none";
+      if(instaLink) instaLink.href = "#";
+    }
+
+    document.querySelectorAll(".add-form").forEach(form => {
+      const kpId = form.dataset.kp;
+      form.action = `/kp/${kpId}/add/${serviceId}/`;
+    });
+
+    if(allowMultiple){
+      qtyCard.style.display = "block";
+      qtyHintEl.textContent = qtyHintEl.dataset.multiText || "Можно добавить несколько раз";
+      setQty(1);
+      minusBtn.disabled = false;
+      plusBtn.disabled = false;
+    } else {
+      qtyCard.style.display = "none";
+      setQty(1);
+      minusBtn.disabled = true;
+      plusBtn.disabled = true;
+    }
+
+    mediaGrid.innerHTML = "";
+    let hasMedia = false;
+
+    const filteredImages = (images || []).filter(x => x && x.trim().length > 0);
+
+    filteredImages.forEach((src, index) => {
+      hasMedia = true;
+
+      const el = document.createElement("div");
+      el.className = "modal-media-img";
+
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "photo";
+
+      img.addEventListener("click", (e) => {
+        e.stopPropagation();
+        window.openImgSlider(filteredImages, index);
+      });
+
+      el.appendChild(img);
+      mediaGrid.appendChild(el);
+    });
+
+    if(serviceDesc && serviceDesc.trim().length > 0){
+      modalDesc.style.display = "block";
+      modalDesc.textContent = serviceDesc;
+      hasMedia = true;
+    } else {
+      modalDesc.style.display = "none";
+      modalDesc.textContent = "";
+    }
+
+    const yt = youtubeToWatch(youtubeUrl || "");
+    if(yt){
+      hasMedia = true;
+      if(ytLinkWrap) ytLinkWrap.style.display = "flex";
+      if(ytLink) ytLink.href = yt;
+    } else {
+      if(ytLinkWrap) ytLinkWrap.style.display = "none";
+      if(ytLink) ytLink.href = "#";
+    }
+
+    if(hasMedia){
+      mediaCard.style.display = "block";
+    } else {
+      mediaCard.style.display = "none";
+    }
+
+    if(modal) modal.style.display = "flex";
+  }
+
+  function openFromTile(tile){
+    if(!tile) return;
+
+    const sid = tile.dataset.serviceId;
+    const sname = tile.dataset.serviceName || "";
+    const desc = tile.dataset.serviceDesc || "";
+    const allow = tile.dataset.allowMultiple === "1";
+    const insta = tile.dataset.instagram || "";
+
+    const img1 = tile.dataset.image1 || "";
+    const img2 = tile.dataset.image2 || "";
+    const img3 = tile.dataset.image3 || "";
+    const img4 = tile.dataset.image4 || "";
+    const img5 = tile.dataset.image5 || "";
+    const img6 = tile.dataset.image6 || "";
+    const yt = tile.dataset.youtube || "";
+
+    openAddModal(
+      sid,
+      sname,
+      desc,
+      allow,
+      insta,
+      [img1, img2, img3, img4, img5, img6],
+      yt
+    );
+  }
+
+  // click on tile opens modal
+  document.querySelectorAll(".js-service").forEach(tile => {
+    tile.addEventListener("click", (e) => {
+      if (e.target.closest("a, button, input, textarea, select, label, form")) {
+        return;
+      }
+      openFromTile(tile);
+    });
+
+  });
+
+  if(minusBtn) minusBtn.addEventListener("click", () => {
+    if(!allowMultiple) return;
+    setQty(qty - 1);
+  });
+
+  if(plusBtn) plusBtn.addEventListener("click", () => {
+    if(!allowMultiple) return;
+    setQty(qty + 1);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape"){
+      if(imgSlider && imgSlider.style.display === "flex"){
+        window.closeImgSlider();
+      } else {
+        window.closeAddModal();
+      }
+    }
+
+    if(imgSlider && imgSlider.style.display === "flex"){
+      if(e.key === "ArrowRight") window.nextImg();
+      if(e.key === "ArrowLeft") window.prevImg();
+    }
+  });
+
+  if(modal){
+    modal.addEventListener("click", (e) => {
+      if(e.target === modal) window.closeAddModal();
+    });
+  }
+
+  if(imgSlider){
+    imgSlider.addEventListener("click", (e) => {
+      if(e.target === imgSlider) window.closeImgSlider();
+    });
+  }
+})();
+</script>
+
+{% endblock %}
