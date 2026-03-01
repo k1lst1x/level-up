@@ -435,6 +435,10 @@
   min-width:0;
 }
 
+.kp-meta-grid--full{
+  grid-template-columns: 1fr;
+}
+
 .kp-field{
   display:flex;
   flex-direction:column;

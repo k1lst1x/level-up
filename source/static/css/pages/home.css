@@ -302,7 +302,7 @@
 .categories-grid {
   display: grid;
   --cat-gap: 20px;
-  --cat-side: clamp(180px, 14vw, 260px);
+  --cat-side: clamp(80px, 6vw, 160px);
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--cat-gap);
   padding: 0 var(--cat-side);

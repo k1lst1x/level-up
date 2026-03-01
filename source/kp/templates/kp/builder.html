@@ -34,7 +34,7 @@
 </section>
 
 
-<section class="card kp-block">
+<!--<section class="card kp-block">
   <div class="kp-section-title">{% trans "Фото / обложка КП" %}</div>
   <div class="kp-section-subtitle">{% trans "Загрузи изображение (баннер/обложка)." %}</div>
 
@@ -98,7 +98,7 @@
       <div class="muted kp-readonly-hint">{% trans "Это КП из истории. Редактирование выключено." %}</div>
     {% endif %}
   </div>
-</section>
+</section>-->
 
 
 <section class="card kp-block">
@@ -107,7 +107,7 @@
   <form id="kpMetaForm" class="kp-form">
     {% csrf_token %}
 
-    <div class="kp-meta-grid">
+    <div class="kp-meta-grid kp-meta-grid--full">
       <div class="kp-field">
         <label class="kp-label">{% trans "Заголовок КП" %}</label>
         <input
@@ -119,19 +119,19 @@
         >
       </div>
 
-      <div class="kp-field">
+      <!--<div class="kp-field">
         <label class="kp-label">{% trans "Шаблон / тип мероприятия" %}</label>
         <select class="search-input" name="template_id" {% if not can_edit %}disabled{% endif %}>
           <option value="">{% trans "— не менять —" %}</option>
           {% for t in templates %}
             <option value="{{ t.id }}" {% if kp.template_id == t.id %}selected{% endif %}>
               {{ t.name }}
-            </option>
-          {% endfor %}
+          </option>
+        {% endfor %}
         </select>
-      </div>
+      </div> -->
 
-      <div class="kp-field">
+      <!-- <div class="kp-field">
         <label class="kp-label">{% trans "Название мероприятия" %}</label>
         <input
           class="search-input"
@@ -140,7 +140,7 @@
           placeholder="{% trans 'Например: Свадьба / Корпоратив' %}"
           {% if not can_edit %}disabled{% endif %}
         >
-      </div>
+      </div> -->
 
       <div class="kp-field">
         <label class="kp-label">{% trans "Дата и время" %}</label>
@@ -153,9 +153,9 @@
             {% if not can_edit %}disabled{% endif %}
           >
         </div>
-      </div>
+      </div> 
 
-      <div class="kp-field">
+      <!--<div class="kp-field">
         <label class="kp-label">{% trans "Адрес проведения" %}</label>
         <input
           class="search-input"
@@ -186,9 +186,9 @@
           placeholder="{% trans 'https://drive.google.com/...' %}"
           {% if not can_edit %}disabled{% endif %}
         >
-      </div>
+      </div> -->
 
-      <div class="kp-field kp-field-full">
+       <div class="kp-field kp-field-full">
         <label class="kp-label">{% trans "Описание / заметки" %}</label>
         <textarea
           class="search-input"
@@ -197,7 +197,8 @@
           placeholder="{% trans 'Короткое описание' %}"
           {% if not can_edit %}disabled{% endif %}
         >{{ meta.event_description }}</textarea>
-      </div>
+      </div> 
+
     </div>
   </form>
 
