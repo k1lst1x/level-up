@@ -21,22 +21,19 @@
   <div class="hero-dark-overlay"></div>
   <div class="hero-center-content">
     <h1 class="hero-big-title">
-      {% trans "СОБЕРИ СВОЕ" %}<br>{% trans "МЕРОПРИЯТИЕ МЕЧТЫ" %}
+      {% trans "СОЗДАЙ СВОЙ" %}<br>{% trans "ФОРМАТ МЕРОПРИЯТИЯ" %}
     </h1>
     <p class="hero-small-text">
       {% trans "ОРГАНИЗАЦИЯ МЕРОПРИЯТИЙ ПОД КЛЮЧ" %}<br>{% trans "АЛМАТЫ" %}
     </p>
 
     <div class="hero-doc-buttons">
-      <a href="{% url 'main:category_services' 1 %}" class="hero-doc-btn">{% trans "Каталог услуг" %}</a>
-      <a href="{% url 'portfolio:list' %}" class="hero-doc-btn">{% trans "Портфолио" %}</a>
-      <a href="{% url 'kp:kp' %}" class="hero-doc-btn">{% trans "Собрать КП" %}</a>
-      <a href="{% url 'main:kp_examples' %}" class="hero-doc-btn">{% trans "Цены" %}</a>
+      <a href="{% url 'main:category_services' 1 %}" class="hero-doc-btn">{% trans "Открыть каталог" %}</a>
     </div>
  
 
     {# ПОИСК #}
-    <div class="hero-search-bar">
+  <!--  <div class="hero-search-bar">
       <form method="get" action="{% url 'main:home' %}" class="hero-search-form">
         <input
           type="text"
@@ -54,15 +51,15 @@
         {% endif %}
       </form>
     </div>
-  </div>
-</section>
+  </div> -->
+</section> 
 
 
 {# ======== 2) КАТЕГОРИИ ======== #}
 <section class="section-categories" id="services">
   <div class="container">
     <div class="section-head">
-      <h2 class="section-title">{% trans "Что мы предлагаем" %}</h2>
+      <h2 class="section-title">{% trans "Каталог услуг" %}</h2>
     </div>
     <div class="categories-grid">
       {% for c in categories %}

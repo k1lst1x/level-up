@@ -12,9 +12,18 @@
 
 /* На ПК: 3 крупные карточки вместо 4 мелких */
 @media (min-width: 1024px){
+  .categories-page{
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
   .categories-page .grid-2.categories-grid{
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 18px;
   }
 
   /* если хочешь управлять соотношением картинок именно на категориях */
@@ -38,7 +47,7 @@
 
 @media (min-width: 1280px){
   .categories-page .grid-2.categories-grid{
-    gap: 18px;
+    gap: 20px;
   }
 }
 
