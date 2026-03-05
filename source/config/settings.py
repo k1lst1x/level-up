@@ -5,11 +5,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "dev-secret-key"
 DEBUG = False
 
-ALLOWED_HOSTS = [
-    "ala-event.kz",
-    "www.ala-event.kz",
-    "194.32.141.184",
-]
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = [
+        "ala-event.kz",
+        "www.ala-event.kz",
+        "194.32.141.184",
+    ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://ala-event.kz",

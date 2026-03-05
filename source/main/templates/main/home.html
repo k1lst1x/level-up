@@ -21,24 +21,19 @@
   <div class="hero-dark-overlay"></div>
   <div class="hero-center-content">
     <h1 class="hero-big-title">
-      {% trans "СОБЕРИ СВОЕ" %}<br>{% trans "МЕРОПРИЯТИЕ МЕЧТЫ" %}
+      {% trans "СОЗДАЙ СВОЙ" %}<br>{% trans "ФОРМАТ МЕРОПРИЯТИЯ" %}
     </h1>
     <p class="hero-small-text">
-      {% trans "ПЛАТФОРМА ДЛЯ СОЗДАНИЯ" %}<br>{% trans "АБСОЛЮТНО ЛЮБОГО СОБЫТИЯ" %}
+      {% trans "ОРГАНИЗАЦИЯ МЕРОПРИЯТИЙ ПОД КЛЮЧ" %}<br>{% trans "АЛМАТЫ" %}
     </p>
 
-    {# Админ-документы #}
-
     <div class="hero-doc-buttons">
-      <a href="#" class="hero-doc-btn">{% trans "Чек-лист" %}</a>
-      <a href="#" class="hero-doc-btn">{% trans "Методичка" %}</a>
-      <a href="#" class="hero-doc-btn">{% trans "Бриф" %}</a>
-      <a href="#" class="hero-doc-btn">{% trans "Расходы" %}</a>
+      <a href="{% url 'main:category_services' 1 %}" class="hero-doc-btn">{% trans "Открыть каталог" %}</a>
     </div>
  
 
     {# ПОИСК #}
-    <div class="hero-search-bar">
+  <!--  <div class="hero-search-bar">
       <form method="get" action="{% url 'main:home' %}" class="hero-search-form">
         <input
           type="text"
@@ -56,15 +51,15 @@
         {% endif %}
       </form>
     </div>
-  </div>
-</section>
+  </div> -->
+</section> 
 
 
 {# ======== 2) КАТЕГОРИИ ======== #}
 <section class="section-categories" id="services">
   <div class="container">
     <div class="section-head">
-      <h2 class="section-title">{% trans "Что мы предлагаем" %}</h2>
+      <h2 class="section-title">{% trans "Каталог услуг" %}</h2>
     </div>
     <div class="categories-grid">
       {% for c in categories %}
@@ -114,35 +109,35 @@
   <div class="container">
     <div class="section-head">
       <h2 class="section-title">{% trans "Как проходит работа" %}</h2>
-      <p class="section-subtitle">{% trans "Четыре простых шага к идеальному событию" %}</p>
+      <p class="section-subtitle">{% trans "Всё под контролем — на каждом этапе" %}</p>
     </div>
     <div class="process-grid">
       <div class="process-step">
         <div class="process-num">01</div>
         <div class="process-box">
           <h3>{% trans "Бриф и задача" %}</h3>
-          <p>{% trans "Вместе с вами прорабатываем ключевые моменты: формат, цели и ожидания." %}</p>
+          <p>{% trans "Заполняем бриф, фиксируем формат, цели и бюджет — всё письменно и прозрачно." %}</p>
         </div>
       </div>
       <div class="process-step">
         <div class="process-num">02</div>
         <div class="process-box">
           <h3>{% trans "Подготовка" %}</h3>
-          <p>{% trans "Создаём концепции, прорабатываем сценарий и фиксируем бюджет." %}</p>
+          <p>{% trans "Разрабатываем концепцию, детальный сценарий и тайминг — согласовываем каждый пункт." %}</p>
         </div>
       </div>
       <div class="process-step">
         <div class="process-num">03</div>
         <div class="process-box">
           <h3>{% trans "Координация" %}</h3>
-          <p>{% trans "Координируем все этапы: от команды до таймингов." %}</p>
+          <p>{% trans "Управляем всеми подрядчиками, тайм-контролем и логистикой. Вы — всегда в курсе." %}</p>
         </div>
       </div>
       <div class="process-step">
         <div class="process-num">04</div>
         <div class="process-box">
           <h3>{% trans "Проведение" %}</h3>
-          <p>{% trans "Полный контроль: вы отдыхаете, мы решаем все вопросы." %}</p>
+          <p>{% trans "Ведём мероприятие в реальном времени. Вы — гость на своём событии." %}</p>
         </div>
       </div>
     </div>
@@ -175,7 +170,7 @@
   <div class="container">
     <div class="section-head">
       <h2 class="section-title">{% trans "Мероприятия, которые мы создали" %}</h2>
-      <p class="section-subtitle">{% trans "Каждое событие — это история успеха" %}</p>
+      <p class="section-subtitle">{% trans "Реальные проекты нашей команды" %}</p>
     </div>
   </div>
   <div class="cases-carousel-wrap">
@@ -245,8 +240,8 @@
       <a href="#contacts" class="banner-btn banner-btn-white">
         {% trans "Оставить заявку" %}
       </a>
-      <a href="/portfolio/" class="banner-btn banner-btn-outline">
-        {% trans "Доступные пакеты" %}
+      <a href="{% url 'main:kp_examples' %}" class="banner-btn banner-btn-outline">
+        {% trans "Смотреть пакеты" %}
       </a>
     </div>
   </div>
@@ -262,19 +257,23 @@
     <div class="faq-list">
       <details class="faq-item">
         <summary>{% trans "Сколько времени нужно на подготовку?" %}</summary>
-        <p>{% trans "Обычно от 7 дней. Зависит от масштаба мероприятия." %}</p>
+        <p>{% trans "Небольшое событие — от 7 дней. Свадьбу или корпоратив рекомендуем планировать за 1–3 месяца: это даёт возможность выбрать лучшую локацию, артистов и декор по оптимальной цене." %}</p>
       </details>
       <details class="faq-item">
         <summary>{% trans "Можно уложиться в бюджет?" %}</summary>
-        <p>{% trans "Да, мы всегда предложим варианты под ваш бюджет." %}</p>
+        <p>{% trans "Да. Мы работаем с разными форматами — от 300 000 ₸. Назовите нам цифру, и мы предложим оптимальный вариант без компромиссов по качеству." %}</p>
       </details>
       <details class="faq-item">
         <summary>{% trans "Вы работаете под ключ?" %}</summary>
-        <p>{% trans "Да, от сценария до координации на площадке." %}</p>
+        <p>{% trans "Да. Берём на себя всё: концепцию, сценарий, подрядчиков, декор и координацию на площадке. Вам остаётся только наслаждаться событием." %}</p>
       </details>
       <details class="faq-item">
         <summary>{% trans "Что если что-то пойдёт не так?" %}</summary>
-        <p>{% trans "Наша команда решает все вопросы на месте." %}</p>
+        <p>{% trans "На каждый форс-мажор у нас есть план Б. Команда оперативно справляется с нештатными ситуациями — чаще всего вы об этом даже не узнаете." %}</p>
+      </details>
+      <details class="faq-item">
+        <summary>{% trans "Вы работаете только в Алматы?" %}</summary>
+        <p>{% trans "Нет. Основная база — Алматы, но мы выезжаем в другие города Казахстана. Свяжитесь с нами, обсудим детали." %}</p>
       </details>
     </div>
   </div>
@@ -287,7 +286,7 @@
     <div class="contacts-box">
       <div class="section-head">
         <h2 class="section-title">{% trans "Контакты" %}</h2>
-        <p class="section-subtitle">{% trans "Обсудим формат и предложим варианты" %}</p>
+        <p class="section-subtitle">{% trans "На связи каждый день — ответим быстро" %}</p>
       </div>
       <div class="contacts-grid">
         <a class="contact-item" href="https://wa.me/77075822357" target="_blank" rel="noopener">
@@ -323,11 +322,6 @@
 
 {# ======== JAVASCRIPT ======== #}
 <script>
-  function addNewDoc(type) {
-    if (!type) return;
-    alert('Добавлен документ: ' + type);
-  }
-
   // ── Живой поиск категорий ──────────────────────────────────────
   (function () {
     var input = document.querySelector('.hero-search-input');
