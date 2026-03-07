@@ -29,7 +29,7 @@
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 14px;
   flex: 1 1 auto;
   min-width: 0;
   overflow-x: auto;
@@ -38,14 +38,61 @@
 .nav-left::-webkit-scrollbar { display: none; }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 21px;
+  line-height: 1;
+  letter-spacing: 0.01em;
   color: var(--text);
   text-decoration: none;
+  border-radius: var(--radius-sm);
   white-space: nowrap;
-  transition: color var(--transition-fast);
+  transition: color var(--transition-fast), background var(--transition-fast);
 }
-.brand:hover { color: var(--color-accent); }
+.brand:hover {
+  color: var(--color-accent);
+  background: var(--hover);
+}
+
+.brand-home {
+  gap: 10px;
+}
+
+.brand-logo-wrap {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  flex: 0 0 68px;
+}
+
+.brand-logo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+}
+
+.brand-logo-light {
+  display: none;
+}
+
+html[data-theme="light"] .brand-logo-light {
+  display: block;
+}
+
+html[data-theme="light"] .brand-logo-dark {
+  display: none;
+}
+
+html[data-theme="dark"] .brand-logo-light {
+  display: none;
+}
 
 .nav-links { display: flex; gap: 6px; }
 

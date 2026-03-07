@@ -24,8 +24,20 @@
 
   <div class="navbar">
     <div class="nav-left">
-      <a class="brand" href="{% url 'main:home' %}">{% trans "Главная" %}</a>
-      <a class="brand" href="{% url 'main:category_services' 1 %}">{% trans "Категории" %}</a>
+      <span class="brand-logo-wrap" aria-hidden="true">
+        <img class="brand-logo brand-logo-dark" src="{% static 'icons/logo.png' %}" alt="">
+        <img class="brand-logo brand-logo-light" src="{% static 'icons/logo-white.png' %}" alt="">
+      </span>
+      <a class="brand brand-home" href="{% url 'main:home' %}">
+        {% comment %}
+        <span class="brand-logo-wrap" aria-hidden="true">
+          <img class="brand-logo brand-logo-dark" src="{% static 'icons/logo.png' %}" alt="">
+          <img class="brand-logo brand-logo-light" src="{% static 'icons/logo-white.png' %}" alt="">
+        </span>
+        {% endcomment %}
+        <span class="brand-label">{% trans "Главная" %}</span>
+      </a>
+      <a class="brand" href="{% url 'main:categories' %}">{% trans "Категории" %}</a>
       <a class="brand" href="{% url 'portfolio:list' %}">{% trans "Портфолио" %}</a>
       <a class="brand" href="{% url 'kp:kp' %}">{% trans "КП" %}</a>
 
@@ -76,7 +88,7 @@
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <nav class="mobile-menu-links">
       <a class="mobile-menu-link" href="{% url 'main:home' %}">{% trans "Главная" %}</a>
-      <a class="mobile-menu-link" href="{% url 'main:category_services' 1 %}">{% trans "Категории" %}</a>
+      <a class="mobile-menu-link" href="{% url 'main:categories' %}">{% trans "Категории" %}</a>
       <a class="mobile-menu-link" href="{% url 'portfolio:list' %}">{% trans "Портфолио" %}</a>
       <a class="mobile-menu-link" href="{% url 'kp:kp' %}">{% trans "КП" %}</a>
       {% if request.user.is_authenticated and request.user.is_staff %}

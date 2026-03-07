@@ -20,7 +20,7 @@
   }
 
   .nav-left {
-    gap: 4px;
+    gap: 6px;
   }
 
   .nav-right {
@@ -46,10 +46,6 @@
   /* На очень маленьких экранах убираем переключатель языка */
   .lang-form {
     display: none;
-  }
-
-  .brand {
-    font-size: 12px;
   }
 }
 
@@ -540,7 +536,7 @@
   align-items: center;
   padding: 14px 16px;
   border-radius: var(--radius-md);
-  font-size: 16px;
+  font-size: 21px;
   font-weight: 700;
   color: var(--text);
   text-decoration: none;
@@ -590,9 +586,15 @@
 
   /* Делаем первую ссылку чуть крупнее — она теперь логотип */
   .nav-left .brand:first-child {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 900;
     letter-spacing: 0.02em;
+  }
+
+  .nav-left .brand:first-child .brand-logo-wrap {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
   }
 
   /* Мобильное меню — dropdown под навбаром */
@@ -621,6 +623,18 @@
     opacity: 1;
     transform: translateY(0);
     pointer-events: all;
+  }
+}
+
+@media (max-width: 380px) {
+  .nav-left .brand:first-child {
+    font-size: 16px;
+  }
+
+  .nav-left .brand:first-child .brand-logo-wrap {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
   }
 }
 
