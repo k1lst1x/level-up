@@ -6,17 +6,17 @@
 
 /*
    FULL-BLEED UTILITY
-   Breaks out of the .container to span the full viewport width.
-   Works by shifting left 50% of the viewport, then positioning
-   from there. Requires .container to be horizontally centered.
+   Breaks out of the centered .container to full viewport width
+   without transform-based centering (avoids mobile seam/overflow).
 */
 .hero-fullwidth,
 .banner-fullwidth,
 .cases-carousel-wrap {
-  width: 100vw;
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+  left: auto;
+  transform: none;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 
 /* ---- Animations ---- */
@@ -291,12 +291,14 @@
 }
 
 .section-categories .container {
-  width: 100vw;
+  width: auto;
   max-width: none;
   padding: 0;
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+  left: auto;
+  transform: none;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 
 .categories-grid {

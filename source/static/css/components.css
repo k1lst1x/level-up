@@ -63,9 +63,9 @@
 
 .brand-logo-wrap {
   position: relative;
-  width: 68px;
-  height: 68px;
-  flex: 0 0 68px;
+  width: 60px;
+  height: 60px;
+  flex: 0 0 60px;
 }
 
 .brand-logo {
@@ -149,6 +149,11 @@ html[data-theme="dark"] .brand-logo-light {
 
 /* Language switcher */
 .lang-form { margin: 0; }
+.lang-form-mobile {
+  display: none;
+  margin: 0;
+  position: relative;
+}
 
 .lang-switch {
   appearance: none;
@@ -168,6 +173,63 @@ html[data-theme="dark"] .brand-logo-light {
 }
 .lang-switch:hover  { filter: brightness(1.08); }
 .lang-switch option { background: #0c0c12; color: #fff; }
+
+.lang-mobile-toggle {
+  height: 38px;
+  min-width: 66px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--purple-border);
+  background: linear-gradient(180deg, var(--purple-2), var(--purple));
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 8px 20px var(--purple-glow);
+}
+
+.lang-mobile-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 92px;
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow-md);
+  z-index: 100001;
+}
+
+.lang-form-mobile.is-open .lang-mobile-menu {
+  display: flex;
+}
+
+.lang-mobile-option {
+  height: 34px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.lang-mobile-option:hover {
+  background: var(--hover);
+  border-color: var(--border);
+}
+
+.lang-mobile-option.is-active {
+  background: linear-gradient(180deg, var(--purple-2), var(--purple));
+  border-color: var(--purple-border);
+  color: #fff;
+}
 
 
 /* ================================================================

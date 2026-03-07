@@ -24,18 +24,12 @@
 
   <div class="navbar">
     <div class="nav-left">
-      <span class="brand-logo-wrap" aria-hidden="true">
-        <img class="brand-logo brand-logo-dark" src="{% static 'icons/logo.png' %}" alt="">
-        <img class="brand-logo brand-logo-light" src="{% static 'icons/logo-white.png' %}" alt="">
-      </span>
-      <a class="brand brand-home" href="{% url 'main:home' %}">
-        {% comment %}
+      <a class="brand brand-home" href="{% url 'main:home' %}" style="padding: 0 !important;">
         <span class="brand-logo-wrap" aria-hidden="true">
           <img class="brand-logo brand-logo-dark" src="{% static 'icons/logo.png' %}" alt="">
           <img class="brand-logo brand-logo-light" src="{% static 'icons/logo-white.png' %}" alt="">
         </span>
-        {% endcomment %}
-        <span class="brand-label">{% trans "Главная" %}</span>
+        {% comment %}<span class="brand-label">{% trans "Главная" %}</span>{% endcomment %}
       </a>
       <a class="brand" href="{% url 'main:categories' %}">{% trans "Категории" %}</a>
       <a class="brand" href="{% url 'portfolio:list' %}">{% trans "Портфолио" %}</a>
@@ -52,7 +46,7 @@
     <div class="nav-right">
       {% get_current_language as CURRENT_LANGUAGE %}
 
-      <form action="{% url 'set_language' %}" method="post" class="lang-form">
+      <form action="{% url 'set_language' %}" method="post" class="lang-form lang-form-desktop">
         {% csrf_token %}
         <input name="next" type="hidden" value="{{ request.get_full_path }}">
         <select name="language" class="lang-switch" onchange="this.form.submit()">      
@@ -60,6 +54,19 @@
         <option value="kk" {% if CURRENT_LANGUAGE == "kk" %}selected{% endif %}>{% trans "KZ" %}</option>
         <option value="en" {% if CURRENT_LANGUAGE == "en" %}selected{% endif %}>{% trans "EN" %}</option>
       </select>
+      </form>
+
+      <form action="{% url 'set_language' %}" method="post" class="lang-form-mobile" id="langMobileForm">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+        <button class="lang-mobile-toggle" id="langMobileToggle" type="button" aria-haspopup="true" aria-expanded="false">
+          {% if CURRENT_LANGUAGE == "kk" %}KZ{% elif CURRENT_LANGUAGE == "en" %}EN{% else %}RU{% endif %}
+        </button>
+        <div class="lang-mobile-menu" id="langMobileMenu" aria-hidden="true">
+          <button type="submit" name="language" value="ru" class="lang-mobile-option{% if CURRENT_LANGUAGE == 'ru' %} is-active{% endif %}">RU</button>
+          <button type="submit" name="language" value="kk" class="lang-mobile-option{% if CURRENT_LANGUAGE == 'kk' %} is-active{% endif %}">KZ</button>
+          <button type="submit" name="language" value="en" class="lang-mobile-option{% if CURRENT_LANGUAGE == 'en' %} is-active{% endif %}">EN</button>
+        </div>
       </form>
 
       {% if request.user.is_authenticated %}
@@ -164,6 +171,40 @@
       loadTheme();
       if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
 
+      var langMobileForm = document.getElementById("langMobileForm");
+      var langMobileToggle = document.getElementById("langMobileToggle");
+      var langMobileMenu = document.getElementById("langMobileMenu");
+
+      function openLangMenu() {
+        if (langMobileForm) langMobileForm.classList.add("is-open");
+        if (langMobileToggle) langMobileToggle.setAttribute("aria-expanded", "true");
+        if (langMobileMenu) langMobileMenu.setAttribute("aria-hidden", "false");
+      }
+
+      function closeLangMenu() {
+        if (langMobileForm) langMobileForm.classList.remove("is-open");
+        if (langMobileToggle) langMobileToggle.setAttribute("aria-expanded", "false");
+        if (langMobileMenu) langMobileMenu.setAttribute("aria-hidden", "true");
+      }
+
+      if (langMobileToggle) {
+        langMobileToggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          langMobileForm && langMobileForm.classList.contains("is-open") ? closeLangMenu() : openLangMenu();
+        });
+      }
+
+      if (langMobileMenu) {
+        langMobileMenu.addEventListener("click", function (e) {
+          e.stopPropagation();
+        });
+      }
+
+      if (langMobileForm) {
+        langMobileForm.addEventListener("submit", closeLangMenu);
+      }
+
       if (window.matchMedia) {
         var mq = window.matchMedia("(prefers-color-scheme: dark)");
         if (mq && mq.addEventListener) {
@@ -215,6 +256,12 @@
 
       // Закрыть по клику вне меню
       document.addEventListener("click", function (e) {
+        if (langMobileForm && langMobileForm.classList.contains("is-open")) {
+          if (!e.target.closest(".lang-form-mobile")) {
+            closeLangMenu();
+          }
+        }
+
         if (mobileMenu && mobileMenu.classList.contains("is-open")) {
           if (!e.target.closest(".navbar") && !e.target.closest(".mobile-menu")) {
             closeMobileMenu();
@@ -230,7 +277,7 @@
       }
 
       document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") { closeModal(); closeMobileMenu(); }
+        if (e.key === "Escape") { closeModal(); closeMobileMenu(); closeLangMenu(); }
       });
     })();
   </script>
