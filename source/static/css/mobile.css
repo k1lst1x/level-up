@@ -134,18 +134,20 @@
   }
 
   .hero-doc-btn {
-    width: min(92vw, 360px);
-    min-height: 58px;
-    font-size: 20px;
-    font-weight: 800;
-    padding: 0 24px;
+    width: auto;
+    max-width: 100%;
+    min-height: 0;
+    padding: 10px 18px;
     justify-content: center;
     text-align: center;
     border-radius: var(--radius-full);
-    background: linear-gradient(180deg, var(--purple-2), var(--purple));
-    border: 1px solid var(--purple-border);
-    color: #fff;
-    box-shadow: 0 12px 30px var(--purple-glow);
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(var(--blur-md));
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 25px;
+    font-weight: 600;
+    box-shadow: none;
   }
 
   .hero-doc-buttons {
@@ -166,10 +168,11 @@
   }
 
   .hero-doc-btn {
-    width: 100%;
-    min-height: 54px;
-    font-size: 18px;
-    padding: 0 18px;
+    width: auto;
+    max-width: 100%;
+    min-height: 0;
+    font-size: 25px;
+    padding: 10px 18px;
   }
 
   .hero-doc-buttons {
@@ -238,6 +241,40 @@
     height: 48px;
     font-size: 14px;
     padding: 0 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-btn,
+  .cases-cta .btn-black {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .section-contacts .contact-item {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .section-contacts .address-link strong {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .section-contacts .address-link div span {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-btn,
+  .cases-cta .btn-black {
+    height: 52px;
+    font-size: 17px;
+  }
+
+  .section-contacts .contact-item {
+    font-size: 15px;
   }
 }
 

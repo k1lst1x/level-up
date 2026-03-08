@@ -803,7 +803,7 @@ html[data-theme="dark"] .process-num {
   align-items: center;
   gap: 10px;
   padding: 22px 12px;
-  background: var(--bg);
+  background: var(--contact-surface, var(--bg));
   border-radius: var(--radius-md);
   border: 1px solid transparent;
   text-decoration: none;
@@ -814,6 +814,7 @@ html[data-theme="dark"] .process-num {
               box-shadow var(--transition-base);
 }
 .contact-item:hover {
+  background: var(--contact-surface-hover, var(--hover));
   border-color: var(--color-accent);
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
@@ -823,21 +824,23 @@ html[data-theme="dark"] .process-num {
   width: 48px;
   height: 48px;
   border-radius: var(--radius-md);
-  background: #111;
+  background: var(--contact-icon-bg, #111);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background var(--transition-base);
 }
 .contact-item:hover .contact-icon { background: var(--color-accent); }
+.contact-item:hover .contact-icon img { filter: brightness(0) invert(1); }
+.contact-item:hover .contact-icon-at { color: #fff; }
 
 .contact-icon img {
   width: 22px;
   height: 22px;
-  filter: brightness(0) invert(1);
+  filter: var(--contact-icon-filter, brightness(0) invert(1));
 }
 .contact-icon-at {
-  color: #fff;
+  color: var(--contact-icon-color, #fff);
   font-size: 20px;
   font-weight: 700;
 }
@@ -853,7 +856,7 @@ html[data-theme="dark"] .process-num {
   align-items: center;
   gap: 14px;
   padding: 16px 28px;
-  background: var(--bg);
+  background: var(--contact-surface, var(--bg));
   border-radius: var(--radius-md);
   border: 1px solid transparent;
   text-decoration: none;
@@ -861,6 +864,7 @@ html[data-theme="dark"] .process-num {
   transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
 .address-link:hover {
+  background: var(--contact-surface-hover, var(--hover));
   border-color: var(--color-accent);
   box-shadow: var(--shadow-sm);
 }

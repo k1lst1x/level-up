@@ -38,6 +38,13 @@ html[data-theme="dark"] {
   --btn-text:   var(--text);
   --btn-border: rgba(255, 255, 255, 0.14);
 
+  /* ---- Contacts on landing ---- */
+  --contact-surface:       #06060a;
+  --contact-surface-hover: #0d0d14;
+  --contact-icon-bg:       #111111;
+  --contact-icon-filter:   brightness(0) invert(1);
+  --contact-icon-color:    #ffffff;
+
   /* ---- Modals ---- */
   --modal-backdrop: rgba(0, 0, 0, 0.72);
   --modal-bg:       #0c0c12;
