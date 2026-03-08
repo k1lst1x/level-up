@@ -366,7 +366,7 @@ body {
   font-weight: 800;
   font-size: 16px;
   line-height: 1.2;
-  overflow: hidden;
+  /* overflow: hidden; */
   text-overflow: ellipsis;
 }
 

@@ -308,8 +308,8 @@ html[data-theme="dark"] .tile-badge {
   font-weight: 700;
   font-size: 16px;
   margin: 0 0 6px;
-  white-space: nowrap;
-  overflow: hidden;
+  /* white-space: nowrap;
+  overflow: hidden; */
   text-overflow: ellipsis;
 }
 .tile-desc {
