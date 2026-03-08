@@ -43,7 +43,7 @@
 }
 
 @media (max-width: 768px) {
-  .lang-form-desktop {
+  .lang-form-desktop-custom {
     display: none;
   }
 
@@ -53,9 +53,9 @@
 }
 
 @media (max-width: 380px) {
-  /* На очень маленьких экранах убираем переключатель языка */
-  .lang-form {
-    display: none;
+  .lang-mobile-toggle {
+    min-width: 60px;
+    padding: 0 10px;
   }
 }
 
@@ -402,21 +402,25 @@
    CATEGORY SIDEBAR — компактные айтемы
    ---------------------------------------------------------------- */
 @media (max-width: 900px) {
+  .category-sidebar .category-list {
+    overflow-x: auto;
+  }
+
   .category-sidebar {
     height: auto;
     padding: 10px;
   }
 
-  .category-name {
+  .category-sidebar .category-name {
     font-size: 14px;
   }
 
-  .category-item {
+  .category-sidebar .category-item {
     padding: 10px 12px;
     min-width: 140px;
   }
 
-  .category-count {
+  .category-sidebar .category-count {
     font-size: 12px;
     padding: 3px 8px;
   }
@@ -464,7 +468,7 @@
    ---------------------------------------------------------------- */
 @media (max-width: 480px) {
   .grid {
-    gap: 8px;
+    gap: 16px;
   }
 
   .pf-grid {

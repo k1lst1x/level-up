@@ -46,20 +46,23 @@
     <div class="nav-right">
       {% get_current_language as CURRENT_LANGUAGE %}
 
-      <form action="{% url 'set_language' %}" method="post" class="lang-form lang-form-desktop">
+      <form action="{% url 'set_language' %}" method="post" class="lang-form lang-form-desktop-custom lang-form-dropdown" id="langDesktopForm">
         {% csrf_token %}
         <input name="next" type="hidden" value="{{ request.get_full_path }}">
-        <select name="language" class="lang-switch" onchange="this.form.submit()">      
-        <option value="ru" {% if CURRENT_LANGUAGE == "ru" %}selected{% endif %}>{% trans "RU" %}</option>
-        <option value="kk" {% if CURRENT_LANGUAGE == "kk" %}selected{% endif %}>{% trans "KZ" %}</option>
-        <option value="en" {% if CURRENT_LANGUAGE == "en" %}selected{% endif %}>{% trans "EN" %}</option>
-      </select>
+        <button class="lang-mobile-toggle" id="langDesktopToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="langDesktopMenu">
+          {% if CURRENT_LANGUAGE == "kk" %}KZ{% elif CURRENT_LANGUAGE == "en" %}EN{% else %}RU{% endif %}
+        </button>
+        <div class="lang-mobile-menu" id="langDesktopMenu" aria-hidden="true">
+          <button type="submit" name="language" value="ru" class="lang-mobile-option{% if CURRENT_LANGUAGE == 'ru' %} is-active{% endif %}">RU</button>
+          <button type="submit" name="language" value="kk" class="lang-mobile-option{% if CURRENT_LANGUAGE == 'kk' %} is-active{% endif %}">KZ</button>
+          <button type="submit" name="language" value="en" class="lang-mobile-option{% if CURRENT_LANGUAGE == 'en' %} is-active{% endif %}">EN</button>
+        </div>
       </form>
 
-      <form action="{% url 'set_language' %}" method="post" class="lang-form-mobile" id="langMobileForm">
+      <form action="{% url 'set_language' %}" method="post" class="lang-form-mobile lang-form-dropdown" id="langMobileForm">
         {% csrf_token %}
         <input name="next" type="hidden" value="{{ request.get_full_path }}">
-        <button class="lang-mobile-toggle" id="langMobileToggle" type="button" aria-haspopup="true" aria-expanded="false">
+        <button class="lang-mobile-toggle" id="langMobileToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="langMobileMenu">
           {% if CURRENT_LANGUAGE == "kk" %}KZ{% elif CURRENT_LANGUAGE == "en" %}EN{% else %}RU{% endif %}
         </button>
         <div class="lang-mobile-menu" id="langMobileMenu" aria-hidden="true">
@@ -171,39 +174,52 @@
       loadTheme();
       if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
 
-      var langMobileForm = document.getElementById("langMobileForm");
-      var langMobileToggle = document.getElementById("langMobileToggle");
-      var langMobileMenu = document.getElementById("langMobileMenu");
+      var langDropdowns = [
+        {
+          form: document.getElementById("langDesktopForm"),
+          toggle: document.getElementById("langDesktopToggle"),
+          menu: document.getElementById("langDesktopMenu")
+        },
+        {
+          form: document.getElementById("langMobileForm"),
+          toggle: document.getElementById("langMobileToggle"),
+          menu: document.getElementById("langMobileMenu")
+        }
+      ].filter(function (dropdown) {
+        return dropdown.form && dropdown.toggle && dropdown.menu;
+      });
 
-      function openLangMenu() {
-        if (langMobileForm) langMobileForm.classList.add("is-open");
-        if (langMobileToggle) langMobileToggle.setAttribute("aria-expanded", "true");
-        if (langMobileMenu) langMobileMenu.setAttribute("aria-hidden", "false");
+      function setLangMenuState(dropdown, open) {
+        if (!dropdown) return;
+        dropdown.form.classList.toggle("is-open", !!open);
+        dropdown.toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        dropdown.menu.setAttribute("aria-hidden", open ? "false" : "true");
       }
 
-      function closeLangMenu() {
-        if (langMobileForm) langMobileForm.classList.remove("is-open");
-        if (langMobileToggle) langMobileToggle.setAttribute("aria-expanded", "false");
-        if (langMobileMenu) langMobileMenu.setAttribute("aria-hidden", "true");
+      function closeAllLangMenus(exceptForm) {
+        langDropdowns.forEach(function (dropdown) {
+          if (exceptForm && dropdown.form === exceptForm) return;
+          setLangMenuState(dropdown, false);
+        });
       }
 
-      if (langMobileToggle) {
-        langMobileToggle.addEventListener("click", function (e) {
+      langDropdowns.forEach(function (dropdown) {
+        dropdown.toggle.addEventListener("click", function (e) {
+          var willOpen = !dropdown.form.classList.contains("is-open");
           e.preventDefault();
           e.stopPropagation();
-          langMobileForm && langMobileForm.classList.contains("is-open") ? closeLangMenu() : openLangMenu();
+          closeAllLangMenus(dropdown.form);
+          setLangMenuState(dropdown, willOpen);
         });
-      }
 
-      if (langMobileMenu) {
-        langMobileMenu.addEventListener("click", function (e) {
+        dropdown.menu.addEventListener("click", function (e) {
           e.stopPropagation();
         });
-      }
 
-      if (langMobileForm) {
-        langMobileForm.addEventListener("submit", closeLangMenu);
-      }
+        dropdown.form.addEventListener("submit", function () {
+          setLangMenuState(dropdown, false);
+        });
+      });
 
       if (window.matchMedia) {
         var mq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -256,10 +272,8 @@
 
       // Закрыть по клику вне меню
       document.addEventListener("click", function (e) {
-        if (langMobileForm && langMobileForm.classList.contains("is-open")) {
-          if (!e.target.closest(".lang-form-mobile")) {
-            closeLangMenu();
-          }
+        if (!e.target.closest(".lang-form-dropdown")) {
+          closeAllLangMenus();
         }
 
         if (mobileMenu && mobileMenu.classList.contains("is-open")) {
@@ -277,7 +291,7 @@
       }
 
       document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") { closeModal(); closeMobileMenu(); closeLangMenu(); }
+        if (e.key === "Escape") { closeModal(); closeMobileMenu(); closeAllLangMenus(); }
       });
     })();
   </script>

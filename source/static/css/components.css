@@ -149,10 +149,17 @@ html[data-theme="dark"] .brand-logo-light {
 
 /* Language switcher */
 .lang-form { margin: 0; }
-.lang-form-mobile {
-  display: none;
+.lang-form-dropdown {
   margin: 0;
   position: relative;
+}
+
+.lang-form-desktop-custom {
+  display: block;
+}
+
+.lang-form-mobile {
+  display: none;
 }
 
 .lang-switch {
@@ -193,7 +200,7 @@ html[data-theme="dark"] .brand-logo-light {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  min-width: 92px;
+  min-width: 100%;
   display: none;
   flex-direction: column;
   gap: 4px;
@@ -205,7 +212,7 @@ html[data-theme="dark"] .brand-logo-light {
   z-index: 100001;
 }
 
-.lang-form-mobile.is-open .lang-mobile-menu {
+.lang-form-dropdown.is-open .lang-mobile-menu {
   display: flex;
 }
 

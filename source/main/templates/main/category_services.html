@@ -9,7 +9,7 @@
 <div id="svcPage" class="category-services-page" data-live-search-root>
 
   <div class="category-services-layout category-fullwidth">
-    <aside class="card category-sidebar">
+    <aside class="card category-sidebar category-sidebar-desktop">
       <div class="category-sidebar-head">
         <div>
           <div class="category-sidebar-title">{% trans "Каталог услуг" %}</div>
@@ -31,13 +31,13 @@
 
     <main class="category-main">
       <div class="page-head category-head">
-        <div class="page-breadcrumb">
+        <div class="page-breadcrumb category-head-breadcrumb">
           <a href="{% url 'main:home' %}">{% trans "Категории" %}</a>
           <span>›</span>
           <span>{{ category.name }}</span>
         </div>
 
-        <div class="card category-search-card">
+        <div class="card category-search-card category-head-search">
           <form method="get" class="search-row">
             <input
               type="text"
@@ -54,10 +54,89 @@
           </form>
         </div>
 
-        <h1 class="page-title" style="margin:0;">{{ category.name }}</h1>
+        <h1 class="page-title category-head-title" style="margin:0;">{{ category.name }}</h1>
         {% if category.description %}
-          <div class="page-subtitle muted">{{ category.description }}</div>
+          <div class="page-subtitle muted category-head-description">{{ category.description }}</div>
         {% endif %}
+
+        <details class="card mobile-category-panel mobile-category-dropdown" aria-label="{% trans 'Категории' %}">
+          <summary class="mobile-category-toggle">
+            <div class="mobile-category-toggle-copy">
+              <div class="mobile-category-toggle-label">{% trans "Категории" %}</div>
+              <div class="mobile-category-toggle-sub">{% trans "Открыть список категорий" %}</div>
+            </div>
+            <div class="mobile-category-toggle-side">
+              <span class="mobile-category-toggle-badge">{{ categories|length }}</span>
+              <span class="mobile-category-toggle-icon" aria-hidden="true">⌄</span>
+            </div>
+          </summary>
+
+          <nav class="mobile-category-menu">
+            {% for c in categories %}
+              {% if c.id != category.id %}
+                <a class="mobile-category-option" href="{% url 'main:category_services' c.id %}">
+                  <span class="mobile-category-option-main">
+                    <span class="category-dot"></span>
+                    <span class="mobile-category-option-name">{{ c.name }}</span>
+                  </span>
+                  <span class="category-count">{{ c.services_count }}</span>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </nav>
+        </details>
+
+        <details class="card mobile-kp-panel">
+          <summary class="mobile-kp-toggle">
+            <div class="mobile-kp-toggle-copy">
+              <div class="mobile-kp-toggle-label">{% trans "Смета события" %}</div>
+              <div class="mobile-kp-toggle-value">{{ kp_total }} ₸</div>
+            </div>
+            <div class="mobile-kp-toggle-side">
+              <span class="mobile-kp-toggle-badge">{{ kp_items|length }}</span>
+              <span class="mobile-kp-toggle-icon" aria-hidden="true">⌄</span>
+            </div>
+          </summary>
+
+          <div class="mobile-kp-content">
+            {% if active_kp %}
+              <div class="mobile-kp-draft muted">{{ active_kp.title }}</div>
+            {% endif %}
+
+            <div class="mobile-kp-list">
+              {% for it in kp_items %}
+                <form method="post" action="{% url 'kp:remove_item' it.id %}" class="mobile-kp-item">
+                  {% csrf_token %}
+                  <div class="mobile-kp-item-main">
+                    <div class="mobile-kp-item-name">{{ it.service.name }}</div>
+                    <div class="mobile-kp-item-meta muted">{{ it.qty }} × {{ it.price }} ₸</div>
+                  </div>
+                  <button class="mobile-kp-item-remove" type="submit" aria-label="{% trans 'Удалить услугу' %}">✕</button>
+                </form>
+              {% empty %}
+                <div class="mobile-kp-empty">
+                  {% if active_kp %}
+                    {% trans "Выберите услуги из списка, нажимая «Добавить в план»." %}
+                  {% else %}
+                    <a href="{% url 'kp:kp' %}" class="kp-summary-link">
+                      {% trans "Нет активного КП. Открой КП и выбери клиента." %}
+                    </a>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+
+            {% if active_kp %}
+              <a class="btn btn-primary mobile-kp-button" href="{% url 'kp:builder' active_kp.id %}">
+                {% trans "Перейти к заполнению КП" %}
+              </a>
+            {% else %}
+              <a class="btn btn-primary mobile-kp-button" href="{% url 'kp:kp' %}">
+                {% trans "Перейти к заполнению КП" %}
+              </a>
+            {% endif %}
+          </div>
+        </details>
       </div>
 
       <div class="grid services-grid" style="margin-top:12px;">
@@ -134,7 +213,7 @@
       </div>
     </main>
 
-    <aside class="kp-summary">
+    <aside class="kp-summary kp-summary-desktop">
       <div class="card kp-summary-card">
         <div class="kp-summary-top">
           <div class="kp-summary-title">{% trans "Смета события" %}</div>
