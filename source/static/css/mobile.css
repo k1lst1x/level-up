@@ -469,7 +469,7 @@
    ---------------------------------------------------------------- */
 @media (max-width: 480px) {
   .modal-backdrop:not(.modal-backdrop--full) {
-    align-items: flex-end;
+    align-items: center;
     padding: 0;
   }
 

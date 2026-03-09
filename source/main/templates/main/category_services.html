@@ -151,8 +151,9 @@
             data-service-desc="{{ s.description|default:''|escapejs }}"
             data-service-price="{% if s.base_price %}{{ s.base_price }}{% endif %}"
             data-service-unit="{{ s.unit|default:''|escapejs }}"
+            data-service-category="{{ category.name|escapejs }}"
             data-allow-multiple="{% if s.allow_multiple %}1{% else %}0{% endif %}"
-        data-instagram="{{ s.instagram_urls|default:s.instagram_url|default:'' }}"
+            data-instagram="{{ s.instagram_urls|default:s.instagram_url|default:'' }}"
             data-image1="{% if s.image %}{{ s.image.url }}{% endif %}"
             data-image2="{% if s.image_2 %}{{ s.image_2.url }}{% endif %}"
             data-image3="{% if s.image_3 %}{{ s.image_3.url }}{% endif %}"
@@ -276,115 +277,157 @@
         <button class="modal-close" type="button" onclick="closeAddModal()">✕</button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body service-modal-body">
 
-        <div class="card">
-          <div style="font-weight:900;" id="modalServiceName"></div>
-          <div class="muted" style="margin-top:6px;">
-          </div>
+        <div class="service-modal-hero-wrap">
+          <section class="card service-modal-card" aria-label="{% trans 'Карточка услуги' %}">
+            <div class="service-modal-gallery" id="serviceGalleryViewport">
+              <div class="service-modal-track"
+                   id="serviceGalleryTrack"
+                   data-empty-text="{% trans 'Фото не добавлено' %}"></div>
+
+              <button class="service-modal-nav service-modal-nav--prev"
+                      type="button"
+                      id="serviceGalleryPrev"
+                      aria-label="{% trans 'Предыдущее фото' %}">
+                ‹
+              </button>
+              <button class="service-modal-nav service-modal-nav--next"
+                      type="button"
+                      id="serviceGalleryNext"
+                      aria-label="{% trans 'Следующее фото' %}">
+                ›
+              </button>
+
+              <div class="service-modal-overlay">
+                <div class="service-modal-subtitle"
+                     id="modalServiceSubtitle"
+                     data-fallback="{% trans 'Услуга' %}"></div>
+                <h2 class="service-modal-title" id="modalServiceName"></h2>
+              </div>
+
+              <div class="service-modal-dots" id="serviceGalleryDots"></div>
+            </div>
+
+            <div class="service-modal-meta">
+              <div class="service-modal-chip service-modal-price" id="modalServicePriceChip" style="display:none;"></div>
+              <div class="service-modal-chip" id="modalServiceUnitChip" style="display:none;"></div>
+              <div class="service-modal-chip"
+                   id="modalServiceModeChip"
+                   data-multi-text="{% trans 'Можно добавить несколько раз' %}"
+                   data-single-text="{% trans 'Добавляется только один раз' %}">
+              </div>
+            </div>
+          </section>
         </div>
 
-        <!-- media block -->
-        <div class="card" id="modalMediaCard" style="margin-top:12px; display:none;">
-          <div class="modal-media-grid" id="modalMediaGrid"></div>
+        <div class="service-modal-content-wrap">
+          <section class="card service-modal-section" id="modalDescCard" style="display:none;">
+            <div class="service-modal-section-title">{% trans "Описание услуги" %}</div>
+            <div class="service-modal-desc" id="modalDesc"></div>
+          </section>
 
-          <!-- description block -->
-          <div class="modal-desc" id="modalDesc" style="display:none;"></div>
+          <section class="card service-modal-section" id="modalLinksCard" style="display:none;">
+            <div class="service-modal-section-title">{% trans "Instagram и YouTube" %}</div>
 
-          <div class="modal-instagram-grid" id="modalInstagramGrid" style="display:none;"></div>
+            <div class="service-modal-instagram-grid" id="modalInstagramGrid" style="display:none;"></div>
 
-          <div class="modal-instagram-wrap" id="modalInstagramFallback" style="display:none;">
-            <a id="modalInstagramLink"
-               href="#"
-               target="_blank"
-               rel="noopener"
-               class="btn modal-instagram-btn"
-               style="text-decoration:none;">
-               {% trans "📸 Посмотреть в Instagram" %}
+            <div class="service-modal-links-wrap" id="modalInstagramFallback" style="display:none;">
+              <a id="modalInstagramLink"
+                 href="#"
+                 target="_blank"
+                 rel="noopener"
+                 class="btn service-modal-link-btn">
+                {% trans "Открыть Instagram" %}
+              </a>
+            </div>
+
+            <div class="service-modal-links-wrap" id="modalYoutubeLinkWrap" style="display:none;">
+              <a id="modalYoutubeLink"
+                 href="#"
+                 target="_blank"
+                 rel="noopener"
+                 class="btn service-modal-link-btn">
+                {% trans "Смотреть на YouTube" %}
+              </a>
+            </div>
+          </section>
+        </div>
+
+        <section class="card service-modal-section service-modal-kp-section">
+          <div class="service-modal-kp-head">
+            <div class="service-modal-section-title">{% trans "Коммерческое предложение" %}</div>
+            <a href="{% url 'kp:kp' %}" class="btn btn-primary btn-compact service-modal-create-btn">
+              {% trans "Создать новое КП" %}
             </a>
           </div>
 
-          <div class="modal-youtube-link" id="modalYoutubeLinkWrap" style="display:none;">
-            <a id="modalYoutubeLink"
-               href="#"
-               target="_blank"
-               rel="noopener"
-               class="btn modal-youtube-btn"
-               style="text-decoration:none;">
-               {% trans "▶️ Смотреть на YouTube" %}
-            </a>
-          </div>
-        </div>
+          <div class="service-modal-qty" id="qtyCard" style="display:none;">
+            <div class="qty-row">
+              <div class="qty-left">
+                <div class="qty-title">{% trans "Количество" %}</div>
+                <div class="qty-sub muted"
+                     id="qtyHint"
+                     data-multi-text="{% trans 'Можно добавить несколько раз' %}">
+                  {% trans "Можно добавить несколько раз" %}
+                </div>
+              </div>
 
-        <!-- qty block -->
-        <div class="card" id="qtyCard" style="margin-top:12px; display:none;">
-          <div class="qty-row">
-            <div class="qty-left">
-              <div class="qty-title">{% trans "Количество" %}</div>
-              <div class="qty-sub muted" id="qtyHint" data-multi-text="{% trans "Можно добавить несколько раз" %}">{% trans "Можно добавить несколько раз" %}</div>
-            </div>
-
-            <div class="qty-controls">
-              <button class="qty-btn" type="button" id="qtyMinus">−</button>
-              <div class="qty-value" id="qtyValue">1</div>
-              <button class="qty-btn" type="button" id="qtyPlus">+</button>
+              <div class="qty-controls">
+                <button class="qty-btn" type="button" id="qtyMinus">−</button>
+                <div class="qty-value" id="qtyValue">1</div>
+                <button class="qty-btn" type="button" id="qtyPlus">+</button>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div class="card" style="margin-top:12px;">
-          <a href="{% url 'kp:kp' %}"
-             class="btn btn-primary"
-             style="width:100%;">
-            {% trans "Создать новое КП" %}
-          </a>
-        </div>
+        </section>
 
         {% if draft_kps %}
-          <div class="modal-scroll" style="margin-top:12px;">
-            <div style="display:flex; flex-direction:column; gap:12px;">
-              {% for kp in draft_kps %}
-                <div class="kp-choice-card">
-                  <div class="kp-choice-title">
-                    {{ kp.title|default:_("КП") }} · #{{ kp.id }}
-                  </div>
-                  <div class="kp-choice-sub muted">
-                    {% trans "Клиент:" %} {{ kp.customer.username }}
-                  </div>
+          <section class="card service-modal-section">
+            <div class="service-modal-section-title">{% trans "Черновики КП" %}</div>
+            <div class="modal-scroll service-modal-draft-scroll">
+              <div class="service-modal-draft-list">
+                {% for kp in draft_kps %}
+                  <div class="kp-choice-card">
+                    <div class="kp-choice-title">
+                      {{ kp.title|default:_("КП") }} · #{{ kp.id }}
+                    </div>
+                    <div class="kp-choice-sub muted">
+                      {% trans "Клиент:" %} {{ kp.customer.username }}
+                    </div>
 
-                  <div class="kp-choice-actions">
-                    <!-- add + stay -->
-                    <form method="post"
-                          action="{% url 'kp:add_to_kp' kp.id 0 %}"
-                          class="add-form add-form-stay"
-                          data-kp="{{ kp.id }}">
-                      {% csrf_token %}
-                      <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                      <input type="hidden" name="qty" value="1" class="qty-input">
-                      <button class="btn btn-compact" type="submit">
-                        {% trans "Добавить и продолжить" %}
-                      </button>
-                    </form>
+                    <div class="kp-choice-actions">
+                      <form method="post"
+                            action="{% url 'kp:add_to_kp' kp.id 0 %}"
+                            class="add-form add-form-stay"
+                            data-kp="{{ kp.id }}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <input type="hidden" name="qty" value="1" class="qty-input">
+                        <button class="btn btn-compact" type="submit">
+                          {% trans "Добавить и продолжить" %}
+                        </button>
+                      </form>
 
-                    <!-- add + open -->
-                    <form method="post"
-                          action="{% url 'kp:add_to_kp' kp.id 0 %}"
-                          class="add-form add-form-open"
-                          data-kp="{{ kp.id }}">
-                      {% csrf_token %}
-                      <input type="hidden" name="next" value="/kp/">
-                      <input type="hidden" name="qty" value="1" class="qty-input">
-                      <button class="btn btn-primary btn-compact" type="submit">
-                        {% trans "Добавить и открыть" %}
-                      </button>
-                    </form>
+                      <form method="post"
+                            action="{% url 'kp:add_to_kp' kp.id 0 %}"
+                            class="add-form add-form-open"
+                            data-kp="{{ kp.id }}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="/kp/">
+                        <input type="hidden" name="qty" value="1" class="qty-input">
+                        <button class="btn btn-primary btn-compact" type="submit">
+                          {% trans "Добавить и открыть" %}
+                        </button>
+                      </form>
+                    </div>
                   </div>
-                </div>
-              {% endfor %}
+                {% endfor %}
+              </div>
             </div>
-          </div>
+          </section>
         {% else %}
-          <div class="card" style="margin-top:12px;">
+          <div class="card service-modal-empty">
             <div class="muted">
               {% trans "Черновиков КП нет. Создай новое КП." %}
             </div>
@@ -421,18 +464,26 @@
 (function(){
   const modal = document.getElementById("addModal");
   const nameEl = document.getElementById("modalServiceName");
+  const subtitleEl = document.getElementById("modalServiceSubtitle");
+  const priceChipEl = document.getElementById("modalServicePriceChip");
+  const unitChipEl = document.getElementById("modalServiceUnitChip");
+  const modeChipEl = document.getElementById("modalServiceModeChip");
 
+  const galleryViewport = document.getElementById("serviceGalleryViewport");
+  const galleryTrack = document.getElementById("serviceGalleryTrack");
+  const galleryDots = document.getElementById("serviceGalleryDots");
+  const galleryPrev = document.getElementById("serviceGalleryPrev");
+  const galleryNext = document.getElementById("serviceGalleryNext");
+
+  const descCard = document.getElementById("modalDescCard");
+  const descEl = document.getElementById("modalDesc");
+
+  const linksCard = document.getElementById("modalLinksCard");
   const instaGrid = document.getElementById("modalInstagramGrid");
   const instaFallback = document.getElementById("modalInstagramFallback");
   const instaLink = document.getElementById("modalInstagramLink");
-  const ytLinkWrap = document.getElementById("modalYoutubeLinkWrap");
+  const ytWrap = document.getElementById("modalYoutubeLinkWrap");
   const ytLink = document.getElementById("modalYoutubeLink");
-
-  const mediaCard = document.getElementById("modalMediaCard");
-  const mediaGrid = document.getElementById("modalMediaGrid");
-  const modalDesc = document.getElementById("modalDesc");
-  const videoWrap = null;
-  const youtubeIframe = null;
 
   const qtyCard = document.getElementById("qtyCard");
   const qtyValueEl = document.getElementById("qtyValue");
@@ -440,7 +491,6 @@
   const minusBtn = document.getElementById("qtyMinus");
   const plusBtn = document.getElementById("qtyPlus");
 
-  // ====== SLIDER ELEMENTS ======
   const imgSlider = document.getElementById("imgSlider");
   const imgSliderTarget = document.getElementById("imgSliderTarget");
   const imgSliderDots = document.getElementById("imgSliderDots");
@@ -449,17 +499,12 @@
   let allowMultiple = false;
   let qty = 1;
 
-  // slider state
+  let gallerySlides = [];
+  let galleryOpenImages = [];
+  let galleryIndex = 0;
+
   let sliderImages = [];
   let sliderIndex = 0;
-
-  function setQty(nextQty){
-    qty = Math.max(1, parseInt(nextQty || 1, 10) || 1);
-    qtyValueEl.textContent = String(qty);
-    document.querySelectorAll(".qty-input").forEach(inp => inp.value = String(qty));
-  }
-
-  function safeClearIframe(){}
 
   function normalizeUrl(raw){
     try {
@@ -467,6 +512,12 @@
     } catch (e) {
       return "";
     }
+  }
+
+  function formatPrice(raw){
+    const value = parseInt(String(raw || "").replace(/[^\d-]/g, ""), 10);
+    if(!Number.isFinite(value) || value <= 0) return "";
+    return value.toLocaleString("ru-RU") + " ₸";
   }
 
   function youtubeToWatch(url){
@@ -482,58 +533,157 @@
 
     const parts = src
       .split(/[\s,;]+/)
-      .map(s => s.trim())
+      .map((s) => s.trim().replace(/^[\[\("'`]+|[\]\)"'`]+$/g, ""))
       .filter(Boolean);
 
     const urls = [];
-    parts.forEach(u => {
+    parts.forEach((u) => {
       if(u.includes("instagram.com/") && (u.includes("/p/") || u.includes("/reel/") || u.includes("/tv/"))){
         urls.push(u.replace(/\/?$/, "/"));
       }
     });
+
     return urls;
   }
 
-  // ============================
-  // SLIDER LOGIC
-  // ============================
+  function setQty(nextQty){
+    qty = Math.max(1, parseInt(nextQty || 1, 10) || 1);
+    if(qtyValueEl) qtyValueEl.textContent = String(qty);
+    document.querySelectorAll(".qty-input").forEach((inp) => {
+      inp.value = String(qty);
+    });
+  }
 
-  function renderDots(){
+  function buildGallerySlides(images){
+    const normalized = (images || [])
+      .map(normalizeUrl)
+      .filter(Boolean)
+      .slice(0, 6);
+
+    galleryOpenImages = normalized;
+
+    if(normalized.length === 0){
+      return [{ src: "", openIndex: -1 }];
+    }
+
+    return normalized.map((src, idx) => ({ src, openIndex: idx }));
+  }
+
+  function renderGalleryDots(){
+    if(!galleryDots) return;
+
+    galleryDots.innerHTML = "";
+    gallerySlides.forEach((_, idx) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "service-modal-dot" + (idx === galleryIndex ? " active" : "");
+      dot.setAttribute("aria-label", `Фото ${idx + 1}`);
+      dot.addEventListener("click", () => setGalleryIndex(idx));
+      galleryDots.appendChild(dot);
+    });
+  }
+
+  function updateGallery(){
+    if(!galleryTrack) return;
+
+    galleryTrack.style.transform = `translateX(-${galleryIndex * 100}%)`;
+    renderGalleryDots();
+
+    const canSlide = gallerySlides.length > 1;
+    if(galleryPrev) galleryPrev.disabled = !canSlide;
+    if(galleryNext) galleryNext.disabled = !canSlide;
+  }
+
+  function setGalleryIndex(next){
+    if(gallerySlides.length === 0) return;
+
+    const total = gallerySlides.length;
+    galleryIndex = (next % total + total) % total;
+    updateGallery();
+  }
+
+  function nextGallerySlide(){
+    if(gallerySlides.length <= 1) return;
+    setGalleryIndex(galleryIndex + 1);
+  }
+
+  function prevGallerySlide(){
+    if(gallerySlides.length <= 1) return;
+    setGalleryIndex(galleryIndex - 1);
+  }
+
+  function renderGallerySlides(serviceName){
+    if(!galleryTrack) return;
+
+    galleryTrack.innerHTML = "";
+    const emptyText = galleryTrack.dataset.emptyText || "Фото не добавлено";
+
+    gallerySlides.forEach((slide, idx) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "service-modal-slide";
+      btn.setAttribute("aria-label", `Фото ${idx + 1}`);
+
+      if(slide.src){
+        const img = document.createElement("img");
+        img.src = slide.src;
+        img.alt = serviceName ? `${serviceName} — фото ${idx + 1}` : `Фото ${idx + 1}`;
+        img.loading = idx === 0 ? "eager" : "lazy";
+        btn.appendChild(img);
+
+        btn.addEventListener("click", () => {
+          if(slide.openIndex < 0 || galleryOpenImages.length === 0) return;
+          window.openImgSlider(galleryOpenImages, slide.openIndex);
+        });
+      } else {
+        btn.classList.add("is-empty");
+        btn.disabled = true;
+
+        const empty = document.createElement("span");
+        empty.className = "service-modal-empty-text";
+        empty.textContent = emptyText;
+        btn.appendChild(empty);
+      }
+
+      galleryTrack.appendChild(btn);
+    });
+
+    galleryIndex = 0;
+    updateGallery();
+  }
+
+  function renderFullscreenDots(){
     if(!imgSliderDots) return;
 
     imgSliderDots.innerHTML = "";
-
-    sliderImages.forEach((src, idx) => {
+    sliderImages.forEach((_, idx) => {
       const dot = document.createElement("button");
       dot.type = "button";
       dot.className = "img-dot" + (idx === sliderIndex ? " active" : "");
       dot.addEventListener("click", () => {
         sliderIndex = idx;
-        updateSlider();
+        updateFullscreenSlider();
       });
       imgSliderDots.appendChild(dot);
     });
   }
 
-  function updateSlider(){
-    if(!imgSliderTarget) return;
-    if(sliderImages.length === 0) return;
-
+  function updateFullscreenSlider(){
+    if(!imgSliderTarget || sliderImages.length === 0) return;
     imgSliderTarget.src = sliderImages[sliderIndex];
-    renderDots();
+    renderFullscreenDots();
   }
 
   window.openImgSlider = function(images, startIndex){
-    sliderImages = (images || []).filter(x => x && x.trim().length > 0);
+    sliderImages = (images || []).filter((x) => x && x.trim().length > 0);
     sliderIndex = Math.max(0, parseInt(startIndex || 0, 10) || 0);
 
     if(sliderIndex >= sliderImages.length) sliderIndex = 0;
-
     if(sliderImages.length === 0) return;
 
-    updateSlider();
+    updateFullscreenSlider();
     if(imgSlider) imgSlider.style.display = "flex";
-  }
+  };
 
   window.closeImgSlider = function(){
     if(imgSlider) imgSlider.style.display = "none";
@@ -541,36 +691,32 @@
     sliderImages = [];
     sliderIndex = 0;
     if(imgSliderDots) imgSliderDots.innerHTML = "";
-  }
+  };
 
   window.nextImg = function(){
     if(sliderImages.length <= 1) return;
     sliderIndex = (sliderIndex + 1) % sliderImages.length;
-    updateSlider();
-  }
+    updateFullscreenSlider();
+  };
 
   window.prevImg = function(){
     if(sliderImages.length <= 1) return;
     sliderIndex = (sliderIndex - 1 + sliderImages.length) % sliderImages.length;
-    updateSlider();
-  }
+    updateFullscreenSlider();
+  };
 
-  // swipe support
-  let touchStartX = 0;
-  let touchEndX = 0;
+  let fsTouchStartX = 0;
+  let fsTouchEndX = 0;
 
   if(imgSliderStage){
     imgSliderStage.addEventListener("touchstart", (e) => {
-      touchStartX = e.changedTouches[0].screenX;
+      fsTouchStartX = e.changedTouches[0].screenX;
     });
 
     imgSliderStage.addEventListener("touchend", (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-
-      const diff = touchStartX - touchEndX;
-
+      fsTouchEndX = e.changedTouches[0].screenX;
+      const diff = fsTouchStartX - fsTouchEndX;
       if(Math.abs(diff) < 40) return;
-
       if(diff > 0){
         window.nextImg();
       } else {
@@ -579,122 +725,162 @@
     });
   }
 
-  // ============================
-  // MAIN MODAL LOGIC
-  // ============================
+  let galleryTouchStartX = 0;
+  let galleryTouchEndX = 0;
+
+  if(galleryViewport){
+    galleryViewport.addEventListener("touchstart", (e) => {
+      galleryTouchStartX = e.changedTouches[0].screenX;
+    });
+
+    galleryViewport.addEventListener("touchend", (e) => {
+      galleryTouchEndX = e.changedTouches[0].screenX;
+      const diff = galleryTouchStartX - galleryTouchEndX;
+      if(Math.abs(diff) < 40) return;
+      if(diff > 0){
+        nextGallerySlide();
+      } else {
+        prevGallerySlide();
+      }
+    });
+  }
 
   window.closeAddModal = function(){
     if(modal) modal.style.display = "none";
-    safeClearIframe();
-  }
+  };
 
-  function openAddModal(serviceId, serviceName, serviceDesc, allowMult, instagramUrl, images, youtubeUrl){
+  function openAddModal(serviceId, serviceName, serviceDesc, servicePrice, serviceUnit, serviceCategory, allowMult, instagramUrl, images, youtubeUrl){
     allowMultiple = !!allowMult;
 
     if(nameEl) nameEl.textContent = serviceName || "";
 
-    const instaUrls = extractInstagramUrls(instagramUrl);
+    if(subtitleEl){
+      const subtitleParts = [];
+      const category = normalizeUrl(serviceCategory);
+      const unit = normalizeUrl(serviceUnit);
+      if(category) subtitleParts.push(category);
+      if(unit) subtitleParts.push(unit);
+      subtitleEl.textContent = subtitleParts.join(" · ") || subtitleEl.dataset.fallback || "";
+    }
 
-    if(instaGrid) instaGrid.innerHTML = "";
-    if(instaGrid) instaGrid.classList.remove("is-4");
+    const formattedPrice = formatPrice(servicePrice);
+    if(priceChipEl){
+      if(formattedPrice){
+        priceChipEl.style.display = "inline-flex";
+        priceChipEl.textContent = formattedPrice;
+      } else {
+        priceChipEl.style.display = "none";
+        priceChipEl.textContent = "";
+      }
+    }
+
+    if(unitChipEl){
+      const unit = normalizeUrl(serviceUnit);
+      if(unit){
+        unitChipEl.style.display = "inline-flex";
+        unitChipEl.textContent = unit;
+      } else {
+        unitChipEl.style.display = "none";
+        unitChipEl.textContent = "";
+      }
+    }
+
+    if(modeChipEl){
+      const multiText = modeChipEl.dataset.multiText || "Можно добавить несколько раз";
+      const singleText = modeChipEl.dataset.singleText || "Добавляется только один раз";
+      modeChipEl.textContent = allowMultiple ? multiText : singleText;
+    }
+
+    gallerySlides = buildGallerySlides(images || []);
+    renderGallerySlides(serviceName || "");
+
+    if(serviceDesc && serviceDesc.trim().length > 0){
+      if(descCard) descCard.style.display = "flex";
+      if(descEl) descEl.textContent = serviceDesc;
+    } else {
+      if(descCard) descCard.style.display = "none";
+      if(descEl) descEl.textContent = "";
+    }
+
+    if(instaGrid){
+      instaGrid.innerHTML = "";
+      instaGrid.classList.remove("is-1", "is-2", "is-3", "is-4");
+    }
+
+    let hasLinks = false;
+    const instaUrls = extractInstagramUrls(instagramUrl);
 
     if(instaUrls.length > 0){
       if(instaGrid){
         const show = instaUrls.slice(0, 4);
-        if(show.length >= 4) instaGrid.classList.add("is-4");
+        instaGrid.classList.add(`is-${show.length}`);
+
         show.forEach((u) => {
-          const wrap = document.createElement("div");
-          wrap.className = "modal-instagram-item";
+          hasLinks = true;
+
+          const card = document.createElement("article");
+          card.className = "service-modal-instagram-item";
 
           const iframe = document.createElement("iframe");
-          iframe.className = "modal-instagram-embed";
+          iframe.className = "service-modal-instagram-embed";
           iframe.src = u + "embed";
           iframe.loading = "lazy";
           iframe.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
           iframe.referrerPolicy = "strict-origin-when-cross-origin";
           iframe.allowFullscreen = true;
 
-          wrap.appendChild(iframe);
-          instaGrid.appendChild(wrap);
+          card.appendChild(iframe);
+          instaGrid.appendChild(card);
         });
+
         instaGrid.style.display = "grid";
       }
+
       if(instaFallback) instaFallback.style.display = "none";
     } else if (instagramUrl) {
+      hasLinks = true;
+      const fallbackHref = normalizeUrl(instagramUrl);
       if(instaFallback) instaFallback.style.display = "flex";
       if(instaGrid) instaGrid.style.display = "none";
-      if(instaLink) instaLink.href = instagramUrl;
+      if(instaLink) instaLink.href = fallbackHref || "#";
     } else {
       if(instaFallback) instaFallback.style.display = "none";
       if(instaGrid) instaGrid.style.display = "none";
       if(instaLink) instaLink.href = "#";
     }
 
-    document.querySelectorAll(".add-form").forEach(form => {
+    const yt = youtubeToWatch(youtubeUrl || "");
+    if(yt){
+      hasLinks = true;
+      if(ytWrap) ytWrap.style.display = "flex";
+      if(ytLink) ytLink.href = yt;
+    } else {
+      if(ytWrap) ytWrap.style.display = "none";
+      if(ytLink) ytLink.href = "#";
+    }
+
+    if(linksCard){
+      linksCard.style.display = hasLinks ? "flex" : "none";
+    }
+
+    document.querySelectorAll(".add-form").forEach((form) => {
       const kpId = form.dataset.kp;
       form.action = `/kp/${kpId}/add/${serviceId}/`;
     });
 
     if(allowMultiple){
-      qtyCard.style.display = "block";
-      qtyHintEl.textContent = qtyHintEl.dataset.multiText || "Можно добавить несколько раз";
+      if(qtyCard) qtyCard.style.display = "block";
+      if(qtyHintEl){
+        qtyHintEl.textContent = qtyHintEl.dataset.multiText || "Можно добавить несколько раз";
+      }
       setQty(1);
-      minusBtn.disabled = false;
-      plusBtn.disabled = false;
+      if(minusBtn) minusBtn.disabled = false;
+      if(plusBtn) plusBtn.disabled = false;
     } else {
-      qtyCard.style.display = "none";
+      if(qtyCard) qtyCard.style.display = "none";
       setQty(1);
-      minusBtn.disabled = true;
-      plusBtn.disabled = true;
-    }
-
-    mediaGrid.innerHTML = "";
-    let hasMedia = false;
-
-    const filteredImages = (images || []).filter(x => x && x.trim().length > 0);
-
-    filteredImages.forEach((src, index) => {
-      hasMedia = true;
-
-      const el = document.createElement("div");
-      el.className = "modal-media-img";
-
-      const img = document.createElement("img");
-      img.src = src;
-      img.alt = "photo";
-
-      img.addEventListener("click", (e) => {
-        e.stopPropagation();
-        window.openImgSlider(filteredImages, index);
-      });
-
-      el.appendChild(img);
-      mediaGrid.appendChild(el);
-    });
-
-    if(serviceDesc && serviceDesc.trim().length > 0){
-      modalDesc.style.display = "block";
-      modalDesc.textContent = serviceDesc;
-      hasMedia = true;
-    } else {
-      modalDesc.style.display = "none";
-      modalDesc.textContent = "";
-    }
-
-    const yt = youtubeToWatch(youtubeUrl || "");
-    if(yt){
-      hasMedia = true;
-      if(ytLinkWrap) ytLinkWrap.style.display = "flex";
-      if(ytLink) ytLink.href = yt;
-    } else {
-      if(ytLinkWrap) ytLinkWrap.style.display = "none";
-      if(ytLink) ytLink.href = "#";
-    }
-
-    if(hasMedia){
-      mediaCard.style.display = "block";
-    } else {
-      mediaCard.style.display = "none";
+      if(minusBtn) minusBtn.disabled = true;
+      if(plusBtn) plusBtn.disabled = true;
     }
 
     if(modal) modal.style.display = "flex";
@@ -706,6 +892,9 @@
     const sid = tile.dataset.serviceId;
     const sname = tile.dataset.serviceName || "";
     const desc = tile.dataset.serviceDesc || "";
+    const price = tile.dataset.servicePrice || "";
+    const unit = tile.dataset.serviceUnit || "";
+    const category = tile.dataset.serviceCategory || "";
     const allow = tile.dataset.allowMultiple === "1";
     const insta = tile.dataset.instagram || "";
 
@@ -721,6 +910,9 @@
       sid,
       sname,
       desc,
+      price,
+      unit,
+      category,
       allow,
       insta,
       [img1, img2, img3, img4, img5, img6],
@@ -728,28 +920,34 @@
     );
   }
 
-  // click on tile opens modal
-  document.querySelectorAll(".js-service").forEach(tile => {
+  document.querySelectorAll(".js-service").forEach((tile) => {
     tile.addEventListener("click", (e) => {
-      if (e.target.closest("a, button, input, textarea, select, label, form")) {
-        return;
-      }
+      if(e.target.closest("a, button, input, textarea, select, label, form")) return;
       openFromTile(tile);
     });
-
   });
 
-  if(minusBtn) minusBtn.addEventListener("click", () => {
-    if(!allowMultiple) return;
-    setQty(qty - 1);
-  });
+  if(galleryPrev) galleryPrev.addEventListener("click", prevGallerySlide);
+  if(galleryNext) galleryNext.addEventListener("click", nextGallerySlide);
 
-  if(plusBtn) plusBtn.addEventListener("click", () => {
-    if(!allowMultiple) return;
-    setQty(qty + 1);
-  });
+  if(minusBtn){
+    minusBtn.addEventListener("click", () => {
+      if(!allowMultiple) return;
+      setQty(qty - 1);
+    });
+  }
+
+  if(plusBtn){
+    plusBtn.addEventListener("click", () => {
+      if(!allowMultiple) return;
+      setQty(qty + 1);
+    });
+  }
 
   document.addEventListener("keydown", (e) => {
+    const tag = (e.target && e.target.tagName ? e.target.tagName : "").toLowerCase();
+    if(tag === "input" || tag === "textarea" || tag === "select") return;
+
     if(e.key === "Escape"){
       if(imgSlider && imgSlider.style.display === "flex"){
         window.closeImgSlider();
@@ -758,9 +956,20 @@
       }
     }
 
-    if(imgSlider && imgSlider.style.display === "flex"){
-      if(e.key === "ArrowRight") window.nextImg();
-      if(e.key === "ArrowLeft") window.prevImg();
+    if(e.key === "ArrowRight"){
+      if(imgSlider && imgSlider.style.display === "flex"){
+        window.nextImg();
+      } else if(modal && modal.style.display === "flex"){
+        nextGallerySlide();
+      }
+    }
+
+    if(e.key === "ArrowLeft"){
+      if(imgSlider && imgSlider.style.display === "flex"){
+        window.prevImg();
+      } else if(modal && modal.style.display === "flex"){
+        prevGallerySlide();
+      }
     }
   });
 
