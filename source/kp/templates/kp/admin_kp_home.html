@@ -1,7 +1,7 @@
 {# templates/kp/admin_kp_home.html #}
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans "КП" %}{% endblock %}
+{% block title %}{% trans "Сметы" %}{% endblock %}
 
 {% block extra_css %}{% load static %}<link rel="stylesheet" href="{% static 'css/pages/kp.css' %}">{% endblock %}
 
@@ -12,7 +12,7 @@
     <div class="page-head-left"></div>
 
     <div class="page-head-center">
-      <h1 class="page-title">{% trans "Коммерческие предложения" %}</h1>
+      <h1 class="page-title">{% trans "Сметы" %}</h1>
       <div class="muted" style="font-size:12px; margin-top:6px;">
         {% trans "Тут ты админ. Клиенты сюда не попадают." %}
       </div>
@@ -23,7 +23,7 @@
 </div>
 
 <div class="kp-tabs-wrap">
-  <div class="kp-tabs" role="tablist" aria-label="{% trans 'KP tabs' %}">
+  <div class="kp-tabs" role="tablist" aria-label="{% trans 'Вкладки сметы' %}">
     <button
       id="kpTabBtnActive"
       class="kp-tab {% if tab == 'active' %}is-active{% endif %}"
@@ -69,7 +69,7 @@
     {# ===== Active list ===== #}
     <div id="kpPaneActive" role="tabpanel" style="{% if tab != 'active' %}display:none;{% endif %}">
       <div class="card" style="margin-bottom:10px;">
-        <div class="muted">{% trans "KP, которые сейчас у тебя в работе:" %}</div>
+        <div class="muted">{% trans "Сметы, которые сейчас у тебя в работе:" %}</div>
       </div>
 
       {% if active_list %}
@@ -78,7 +78,7 @@
             <div class="kp-item kp-row">
               <div class="kp-item-left">
                 <div class="kp-item-title">
-                  {% blocktrans with id=kp.id username=kp.customer.username %}#{{ id }} · КП для {{ username }}{% endblocktrans %}
+                  {% blocktrans with id=kp.id username=kp.customer.username %}#{{ id }} · смета для {{ username }}{% endblocktrans %}
                 </div>
                 <div class="kp-item-sub muted">
                   {% if kp.template %}
@@ -150,7 +150,7 @@
     {# ===== History list ===== #}
     <div id="kpPaneHistory" role="tabpanel" style="{% if tab != 'history' %}display:none;{% endif %}">
       <div class="card" style="margin-bottom:10px;">
-        <div class="muted">{% trans "Завершённые/отклонённые КП:" %}</div>
+        <div class="muted">{% trans "Завершённые/отклонённые сметы:" %}</div>
       </div>
 
       {% if history_list %}
@@ -196,7 +196,7 @@
 
     <div class="card">
       <div class="muted" style="font-size:12px; margin-bottom:8px;">
-        {% trans "Выбери клиента и создастся/откроется черновик КП" %}
+        {% trans "Выбери клиента и создастся/откроется черновик сметы" %}
       </div>
 
       <div class="kp-pick-list">

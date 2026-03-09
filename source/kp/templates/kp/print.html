@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>{% trans "КП №" %}{{ kp.id }} — {{ kp.title }}</title>
+  <title>{% trans "Смета №" %}{{ kp.id }} — {{ kp.title }}</title>
   <link rel="stylesheet" href="{% static 'kp/print.css' %}">
 </head>
 
@@ -27,7 +27,7 @@
           <img
             class="cover-img"
             src="{% if site_url %}{{ site_url }}{% endif %}{{ kp.photo.url }}"
-            alt="{% trans "Обложка КП" %}"
+            alt="{% trans "Обложка сметы" %}"
           >
         </div>
       {% else %}
@@ -70,9 +70,9 @@
       </div>
     </section>
 
-    {# Параметры КП #}
+    {# Параметры сметы #}
     <section class="block card">
-      <h2 class="h2 center">{% trans "Параметры КП" %}</h2>
+      <h2 class="h2 center">{% trans "Параметры сметы" %}</h2>
 
       <div class="grid-2">
         <div class="pill">

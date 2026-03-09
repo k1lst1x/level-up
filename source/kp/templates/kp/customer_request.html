@@ -1,7 +1,7 @@
 {# templates/kp/customer_request.html #}
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans "Заявка на КП" %}{% endblock %}
+{% block title %}{% trans "Заявка на смету" %}{% endblock %}
 
 {% block extra_css %}{% load static %}<link rel="stylesheet" href="{% static 'css/pages/kp.css' %}">{% endblock %}
 
@@ -9,7 +9,7 @@
   <div class="card">
     <div class="kp-builder-title" style="font-weight:900;">{% trans "Заявка отправлена менеджеру" %}</div>
     <div class="muted" style="margin-top:6px;">
-      {% trans "Менеджер увидит заявку в своём списке КП и свяжется с тобой." %}
+      {% trans "Менеджер увидит заявку в своём списке смет и свяжется с тобой." %}
     </div>
 
     <div style="margin-top:12px;">
@@ -40,7 +40,7 @@
 
     <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
       <a class="btn" href="{% url 'main:home' %}">{% trans "Вернуться в категории" %}</a>
-      <a class="btn btn-compact" href="{% url 'kp:kp' %}">{% trans "Моё КП" %}</a>
+      <a class="btn btn-compact" href="{% url 'kp:kp' %}">{% trans "Моя смета" %}</a>
     </div>
   </div>
 

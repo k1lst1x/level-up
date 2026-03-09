@@ -208,7 +208,7 @@ def _get_or_create_customer_draft(customer: User) -> Proposal:
         owner=customer,
         customer=customer,
         template=tpl,
-        title=f"КП для {customer.username}",
+        title=f"Смета для {customer.username}",
         status=STATUS_DRAFT,
     )
 
@@ -234,7 +234,7 @@ def _get_or_create_admin_draft(owner: User, customer: User, *, force_new: bool =
         owner=owner,
         customer=customer,
         template=tpl,
-        title=f"КП для {customer.username}",
+        title=f"Смета для {customer.username}",
         status=STATUS_DRAFT,
     )
 
@@ -494,7 +494,7 @@ def kp_detail(request, kp_id: int):
 
         if _maybe_autoclose(kp):
             _clear_active_kp(request)
-            messages.info(request, "КП автоматически завершено (прошло 16 часов после начала).")
+            messages.info(request, "Смета автоматически завершена (прошло 16 часов после начала).")
             return redirect("/kp/?tab=history")
 
         if kp.status not in (STATUS_DRAFT, STATUS_REQUESTED, STATUS_SENT, STATUS_REJECTED):
@@ -605,7 +605,7 @@ def add_service_to_active_kp(request, service_id: int):
     if _is_admin(request.user):
         kp = _get_active_kp_for_admin(request)
         if not kp:
-            messages.error(request, "Нет активного КП. Открой /kp/ и выбери клиента.")
+            messages.error(request, "Нет активной сметы. Открой /kp/ и выбери клиента.")
             return redirect("kp:kp")
     else:
         kp = _get_or_create_customer_draft(request.user)
@@ -742,7 +742,7 @@ def submit_kp(request, kp_id: int):
             return redirect("kp:kp")
 
         if kp.items.count() == 0:
-            messages.error(request, "Нельзя завершить пустое КП.")
+            messages.error(request, "Нельзя завершить пустую смету.")
             return redirect("kp:builder", kp_id=kp.id)
         
         items = list(kp.items.all())
@@ -764,7 +764,7 @@ def submit_kp(request, kp_id: int):
         return redirect("kp:kp")
 
     if kp.status != STATUS_DRAFT:
-        messages.info(request, "КП уже отправлено менеджеру. Ждите ответа.")
+        messages.info(request, "Смета уже отправлена менеджеру. Ждите ответа.")
         return redirect("kp:kp")
 
     if kp.items.count() == 0:
@@ -794,7 +794,7 @@ def submit_kp(request, kp_id: int):
     kp.status = STATUS_REQUESTED
     kp.save(update_fields=["status", "fixed_subtotal", "fixed_extra", "fixed_total"])
 
-    messages.success(request, "КП отправлено менеджеру. Ожидай обратной связи.")
+    messages.success(request, "Смета отправлена менеджеру. Ожидай обратной связи.")
     return redirect("kp:kp")
 
 
@@ -872,7 +872,7 @@ def kp_make_active(request, kp_id: int):
 
     # 4) активное в сессию и в билд
     _set_active_kp(request, kp)
-    messages.success(request, "КП активировано. Таймер мероприятия сброшен на текущее время.")
+    messages.success(request, "Смета активирована. Таймер мероприятия сброшен на текущее время.")
     return redirect("kp:builder", kp_id=kp.id)
 
 
@@ -889,7 +889,7 @@ def kp_builder(request, kp_id: int):
     if is_admin and kp.owner_id == request.user.id:
         if _maybe_autoclose(kp):
             _clear_active_kp(request)
-            messages.info(request, "КП автоматически завершено (прошло 16 часов после начала).")
+            messages.info(request, "Смета автоматически завершена (прошло 16 часов после начала).")
             return redirect("/kp/?tab=history")
 
     # ===== ADMIN =====
@@ -934,7 +934,7 @@ def kp_builder(request, kp_id: int):
     )
 
     if not is_editable:
-        messages.info(request, "КП уже отправлено менеджеру. Редактирование выключено.")
+        messages.info(request, "Смета уже отправлена менеджеру. Редактирование выключено.")
         return redirect("kp:kp")
 
     items = kp.items.select_related("service").all()
@@ -1139,7 +1139,7 @@ def api_add_service_to_active_kp(request):
         kp = _get_active_kp_for_admin(request)
         if not kp:
             return JsonResponse(
-                {"ok": False, "detail": "Нет активного КП в сессии (выбери клиента в /kp/)."},
+                {"ok": False, "detail": "Нет активной сметы в сессии (выбери клиента в /kp/)."},
                 status=400
             )
     else:
@@ -1328,4 +1328,3 @@ def update_item_qty(request, item_id: int):
         "extra20": extra20,
         "total": total,
     })
-

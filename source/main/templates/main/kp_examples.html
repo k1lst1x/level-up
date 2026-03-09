@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
-{% block title %}{% trans "Примеры коммерческих предложений" %}{% endblock %}
+{% block title %}{% trans "Примеры смет" %}{% endblock %}
 
 {% block extra_css %}<link rel="stylesheet" href="{% static 'css/pages/kp.css' %}">{% endblock %}
 
@@ -9,7 +9,7 @@
 
 <section class="home-section">
   <div class="home-section-head">
-    <h1 class="home-section-title home-section-title1">{% trans "Примеры коммерческих предложений" %}</h1>
+    <h1 class="home-section-title home-section-title1">{% trans "Примеры смет" %}</h1>
     <p class="muted center">
       {% blocktrans %}Ниже — три варианта формата мероприятий. Каждый проект собирается индивидуально.{% endblocktrans %}
     </p>
@@ -106,7 +106,7 @@
   <div class="card home-cta">
     <div class="home-cta-title">{% trans "Хотите рассчитать точную стоимость?" %}</div>
     <div class="muted home-cta-sub">
-      {% trans "Соберите своё КП и получите персональный расчёт." %}
+      {% trans "Соберите свою смету и получите персональный расчёт." %}
     </div>
 
     <div class="hero-actions">

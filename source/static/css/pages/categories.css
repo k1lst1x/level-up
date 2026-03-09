@@ -714,6 +714,8 @@
   position: sticky;
   top: 84px;
   align-self: start;
+  min-height: calc(100vh - 96px);
+  height: calc(100vh - 96px);
 }
 
 .kp-summary-card {
@@ -841,6 +843,7 @@
 
 .kp-summary-download {
   width: 100%;
+  margin-top: auto;
 }
 
 .kp-summary-download.is-disabled {
@@ -859,6 +862,8 @@
 
   .kp-summary {
     position: static;
+    min-height: 0;
+    height: auto;
   }
 }
 

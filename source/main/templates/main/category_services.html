@@ -119,22 +119,12 @@
                     {% trans "Выберите услуги из списка, нажимая «Добавить в план»." %}
                   {% else %}
                     <a href="{% url 'kp:kp' %}" class="kp-summary-link">
-                      {% trans "Нет активного КП. Открой КП и выбери клиента." %}
+                      {% trans "Нет активной сметы. Открой смету и выбери клиента." %}
                     </a>
                   {% endif %}
                 </div>
               {% endfor %}
             </div>
-
-            {% if active_kp %}
-              <a class="btn btn-primary mobile-kp-button" href="{% url 'kp:builder' active_kp.id %}">
-                {% trans "Перейти к заполнению КП" %}
-              </a>
-            {% else %}
-              <a class="btn btn-primary mobile-kp-button" href="{% url 'kp:kp' %}">
-                {% trans "Перейти к заполнению КП" %}
-              </a>
-            {% endif %}
           </div>
         </details>
       </div>
@@ -196,12 +186,9 @@
                   <input type="hidden" name="next" value="{{ request.get_full_path }}">
                   <input type="hidden" name="qty" value="1">
                   <button class="btn btn-primary btn-compact" type="submit">
-                    + {% trans "Добавить в КП" %}
+                    + {% trans "Добавить в смету" %}
                   </button>
                 </form>
-                <a class="service-open-link js-service-open-link" href="{% url 'main:service_detail' s.id %}">
-                  {% trans "Открыть" %}
-                </a>
               </div>
             </div>
           </div>
@@ -249,7 +236,7 @@
                 {% trans "Выберите услуги из списка, нажимая «Добавить в план»." %}
               {% else %}
                 <a href="{% url 'kp:kp' %}" class="kp-summary-link">
-                  {% trans "Нет активного КП. Открой КП и выбери клиента." %}
+                  {% trans "Нет активной сметы. Открой смету и выбери клиента." %}
                 </a>
               {% endif %}
             </div>
@@ -259,11 +246,11 @@
 
       {% if active_kp %}
         <a class="btn btn-primary kp-summary-download" href="{% url 'kp:builder' active_kp.id %}">
-          {% trans "Перейти к заполнению КП" %}
+          {% trans "Перейти к заполнению сметы" %}
         </a>
       {% else %}
         <a class="btn btn-primary kp-summary-download" href="{% url 'kp:kp' %}">
-          {% trans "Перейти к заполнению КП" %}
+          {% trans "Перейти к заполнению сметы" %}
         </a>
       {% endif %}
     </aside>
@@ -356,9 +343,9 @@
 
         <section class="card service-modal-section service-modal-kp-section">
           <div class="service-modal-kp-head">
-            <div class="service-modal-section-title">{% trans "Коммерческое предложение" %}</div>
+            <div class="service-modal-section-title">{% trans "Смета" %}</div>
             <a href="{% url 'kp:kp' %}" class="btn btn-primary btn-compact service-modal-create-btn">
-              {% trans "Создать новое КП" %}
+              {% trans "Создать новую смету" %}
             </a>
           </div>
 
@@ -384,13 +371,13 @@
 
         {% if draft_kps %}
           <section class="card service-modal-section">
-            <div class="service-modal-section-title">{% trans "Черновики КП" %}</div>
+            <div class="service-modal-section-title">{% trans "Черновики сметы" %}</div>
             <div class="modal-scroll service-modal-draft-scroll">
               <div class="service-modal-draft-list">
                 {% for kp in draft_kps %}
                   <div class="kp-choice-card">
                     <div class="kp-choice-title">
-                      {{ kp.title|default:_("КП") }} · #{{ kp.id }}
+                      {{ kp.title|default:_("Смета") }} · #{{ kp.id }}
                     </div>
                     <div class="kp-choice-sub muted">
                       {% trans "Клиент:" %} {{ kp.customer.username }}
@@ -429,7 +416,7 @@
         {% else %}
           <div class="card service-modal-empty">
             <div class="muted">
-              {% trans "Черновиков КП нет. Создай новое КП." %}
+              {% trans "Черновиков сметы нет. Создай новую смету." %}
             </div>
           </div>
         {% endif %}

@@ -90,7 +90,7 @@ class Command(BaseCommand):
         for i in range(templates_n):
             et = rnd.choice(event_types)
             t = KPTemplate.objects.create(
-                name=f"Шаблон КП (seed) #{i+1}",
+                name=f"Шаблон сметы (seed) #{i+1}",
                 event_type=et,
                 show_cover=True,
                 show_intro=True,
@@ -126,7 +126,7 @@ class Command(BaseCommand):
             tpl = rnd.choice(templates)
 
             dt = timezone.now() + timedelta(days=rnd.randrange(1, 90), hours=rnd.randrange(0, 23))
-            title = f"КП для {customer.username} #{n+1}"
+            title = f"Смета для {customer.username} #{n+1}"
 
             kp = Proposal.objects.create(
                 owner=admin,

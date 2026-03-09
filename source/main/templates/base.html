@@ -33,7 +33,7 @@
       </a>
       <a class="brand" href="{% url 'main:categories' %}">{% trans "Категории" %}</a>
       <a class="brand" href="{% url 'portfolio:list' %}">{% trans "Портфолио" %}</a>
-      <a class="brand" href="{% url 'kp:kp' %}">{% trans "КП" %}</a>
+      <a class="brand" href="{% url 'kp:kp' %}">{% trans "Смета" %}</a>
 
       {% if request.user.is_authenticated and request.user.is_staff %}
         <a class="brand" href="{% url 'main:crm' %}">{% trans "CRM" %}</a>
@@ -100,7 +100,7 @@
       <a class="mobile-menu-link" href="{% url 'main:home' %}">{% trans "Главная" %}</a>
       <a class="mobile-menu-link" href="{% url 'main:categories' %}">{% trans "Категории" %}</a>
       <a class="mobile-menu-link" href="{% url 'portfolio:list' %}">{% trans "Портфолио" %}</a>
-      <a class="mobile-menu-link" href="{% url 'kp:kp' %}">{% trans "КП" %}</a>
+      <a class="mobile-menu-link" href="{% url 'kp:kp' %}">{% trans "Смета" %}</a>
       {% if request.user.is_authenticated and request.user.is_staff %}
         <a class="mobile-menu-link" href="{% url 'main:crm' %}">{% trans "CRM" %}</a>
       {% endif %}

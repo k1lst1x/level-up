@@ -1,13 +1,13 @@
 {# templates/kp/detail.html (или admin_kp_detail.html) #}
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans "КП:" %} {{ kp.title }}{% endblock %}
+{% block title %}{% trans "Смета:" %} {{ kp.title }}{% endblock %}
 
 {% block extra_css %}{% load static %}<link rel="stylesheet" href="{% static 'css/pages/kp.css' %}">{% endblock %}
 
 {% block content %}
   <div class="card">
-    <div class="muted" style="font-size:13px;">{% trans "КП → Черновик (админ)" %}</div>
+    <div class="muted" style="font-size:13px;">{% trans "Смета → Черновик (админ)" %}</div>
     <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center;">
       <div>
         <div style="font-weight:900; font-size:18px;">{{ kp.title }}</div>
@@ -26,7 +26,7 @@
   </div>
 
   <div class="card" style="margin-top:12px;">
-    <div style="font-weight:900;">{% trans "Параметры КП (автосейв)" %}</div>
+    <div style="font-weight:900;">{% trans "Параметры сметы (автосейв)" %}</div>
     <div class="muted" style="margin-top:6px;">{% trans "Ничего “сохранять” не надо, оно само." %}</div>
 
     <form id="kpMetaForm" style="margin-top:10px;">
@@ -34,8 +34,8 @@
 
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
         <div>
-          <div class="muted" style="font-size:12px;">{% trans "Заголовок КП" %}</div>
-          <input class="search-input" name="title" value="{{ kp.title }}" placeholder="{% trans 'Например: КП на мероприятие' %}" />
+          <div class="muted" style="font-size:12px;">{% trans "Заголовок сметы" %}</div>
+          <input class="search-input" name="title" value="{{ kp.title }}" placeholder="{% trans 'Например: смета на мероприятие' %}" />
         </div>
 
         <div>
@@ -85,12 +85,12 @@
   <div class="card" style="margin-top:12px;">
     <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center;">
       <div>
-        <div style="font-weight:900;">{% trans "Услуги в КП" %}</div>
+        <div style="font-weight:900;">{% trans "Услуги в смете" %}</div>
         <div class="muted" style="margin-top:4px;">{% trans "Добавляй через Категории → Услуги." %}</div>
       </div>
       <form method="post" action="{% url 'kp:clear' kp.id %}">
         {% csrf_token %}
-        <button class="btn btn-danger btn-compact" type="submit">{% trans "Очистить КП" %}</button>
+        <button class="btn btn-danger btn-compact" type="submit">{% trans "Очистить смету" %}</button>
       </form>
     </div>
 
