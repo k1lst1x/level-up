@@ -284,7 +284,7 @@ def category_services_page(request, category_id: int):
         )
 
     if active_kp:
-        kp_items = list(active_kp.items.select_related("service"))
+        kp_items = list(active_kp.items.select_related("service").order_by("id"))
         for it in kp_items:
             try:
                 kp_total += int(it.total_price)
@@ -293,6 +293,7 @@ def category_services_page(request, category_id: int):
                     kp_total += int(it.qty) * int(it.price or 0)
                 except Exception:
                     pass
+        kp_total = round(kp_total * 1.2)
 
     return render(
         request,

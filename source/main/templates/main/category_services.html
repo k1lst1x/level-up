@@ -212,10 +212,9 @@
         <div class="kp-summary-total">
           <div class="kp-summary-label">{% trans "Предварительная стоимость" %}</div>
           <div class="kp-summary-value">{{ kp_total }} ₸</div>
+          <div class="kp-summary-label" style="margin-top:4px;">{% trans "включая наценку 20%" %}</div>
         </div>
-      </div>
 
-      <div class="card kp-summary-card">
         <div class="kp-summary-row">
           <div class="kp-summary-title-sm">
             {% trans "Выбранные услуги" %} ({{ kp_items|length }})

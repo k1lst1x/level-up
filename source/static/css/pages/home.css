@@ -273,7 +273,7 @@
 
 /* Отступы секции вокруг видео */
 .section-video {
-  padding: var(--space-3xl) 0;
+  padding: clamp(56px, 6.5vw, 72px) 0;
   background: var(--bg);
 }
 
@@ -395,7 +395,7 @@
    3. PROCESS
    ================================================================ */
 .section-process {
-  padding: var(--space-3xl) 0;
+  padding: clamp(56px, 6.5vw, 72px) 0;
 }
 
 .process-grid {
@@ -629,7 +629,7 @@ html[data-theme="dark"] .process-num {
    5. CASES CAROUSEL
    ================================================================ */
 .section-cases {
-  padding: var(--space-3xl) 0 var(--space-xl);
+  padding: clamp(56px, 6.5vw, 72px) 0 var(--space-xl);
   background: var(--bg);
 }
 
@@ -773,7 +773,7 @@ html[data-theme="dark"] .process-num {
    6. CONTACTS
    ================================================================ */
 .section-contacts {
-  padding: var(--space-3xl) 0;
+  padding: 24px 0 clamp(56px, 6.5vw, 72px);
 }
 
 .contacts-box {
@@ -883,6 +883,6 @@ html[data-theme="dark"] .process-num {
    7. FAQ section wrapper  (section padding only, styles in components)
    ================================================================ */
 .section-faq {
-  padding: var(--space-3xl) 0;
+  padding: clamp(56px, 6.5vw, 72px) 0 24px;
   background: var(--bg);
 }

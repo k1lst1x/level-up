@@ -716,13 +716,20 @@
   align-self: start;
   min-height: calc(100vh - 96px);
   height: calc(100vh - 96px);
+  overflow: hidden;
 }
 
 .kp-summary-card {
   padding: 16px;
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .kp-summary-top {
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -738,6 +745,7 @@
 }
 
 .kp-summary-total {
+  flex: 0 0 auto;
   margin-top: 12px;
   padding: 12px;
   border-radius: 14px;
@@ -760,10 +768,14 @@
 }
 
 .kp-summary-row {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
 }
 
 .kp-summary-title-sm {
@@ -775,12 +787,13 @@
 }
 
 .kp-summary-list {
-  margin-top: 10px;
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: 44vh;
-  overflow: auto;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
   padding-right: 4px;
 }
 
@@ -797,16 +810,22 @@
 }
 
 .kp-summary-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: break-word;
   font-size: 13px;
   font-weight: 700;
 }
 
 .kp-summary-meta {
+  flex: 0 0 auto;
   font-size: 12px;
   white-space: nowrap;
+  text-align: right;
 }
 
 .kp-summary-remove {
+  flex: 0 0 auto;
   width: 28px;
   height: 28px;
   border-radius: 8px;
@@ -843,7 +862,7 @@
 
 .kp-summary-download {
   width: 100%;
-  margin-top: auto;
+  flex: 0 0 auto;
 }
 
 .kp-summary-download.is-disabled {
