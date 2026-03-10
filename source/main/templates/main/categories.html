@@ -15,22 +15,29 @@
 
       </div>
 
-      <form method="get" class="search-row categories-search">
-        <input
-          type="text"
-          name="search"
-          value="{{ search }}"
-          placeholder="{% trans "Поиск категории…" %}"
-          class="search-input"
-          data-live-search-input
-        />
-        <button class="btn btn-compact" type="submit">{% trans "Искать" %}</button>
-
-        {# Кнопка “сбросить”, только если что-то введено #}
-        {% if search %}
-          <a class="btn btn-compact" href="{% url 'main:categories' %}">{% trans "Сброс" %}</a>
-        {% endif %}
-      </form>
+      <div class="card category-search-card">
+        <form method="get" class="search-row category-search-row">
+          <div class="category-search-field">
+            <input
+              type="text"
+              name="search"
+              value="{{ search }}"
+              placeholder="{% trans "Поиск категории…" %}"
+              class="search-input category-search-input"
+              data-live-search-input
+            />
+            <button class="category-search-submit" type="submit" aria-label="{% trans 'Искать' %}">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="11" cy="11" r="7"></circle>
+                <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+              </svg>
+            </button>
+          </div>
+          {% if search %}
+            <a class="btn btn-compact category-search-reset" href="{% url 'main:categories' %}">{% trans "Сброс" %}</a>
+          {% endif %}
+        </form>
+      </div>
     </div>
 
     <div class="grid grid-2 categories-grid">

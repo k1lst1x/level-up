@@ -19,7 +19,15 @@
     </div>
 
     <div class="search-row" style="justify-content:center;">
-      <input id="crmSearch" class="search-input" type="text" placeholder="{% trans "Поиск: ФИО / компания / сфера / телефон…" %}" />
+      <div class="crm-search-field">
+        <input id="crmSearch" class="search-input crm-search-input" type="text" placeholder="{% trans "Поиск: ФИО / компания / сфера / телефон…" %}" />
+        <button id="crmSearchBtn" class="crm-search-submit" type="button" aria-label="{% trans 'Искать' %}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+          </svg>
+        </button>
+      </div>
       <button class="btn btn-compact crm-add-btn" id="crmAddBtn" type="button">
         ＋ {% trans "Добавить клиента" %}
       </button>
@@ -134,6 +142,7 @@
     var grid = document.getElementById("crmGrid");
     var meta = document.getElementById("crmMeta");
     var searchEl = document.getElementById("crmSearch");
+    var searchBtn = document.getElementById("crmSearchBtn");
     var addBtn = document.getElementById("crmAddBtn");
 
     var modal = document.getElementById("crmModal");
@@ -325,6 +334,10 @@
     }
 
     if (searchEl) searchEl.addEventListener("input", applySearch);
+    if (searchBtn) searchBtn.addEventListener("click", function () {
+      applySearch();
+      if (searchEl) searchEl.focus();
+    });
 
     async function loadContacts() {
       meta.textContent = "Загрузка…";

@@ -59,6 +59,14 @@
       }
     }
 
+    var form = input.closest("form");
+    if (form) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        applyFilter();
+      });
+    }
+
     input.addEventListener("input", applyFilter);
     applyFilter();
   }
