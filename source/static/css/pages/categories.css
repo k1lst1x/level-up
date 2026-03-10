@@ -599,6 +599,11 @@
   gap: 12px;
 }
 
+.mobile-kp-content .kp-summary-switch-form {
+  margin-top: 0;
+  padding-top: 12px;
+}
+
 .mobile-kp-draft {
   padding-top: 12px;
   font-size: 13px;
@@ -795,6 +800,29 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.kp-summary-switch-form {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kp-summary-switch-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.kp-summary-switch-select {
+  width: 100%;
+  min-height: 42px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .kp-summary-title {
@@ -1530,6 +1558,33 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+#addModal .service-modal-kp-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#addModal .service-modal-kp-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+#addModal .service-modal-kp-select {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+#addModal .service-modal-kp-meta {
+  margin-top: 2px;
+}
+
+#addModal .service-modal-kp-actions {
+  margin-top: 2px;
 }
 
 #addModal .service-modal-empty {

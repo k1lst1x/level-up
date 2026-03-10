@@ -106,6 +106,30 @@
           </summary>
 
           <div class="mobile-kp-content">
+            {% if is_admin and draft_kps %}
+              <form method="get" class="kp-summary-switch-form">
+                {% if search %}
+                  <input type="hidden" name="search" value="{{ search }}">
+                {% endif %}
+                <label class="kp-summary-switch-label" for="kpSummarySelectMobile">{% trans "Черновик сметы" %}</label>
+                <select
+                  id="kpSummarySelectMobile"
+                  name="kp"
+                  class="search-input kp-summary-switch-select"
+                  onchange="this.form.submit()"
+                >
+                  {% for kp in draft_kps %}
+                    <option
+                      value="{{ kp.id }}"
+                      {% if active_kp and kp.id == active_kp.id %}selected{% elif not active_kp and forloop.first %}selected{% endif %}
+                    >
+                      {{ kp.customer.username }} · {{ kp.title|default:_("Смета") }} · #{{ kp.id }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </form>
+            {% endif %}
+
             {% if active_kp %}
               <div class="mobile-kp-draft muted">{{ active_kp.title }}</div>
             {% endif %}
@@ -212,6 +236,29 @@
       <div class="card kp-summary-card">
         <div class="kp-summary-top">
           <div class="kp-summary-title">{% trans "Смета события" %}</div>
+          {% if is_admin and draft_kps %}
+            <form method="get" class="kp-summary-switch-form">
+              {% if search %}
+                <input type="hidden" name="search" value="{{ search }}">
+              {% endif %}
+              <label class="kp-summary-switch-label" for="kpSummarySelectDesktop">{% trans "Черновик сметы" %}</label>
+              <select
+                id="kpSummarySelectDesktop"
+                name="kp"
+                class="search-input kp-summary-switch-select"
+                onchange="this.form.submit()"
+              >
+                {% for kp in draft_kps %}
+                  <option
+                    value="{{ kp.id }}"
+                    {% if active_kp and kp.id == active_kp.id %}selected{% elif not active_kp and forloop.first %}selected{% endif %}
+                  >
+                    {{ kp.customer.username }} · {{ kp.title|default:_("Смета") }} · #{{ kp.id }}
+                  </option>
+                {% endfor %}
+              </select>
+            </form>
+          {% endif %}
           {% if active_kp %}
             <div class="kp-summary-sub muted">{{ active_kp.title }}</div>
           {% endif %}
@@ -380,47 +427,53 @@
           {% if draft_kps %}
             <section class="card service-modal-section">
               <div class="service-modal-section-title">{% trans "Черновики сметы" %}</div>
-              <div class="modal-scroll service-modal-draft-scroll">
-                <div class="service-modal-draft-list">
+              <div class="service-modal-kp-dropdown">
+                <label class="service-modal-kp-label" for="modalDraftSelect">{% trans "Выбери черновик" %}</label>
+                <select id="modalDraftSelect" class="search-input service-modal-kp-select">
                   {% for kp in draft_kps %}
-                    <div class="kp-choice-card">
-                      <div class="kp-choice-title">
-                        {{ kp.title|default:_("Смета") }} · #{{ kp.id }}
-                      </div>
-                      <div class="kp-choice-sub muted">
-                        {% trans "Клиент:" %} {{ kp.customer.username }}
-                      </div>
-
-                      <div class="kp-choice-actions">
-                        <form method="post"
-                              action="{% url 'kp:add_to_kp' kp.id 0 %}"
-                              class="add-form add-form-stay"
-                              data-kp="{{ kp.id }}"
-                              data-action-template="{% url 'kp:add_to_kp' kp.id 0 %}">
-                          {% csrf_token %}
-                          <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                          <input type="hidden" name="qty" value="1" class="qty-input">
-                          <button class="btn btn-compact" type="submit">
-                            {% trans "Добавить в смету и продолжить добавление услуг" %}
-                          </button>
-                        </form>
-
-                        <form method="post"
-                              action="{% url 'kp:add_to_kp' kp.id 0 %}"
-                              class="add-form add-form-open"
-                              data-kp="{{ kp.id }}"
-                              data-action-template="{% url 'kp:add_to_kp' kp.id 0 %}">
-                          {% csrf_token %}
-                          <input type="hidden" name="next" value="/kp/">
-                          <input type="hidden" name="qty" value="1" class="qty-input">
-                          <button class="btn btn-primary btn-compact" type="submit">
-                            {% trans "Добавить в смету и открыть для редактирования" %}
-                          </button>
-                        </form>
-                      </div>
-                    </div>
+                    <option
+                      value="{{ kp.id }}"
+                      data-customer="{{ kp.customer.username }}"
+                    >
+                      {{ kp.title|default:_("Смета") }} · #{{ kp.id }} · {{ kp.customer.username }}
+                    </option>
                   {% endfor %}
+                </select>
+                <div
+                  class="kp-choice-sub muted service-modal-kp-meta"
+                  id="modalDraftMeta"
+                  data-label="{% trans 'Клиент:' %}"
+                >
+                  {% with first_kp=draft_kps|first %}
+                    {% trans "Клиент:" %} {{ first_kp.customer.username }}
+                  {% endwith %}
                 </div>
+              </div>
+
+              <div class="kp-choice-actions service-modal-kp-actions">
+                <form method="post"
+                      action="{% url 'kp:add_to_kp' 0 0 %}"
+                      class="add-form add-form-stay"
+                      data-action-base="{% url 'kp:add_to_kp' 0 0 %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                  <input type="hidden" name="qty" value="1" class="qty-input">
+                  <button class="btn btn-compact" type="submit">
+                    {% trans "Добавить в смету и продолжить добавление услуг" %}
+                  </button>
+                </form>
+
+                <form method="post"
+                      action="{% url 'kp:add_to_kp' 0 0 %}"
+                      class="add-form add-form-open"
+                      data-action-base="{% url 'kp:add_to_kp' 0 0 %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="/kp/">
+                  <input type="hidden" name="qty" value="1" class="qty-input">
+                  <button class="btn btn-primary btn-compact" type="submit">
+                    {% trans "Добавить в смету и открыть для редактирования" %}
+                  </button>
+                </form>
               </div>
             </section>
           {% else %}
@@ -488,6 +541,8 @@
   const qtyHintEl = document.getElementById("qtyHint");
   const minusBtn = document.getElementById("qtyMinus");
   const plusBtn = document.getElementById("qtyPlus");
+  const draftSelectEl = document.getElementById("modalDraftSelect");
+  const draftMetaEl = document.getElementById("modalDraftMeta");
 
   const imgSlider = document.getElementById("imgSlider");
   const imgSliderTarget = document.getElementById("imgSliderTarget");
@@ -503,6 +558,7 @@
 
   let sliderImages = [];
   let sliderIndex = 0;
+  let currentServiceId = null;
 
   function normalizeUrl(raw){
     try {
@@ -549,6 +605,51 @@
     if(qtyValueEl) qtyValueEl.textContent = String(qty);
     document.querySelectorAll(".qty-input").forEach((inp) => {
       inp.value = String(qty);
+    });
+  }
+
+  function getSelectedDraftKpId(){
+    if(!draftSelectEl || !draftSelectEl.value) return "";
+    return String(draftSelectEl.value).trim();
+  }
+
+  function syncDraftMeta(){
+    if(!draftSelectEl || !draftMetaEl) return;
+    const idx = draftSelectEl.selectedIndex;
+    if(idx < 0) return;
+
+    const opt = draftSelectEl.options[idx];
+    const label = draftMetaEl.dataset.label || "Клиент:";
+    const customer = (opt && opt.dataset ? (opt.dataset.customer || "") : "").trim();
+    draftMetaEl.textContent = customer ? `${label} ${customer}` : "";
+  }
+
+  function updateAddFormActions(serviceId){
+    if(!serviceId) return;
+
+    document.querySelectorAll(".add-form").forEach((form) => {
+      const actionBase = form.dataset.actionBase || "";
+      if(actionBase){
+        const kpId = getSelectedDraftKpId();
+        let action = actionBase;
+
+        if(kpId){
+          action = action.replace(/\/0\/add\/0\/?$/, `/${kpId}/add/0/`);
+        }
+
+        form.action = action.replace(/\/0\/?$/, `/${serviceId}/`);
+        return;
+      }
+
+      const template = form.dataset.actionTemplate || form.getAttribute("action") || "";
+      if(!template) return;
+
+      if(!form.dataset.actionTemplate){
+        form.dataset.actionTemplate = template;
+      }
+
+      const actionTemplate = form.dataset.actionTemplate;
+      form.action = actionTemplate.replace(/\/0\/?$/, `/${serviceId}/`);
     });
   }
 
@@ -861,17 +962,9 @@
       linksCard.style.display = hasLinks ? "flex" : "none";
     }
 
-    document.querySelectorAll(".add-form").forEach((form) => {
-      const template = form.dataset.actionTemplate || form.getAttribute("action") || "";
-      if(!template) return;
-
-      if(!form.dataset.actionTemplate){
-        form.dataset.actionTemplate = template;
-      }
-
-      const actionTemplate = form.dataset.actionTemplate;
-      form.action = actionTemplate.replace(/\/0\/?$/, `/${serviceId}/`);
-    });
+    currentServiceId = String(serviceId || "").trim();
+    updateAddFormActions(currentServiceId);
+    syncDraftMeta();
 
     if(allowMultiple){
       if(qtyCard) qtyCard.style.display = "block";
@@ -946,6 +1039,15 @@
     plusBtn.addEventListener("click", () => {
       if(!allowMultiple) return;
       setQty(qty + 1);
+    });
+  }
+
+  if(draftSelectEl){
+    draftSelectEl.addEventListener("change", () => {
+      syncDraftMeta();
+      if(currentServiceId){
+        updateAddFormActions(currentServiceId);
+      }
     });
   }
 

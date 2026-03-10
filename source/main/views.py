@@ -265,6 +265,17 @@ def category_services_page(request, category_id: int):
         )
         has_draft_kps = draft_kps.exists()
 
+        selected_kp_id = (request.GET.get("kp") or "").strip()
+        if selected_kp_id.isdigit():
+            selected_kp = (
+                Proposal.objects
+                .filter(id=int(selected_kp_id), owner=request.user, status="DRAFT")
+                .only("id")
+                .first()
+            )
+            if selected_kp:
+                request.session["active_kp_id"] = selected_kp.id
+
         kp_id = request.session.get("active_kp_id")
         if kp_id:
             active_kp = (
@@ -273,6 +284,10 @@ def category_services_page(request, category_id: int):
                 .prefetch_related("items__service")
                 .first()
             )
+        if not active_kp:
+            active_kp = draft_kps.prefetch_related("items__service").first()
+            if active_kp:
+                request.session["active_kp_id"] = active_kp.id
     else:
         from kp.models import Proposal
         active_kp = (
