@@ -349,9 +349,11 @@
         <section class="card service-modal-section service-modal-kp-section">
           <div class="service-modal-kp-head">
             <div class="service-modal-section-title">{% trans "Смета" %}</div>
-            <a href="{% url 'kp:kp' %}" class="btn btn-primary btn-compact service-modal-create-btn">
-              {% trans "Создать новую смету" %}
-            </a>
+            {% if is_admin %}
+              <a href="{% url 'kp:kp' %}" class="btn btn-primary btn-compact service-modal-create-btn">
+                {% trans "Создать новую смету" %}
+              </a>
+            {% endif %}
           </div>
 
           <div class="service-modal-qty" id="qtyCard" style="display:none;">
@@ -374,56 +376,60 @@
           </div>
         </section>
 
-        {% if draft_kps %}
-          <section class="card service-modal-section">
-            <div class="service-modal-section-title">{% trans "Черновики сметы" %}</div>
-            <div class="modal-scroll service-modal-draft-scroll">
-              <div class="service-modal-draft-list">
-                {% for kp in draft_kps %}
-                  <div class="kp-choice-card">
-                    <div class="kp-choice-title">
-                      {{ kp.title|default:_("Смета") }} · #{{ kp.id }}
-                    </div>
-                    <div class="kp-choice-sub muted">
-                      {% trans "Клиент:" %} {{ kp.customer.username }}
-                    </div>
+        {% if is_admin %}
+          {% if draft_kps %}
+            <section class="card service-modal-section">
+              <div class="service-modal-section-title">{% trans "Черновики сметы" %}</div>
+              <div class="modal-scroll service-modal-draft-scroll">
+                <div class="service-modal-draft-list">
+                  {% for kp in draft_kps %}
+                    <div class="kp-choice-card">
+                      <div class="kp-choice-title">
+                        {{ kp.title|default:_("Смета") }} · #{{ kp.id }}
+                      </div>
+                      <div class="kp-choice-sub muted">
+                        {% trans "Клиент:" %} {{ kp.customer.username }}
+                      </div>
 
-                    <div class="kp-choice-actions">
-                      <form method="post"
-                            action="{% url 'kp:add_to_kp' kp.id 0 %}"
-                            class="add-form add-form-stay"
-                            data-kp="{{ kp.id }}">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                        <input type="hidden" name="qty" value="1" class="qty-input">
-                        <button class="btn btn-compact" type="submit">
-                          {% trans "Добавить в смету и продолжить добавление услуг" %}
-                        </button>
-                      </form>
+                      <div class="kp-choice-actions">
+                        <form method="post"
+                              action="{% url 'kp:add_to_kp' kp.id 0 %}"
+                              class="add-form add-form-stay"
+                              data-kp="{{ kp.id }}"
+                              data-action-template="{% url 'kp:add_to_kp' kp.id 0 %}">
+                          {% csrf_token %}
+                          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                          <input type="hidden" name="qty" value="1" class="qty-input">
+                          <button class="btn btn-compact" type="submit">
+                            {% trans "Добавить в смету и продолжить добавление услуг" %}
+                          </button>
+                        </form>
 
-                      <form method="post"
-                            action="{% url 'kp:add_to_kp' kp.id 0 %}"
-                            class="add-form add-form-open"
-                            data-kp="{{ kp.id }}">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="/kp/">
-                        <input type="hidden" name="qty" value="1" class="qty-input">
-                        <button class="btn btn-primary btn-compact" type="submit">
-                          {% trans "Добавитьв смету  и открыть для редактирования" %}
-                        </button>
-                      </form>
+                        <form method="post"
+                              action="{% url 'kp:add_to_kp' kp.id 0 %}"
+                              class="add-form add-form-open"
+                              data-kp="{{ kp.id }}"
+                              data-action-template="{% url 'kp:add_to_kp' kp.id 0 %}">
+                          {% csrf_token %}
+                          <input type="hidden" name="next" value="/kp/">
+                          <input type="hidden" name="qty" value="1" class="qty-input">
+                          <button class="btn btn-primary btn-compact" type="submit">
+                            {% trans "Добавить в смету и открыть для редактирования" %}
+                          </button>
+                        </form>
+                      </div>
                     </div>
-                  </div>
-                {% endfor %}
+                  {% endfor %}
+                </div>
+              </div>
+            </section>
+          {% else %}
+            <div class="card service-modal-empty">
+              <div class="muted">
+                {% trans "Черновиков сметы нет. Создай новую смету." %}
               </div>
             </div>
-          </section>
-        {% else %}
-          <div class="card service-modal-empty">
-            <div class="muted">
-              {% trans "Черновиков сметы нет. Создай новую смету." %}
-            </div>
-          </div>
+          {% endif %}
         {% endif %}
 
       </div>
@@ -856,8 +862,15 @@
     }
 
     document.querySelectorAll(".add-form").forEach((form) => {
-      const kpId = form.dataset.kp;
-      form.action = `/kp/${kpId}/add/${serviceId}/`;
+      const template = form.dataset.actionTemplate || form.getAttribute("action") || "";
+      if(!template) return;
+
+      if(!form.dataset.actionTemplate){
+        form.dataset.actionTemplate = template;
+      }
+
+      const actionTemplate = form.dataset.actionTemplate;
+      form.action = actionTemplate.replace(/\/0\/?$/, `/${serviceId}/`);
     });
 
     if(allowMultiple){
