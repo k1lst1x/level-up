@@ -31,7 +31,7 @@
         </span>
         {% comment %}<span class="brand-label">{% trans "Главная" %}</span>{% endcomment %}
       </a>
-      <a class="brand" href="{% url 'main:categories' %}">{% trans "Категории" %}</a>
+      <a class="brand" href="{% url 'main:category_services' 1 %}">{% trans "Категории" %}</a>
       <a class="brand" href="{% url 'portfolio:list' %}">{% trans "Портфолио" %}</a>
       <a class="brand" href="{% url 'kp:kp' %}">{% trans "Смета" %}</a>
 
@@ -98,7 +98,7 @@
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <nav class="mobile-menu-links">
       <a class="mobile-menu-link" href="{% url 'main:home' %}">{% trans "Главная" %}</a>
-      <a class="mobile-menu-link" href="{% url 'main:categories' %}">{% trans "Категории" %}</a>
+      <a class="mobile-menu-link" href="{% url 'main:category_services' 1 %}">{% trans "Категории" %}</a>
       <a class="mobile-menu-link" href="{% url 'portfolio:list' %}">{% trans "Портфолио" %}</a>
       <a class="mobile-menu-link" href="{% url 'kp:kp' %}">{% trans "Смета" %}</a>
       {% if request.user.is_authenticated and request.user.is_staff %}

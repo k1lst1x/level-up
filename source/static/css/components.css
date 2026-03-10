@@ -538,7 +538,7 @@ select:focus {
    ================================================================ */
 .section-head {
   text-align: center;
-  margin-bottom: var(--space-xl);
+  margin-bottom: 24px;
 }
 .section-title {
   font-size: clamp(26px, 4vw, 38px);
