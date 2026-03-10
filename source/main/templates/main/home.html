@@ -154,7 +154,7 @@
   <div class="banner-center-content">
     <h2 class="banner-big-title">{% trans "Из чего складывается" %}<br>{% trans "стоимость вашего события" %}</h2>
     <div class="banner-buttons">
-      <a href="{% url 'kp:kp' %}" class="banner-btn banner-btn-white">
+      <a href="{{ nav_services_url }}" class="banner-btn banner-btn-white">
         {% trans "Рассчитать стоимость" %}
       </a>
       <a href="{% url 'main:kp_examples' %}" class="banner-btn banner-btn-white">

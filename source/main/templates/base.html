@@ -72,15 +72,6 @@
         </div>
       </form>
 
-      {% if request.user.is_authenticated %}
-        <div class="user-chip">
-          <div class="user-chip-name">{{ request.user.username }}</div>
-          <div class="user-chip-role">
-            {% if request.user.is_staff %}{% trans "admin" %}{% else %}{% trans "customer" %}{% endif %}
-          </div>
-        </div>
-      {% endif %}
-
       <button class="theme-btn" id="toggleTheme" type="button" title="{% trans "Тема" %}">🌙</button>
 
       {% if request.user.is_authenticated %}

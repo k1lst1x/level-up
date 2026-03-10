@@ -972,6 +972,11 @@ def kp_print(request, kp_id: int):
 
     items = list(kp.items.select_related("service").all())
     meta = _notes_json_load(kp)
+    event_dt = _get_event_datetime(kp)
+    if event_dt and timezone.is_naive(event_dt):
+        event_dt = timezone.make_aware(event_dt, timezone.get_current_timezone())
+    if event_dt:
+        event_dt = timezone.localtime(event_dt)
 
     # --- Заказчик из meta, иначе из профиля ---
     customer_full_name = (meta.get("customer_full_name") or "").strip()
@@ -1024,6 +1029,7 @@ def kp_print(request, kp_id: int):
         "kp": kp,
         "items": items,
         "meta": meta,
+        "event_dt": event_dt,
         "subtotal": subtotal,
         "extra20": extra20,
         "total": total,

@@ -12,27 +12,38 @@
   display: flex;
   justify-content: center;
   margin-bottom: var(--space-xl);
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .pf-tabs {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 6px;
+  flex-wrap: nowrap;
   justify-content: center;
+  width: fit-content;
+  max-width: calc(100vw - 32px);
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
   padding: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.pf-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .pf-tab {
   display: inline-flex;
   align-items: center;
-  padding: 9px 20px;
+  padding: 9px 16px;
   border-radius: var(--radius-full);
   border: 1px solid transparent;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 900;
   color: var(--text);
   text-decoration: none;
   transition: background var(--transition-fast), border-color var(--transition-fast),
@@ -186,7 +197,7 @@
 }
 
 .pf-card-desc {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
   margin: 0;
   line-height: 1.5;

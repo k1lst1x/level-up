@@ -21,8 +21,8 @@
     {% include "kp/print/_header.html" %}
 
     {# Фото / обложка #}
+    {% if kp.photo %}
     <section class="block card">
-      {% if kp.photo %}
         <div class="cover-frame">
           <img
             class="cover-img"
@@ -30,12 +30,8 @@
             alt="{% trans "Обложка сметы" %}"
           >
         </div>
-      {% else %}
-        <div class="pill">
-          <div class="value muted center">{% trans "Фото не загружено." %}</div>
-        </div>
-      {% endif %}
     </section>
+    {% endif %}
 
     {# Основная информация: Заказчик / Исполнитель #}
     <section class="block card">
@@ -76,45 +72,25 @@
 
       <div class="grid-2">
         <div class="pill">
-          <div class="label">{% trans "Название мероприятия" %}</div>
-          <div class="value value-big">{{ meta.event_title|default:"—" }}</div>
+          <div class="label">{% trans "Заголовок сметы" %}</div>
+          <div class="value value-big">{{ kp.title|default:"—" }}</div>
         </div>
 
         <div class="pill">
           <div class="label">{% trans "Дата и время" %}</div>
-          <div class="value value-strong">{{ now|date:"d.m.Y H:i" }}</div>
-        </div>
-
-        <div class="pill">
-          <div class="label">{% trans "Адрес проведения" %}</div>
-          <div class="value">{% if meta.event_address %}{{ meta.event_address }}{% else %}—{% endif %}</div>
-        </div>
-
-        <div class="pill">
-          <div class="label">{% trans "Ссылка на адрес (2ГИС/Google)" %}</div>
-          <div class="value">
-            {% if meta.event_address_url %}
-              <a class="link-chip" href="{{ meta.event_address_url }}" target="_blank" rel="noopener">
-                {{ meta.event_address_url }}
-              </a>
+          <div class="value value-strong">
+            {% if event_dt %}
+              {{ event_dt|date:"d.m.Y H:i" }}
             {% else %}
-              —
+              {{ now|date:"d.m.Y H:i" }}
             {% endif %}
           </div>
         </div>
 
-        <div class="pill">
-          <div class="label">{% trans "Ссылка на Drive" %}</div>
-          <div class="value">
-            {% if meta.drive_url %}
-              <a class="link-chip" href="{{ meta.drive_url }}" target="_blank" rel="noopener">
-                {{ meta.drive_url }}
-              </a>
-            {% else %}
-              —
-            {% endif %}
-          </div>
-        </div>
+        {# Скрыто по запросу: Название мероприятия #}
+        {# Скрыто по запросу: Адрес проведения #}
+        {# Скрыто по запросу: Ссылка на адрес (2ГИС/Google) #}
+        {# Скрыто по запросу: Ссылка на Drive #}
 
         <div class="pill pill-full">
           <div class="label">{% trans "Описание / заметки" %}</div>
