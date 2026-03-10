@@ -214,9 +214,9 @@
     </div>
 
     {% if can_edit %}
-      <form method="post" action="{% url 'kp:clear' kp.id %}" style="margin: 20px 0px;">
+      <form method="post" action="{% url 'kp:clear' kp.id %}" class="kp-clear-form">
         {% csrf_token %}
-        <button class="btn btn-danger btn-compact" type="submit">{% trans "Очистить смету" %}</button>
+        <button class="btn btn-danger btn-compact kp-clear-btn" type="submit">{% trans "Очистить смету" %}</button>
       </form>
     {% endif %}
   </div>
@@ -224,50 +224,56 @@
   <div class="kp-services-list">
     {% for it in items %}
       <article class="card kp-service-row" data-item-row="{{ it.id }}">
-        <div class="kp-item-photo">
-          {% if it.service.image %}
-            <img src="{{ it.service.image.url }}" alt="{{ it.service.name }}" class="kp-item-photo-img">
-          {% else %}
-            <div class="kp-photo-empty muted">{% trans "Без фото" %}</div>
-          {% endif %}
+        <div class="kp-service-left">
+          <div class="kp-item-photo">
+            {% if it.service.image %}
+              <img src="{{ it.service.image.url }}" alt="{{ it.service.name }}" class="kp-item-photo-img">
+            {% else %}
+              <div class="kp-photo-empty muted">{% trans "Без фото" %}</div>
+            {% endif %}
+          </div>
+
+          <div
+            class="kp-stepper"
+            data-item-id="{{ it.id }}"
+            data-qty="{{ it.qty }}"
+            {% if not can_edit %}data-disabled="1"{% endif %}
+          >
+            <button class="qty-btn" type="button" data-action="dec" aria-label="{% trans 'Уменьшить' %}">−</button>
+            <div class="qty-value" aria-live="polite" data-qty-value="{{ it.id }}">{{ it.qty }}</div>
+            <button class="qty-btn" type="button" data-action="inc" aria-label="{% trans 'Увеличить' %}">+</button>
+          </div>
         </div>
 
         <div class="kp-service-main">
           <div class="kp-service-name">{{ it.service.name }}</div>
 
-          <div class="muted kp-service-meta">
-            <span class="kp-qty" data-qty-text="{{ it.id }}">{{ it.qty }}</span> {% trans "шт" %} ·
+          <div class="kp-service-meta">
+            <div class="muted kp-service-qty-line">
+              {% trans "Кол-во:" %} <span class="kp-qty" data-qty-text="{{ it.id }}">{{ it.qty }}</span> {% trans "шт" %}
+            </div>
 
-            {% if is_admin and can_edit %}
-              <div class="kp-price-wrap">
-                <input
-                  type="number"
-                  min="0"
-                  step="1"
-                  inputmode="numeric"
-                  value="{{ it.price }}"
-                  class="kp-price-input"
-                  data-price-input="{{ it.id }}"
-                >
-                <span class="kp-currency">₸</span>
-              </div>
-            {% else %}
-              <span data-price-text="{{ it.id }}">{{ it.price }}</span> ₸
-            {% endif %}
+            <div class="kp-service-price-line">
+              {% if is_admin and can_edit %}
+                <div class="kp-price-wrap">
+                  <input
+                    type="number"
+                    min="0"
+                    step="1"
+                    inputmode="numeric"
+                    value="{{ it.price }}"
+                    class="kp-price-input"
+                    data-price-input="{{ it.id }}"
+                  >
+                  <span class="kp-currency">₸</span>
+                </div>
+              {% else %}
+                <div class="kp-price-readonly"><span data-price-text="{{ it.id }}">{{ it.price }}</span> ₸</div>
+              {% endif %}
+            </div>
           </div>
 
           <div class="kp-service-actions">
-            <div
-              class="kp-stepper"
-              data-item-id="{{ it.id }}"
-              data-qty="{{ it.qty }}"
-              {% if not can_edit %}data-disabled="1"{% endif %}
-            >
-              <button class="qty-btn" type="button" data-action="dec" aria-label="{% trans 'Уменьшить' %}">−</button>
-              <div class="qty-value" aria-live="polite" data-qty-value="{{ it.id }}">{{ it.qty }}</div>
-              <button class="qty-btn" type="button" data-action="inc" aria-label="{% trans 'Увеличить' %}">+</button>
-            </div>
-
             {% if can_edit %}
               <form method="post" action="{% url 'kp:remove_item' it.id %}">
                 {% csrf_token %}
