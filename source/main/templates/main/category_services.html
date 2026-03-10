@@ -263,9 +263,20 @@
             <div class="kp-summary-sub muted">{{ active_kp.title }}</div>
           {% endif %}
         </div>
-        <div class="kp-summary-total">
-          <div class="kp-summary-label">{% trans "Предварительная стоимость" %}</div>
-          <div class="kp-summary-value">{{ kp_total }} ₸</div>
+        <div class="kp-summary-total kp-summary-total-breakdown">
+          <div class="kp-summary-line kp-summary-line-mini">
+            <span class="kp-summary-line-label">{% trans "Сумма услуг" %}</span>
+            <span class="kp-summary-line-value">{{ kp_subtotal }} ₸</span>
+          </div>
+          <div class="kp-summary-line kp-summary-line-mini">
+            <span class="kp-summary-line-label">{% trans "Комиссия агентства 20%" %}</span>
+            <span class="kp-summary-line-value">+ {{ kp_fee }} ₸</span>
+          </div>
+          <div class="kp-summary-divider"></div>
+          <div class="kp-summary-line kp-summary-line-total">
+            <span class="kp-summary-line-label">{% trans "ИТОГО" %}</span>
+            <span class="kp-summary-line-value">{{ kp_total }} ₸</span>
+          </div>
         </div>
 
         <div class="kp-summary-row">

@@ -250,6 +250,8 @@ def category_services_page(request, category_id: int):
     # KP summary for right sidebar
     active_kp = None
     kp_items = []
+    kp_subtotal = 0
+    kp_fee = 0
     kp_total = 0
 
     if is_admin:
@@ -302,13 +304,14 @@ def category_services_page(request, category_id: int):
         kp_items = list(active_kp.items.select_related("service").order_by("id"))
         for it in kp_items:
             try:
-                kp_total += int(it.total_price)
+                kp_subtotal += int(it.total_price)
             except Exception:
                 try:
-                    kp_total += int(it.qty) * int(it.price or 0)
+                    kp_subtotal += int(it.qty) * int(it.price or 0)
                 except Exception:
                     pass
-        kp_total = round(kp_total * 1.2)
+        kp_fee = round(kp_subtotal * 0.2)
+        kp_total = kp_subtotal + kp_fee
 
     return render(
         request,
@@ -323,6 +326,8 @@ def category_services_page(request, category_id: int):
             "is_admin": is_admin,
             "active_kp": active_kp,
             "kp_items": kp_items,
+            "kp_subtotal": kp_subtotal,
+            "kp_fee": kp_fee,
             "kp_total": kp_total,
         },
     )
