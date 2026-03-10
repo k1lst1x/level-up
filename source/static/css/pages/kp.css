@@ -378,6 +378,19 @@
   color: var(--muted);
 }
 
+.kp-actions{
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+
+.kp-actions .btn{
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
 .kp-center-actions{
   display:flex;
   justify-content:center;
@@ -502,6 +515,15 @@
 
 /* ===== Mobile builder ===== */
 @media (max-width: 640px){
+  .kp-actions{
+    flex-wrap: wrap;
+  }
+
+  .kp-actions .btn{
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
   .kp-meta-grid{ grid-template-columns: 1fr; }
 
   .kp-cover-wrap{

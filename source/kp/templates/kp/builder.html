@@ -24,12 +24,12 @@
 
   <div class="kp-actions">
     {% if is_admin %}
-      <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'kp:kp' %}">{% trans "Назад в смету" %}</a>
+      <a class="btn btn-compact kp-action" href="{% url 'kp:kp' %}">{% trans "Назад в смету" %}</a>
     {% else %}
-      <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'main:home' %}">{% trans "В категории" %}</a>
+      <a class="btn btn-compact kp-action" href="{% url 'main:home' %}">{% trans "В категории" %}</a>
     {% endif %}
 
-    <a class="btn btn-compact kp-action kp-center-actions" href="{% url 'kp:print' kp.id %}">{% trans "Открыть для печати" %}</a>
+    <a class="btn btn-compact kp-action" href="{% url 'kp:print' kp.id %}">{% trans "Открыть для печати" %}</a>
   </div>
 </section>
 
@@ -107,7 +107,7 @@
   <form id="kpMetaForm" class="kp-form">
     {% csrf_token %}
 
-    <div class="kp-meta-grid kp-meta-grid--full">
+    <div class="kp-meta-grid">
       <div class="kp-field">
         <label class="kp-label">{% trans "Заголовок сметы" %}</label>
         <input
