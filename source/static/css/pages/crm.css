@@ -1,19 +1,154 @@
 /* ================================================================
-   pages/crm.css — CRM page
+   pages/crm.css — CRM page layout
    ================================================================ */
 
-/* Action buttons row in each contact card */
-.crm-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 14px;
+.crm-page .search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
 }
 
-/* Icon inside btn-compact (phone/wa/tg icons) */
-.ico {
-  width: 18px;
-  height: 18px;
-  display: block;
-  flex-shrink: 0;
+.crm-page .crm-add-btn {
+  width: auto;
+  min-width: 240px;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 12px;
+  font-weight: 900;
+}
+
+.crm-page #crmGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.crm-page #crmGrid .crm-card {
+  height: 100%;
+  border-radius: 16px;
+}
+
+.crm-page #crmGrid .crm-card .tile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 100%;
+  padding: 12px 12px 10px;
+}
+
+.crm-page #crmGrid .tile-title {
+  font-size: 18px;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.crm-page #crmGrid .tile-desc {
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.crm-page .crm-info {
+  margin-top: 4px;
+  min-height: 148px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.crm-page .crm-line {
+  min-height: 22px;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  column-gap: 8px;
+  align-items: center;
+}
+
+.crm-page .crm-line .crm-key {
+  white-space: nowrap;
+}
+
+.crm-page .crm-line .crm-val {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.crm-page .crm-line-meta {
+  display: flex;
+  gap: 6px;
+}
+
+.crm-page .crm-tags {
+  min-height: 18px;
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.crm-page .crm-actions {
+  margin-top: auto;
+  padding-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.crm-page .crm-actions .crm-act-btn {
+  min-height: 38px;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  box-shadow: 0 6px 16px rgba(109, 40, 217, 0.22);
+}
+
+.crm-page .crm-actions .crm-act-btn .ico {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  filter: brightness(0) invert(1);
+}
+
+.crm-page .crm-actions .crm-act-mail {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.crm-page .crm-actions .crm-act-txt {
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .crm-page #crmGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .crm-page .search-row {
+    grid-template-columns: 1fr;
+  }
+
+  .crm-page .crm-add-btn {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .crm-page .crm-actions .crm-act-btn {
+    min-height: 40px;
+  }
+
+  .crm-page .crm-info {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 460px) {
+  .crm-page .crm-actions {
+    grid-template-columns: 1fr;
+  }
 }

@@ -212,8 +212,9 @@
       var pills = [];
       var phone = normPhone(c.phone);
       if (phone) pills.push(
-        '<a class="btn btn-compact" href="tel:' + esc(phone) + '" aria-label="Позвонить">' +
+        '<a class="btn btn-compact crm-act-btn" href="tel:' + esc(phone) + '" aria-label="Позвонить">' +
         '<img class="ico" src="/static/icons/phone.svg" alt="Phone">' +
+        '<span class="crm-act-txt">Позвонить</span>' +
         '</a>'
       );
 
@@ -221,8 +222,9 @@
       if (c.whatsapp) {
         var wa = waLink(c.whatsapp);
         if (wa) pills.push(
-          '<a class="btn btn-compact" target="_blank" rel="noopener" href="' + esc(wa) + '" aria-label="WhatsApp">' +
+          '<a class="btn btn-compact crm-act-btn" target="_blank" rel="noopener" href="' + esc(wa) + '" aria-label="WhatsApp">' +
           '<img class="ico" src="/static/icons/whatsapp.svg" alt="WhatsApp">' +
+          '<span class="crm-act-txt">WhatsApp</span>' +
           '</a>'
         );
 
@@ -231,8 +233,9 @@
       if (c.telegram) {
         var tg = tgLink(c.telegram);
         pills.push(
-          '<a class="btn btn-compact" target="_blank" rel="noopener" href="' + esc(tg) + '" aria-label="Telegram">' +
+          '<a class="btn btn-compact crm-act-btn" target="_blank" rel="noopener" href="' + esc(tg) + '" aria-label="Telegram">' +
           '<img class="ico" src="/static/icons/telegram.svg" alt="Telegram">' +
+          '<span class="crm-act-txt">Telegram</span>' +
           '</a>'
         );
 
@@ -240,7 +243,12 @@
       }
 
       if (c.email) {
-        pills.push('<a class="btn btn-compact" href="mailto:' + esc(c.email) + '">✉️</a>');
+        pills.push(
+          '<a class="btn btn-compact crm-act-btn" href="mailto:' + esc(c.email) + '" aria-label="Email">' +
+          '<span class="crm-act-mail">✉</span>' +
+          '<span class="crm-act-txt">Email</span>' +
+          '</a>'
+        );
       }
 
       return pills.join("");
@@ -248,7 +256,12 @@
 
     function infoLine(label, value) {
       if (!value) return "";
-      return '<div class="tile-desc" style="margin-top:6px;"><span class="muted">' + esc(label) + ':</span> ' + esc(value) + '</div>';
+      return (
+        '<div class="tile-desc crm-line">' +
+        '<span class="muted crm-key">' + esc(label) + ':</span>' +
+        '<span class="crm-val">' + esc(value) + '</span>' +
+        '</div>'
+      );
     }
 
     function render(list) {
@@ -266,18 +279,19 @@
         // “одно поле, где всё отображается” я трактую как один компактный блок,
         // но контакты строками (как ты и просил).
         html +=
-          '<div class="tile tile--static">' +
+          '<div class="tile tile--static crm-card">' +
           '<div class="tile-body">' +
           '<div class="tile-title">' + esc(c.name || (c.first_name + " " + c.last_name)) + '</div>' +
-          (c.company ? ('<div class="tile-desc" style="margin-top:6px;">🏢 ' + esc(c.company) + '</div>') : '') +
-          (c.sphere ? ('<div class="tile-desc" style="margin-top:6px;">🧭 ' + esc(c.sphere) + '</div>') : '') +
-
+          '<div class="crm-info">' +
+          (c.company ? ('<div class="tile-desc crm-line crm-line-meta">🏢 ' + esc(c.company) + '</div>') : '') +
+          (c.sphere ? ('<div class="tile-desc crm-line crm-line-meta">🧭 ' + esc(c.sphere) + '</div>') : '') +
           infoLine("Телефон", c.phone) +
           infoLine("WhatsApp", c.whatsapp) +
           infoLine("Email", c.email) +
           infoLine("Telegram", c.telegram) +
+          '</div>' +
 
-          (c.tags_text ? ('<div class="muted" style="margin-top:10px; font-size:12px;"># ' + esc(c.tags_text) + '</div>') : '') +
+          '<div class="crm-tags muted">' + (c.tags_text ? ('# ' + esc(c.tags_text)) : '&nbsp;') + '</div>' +
 
           '<div class="crm-actions">' +
           actionsRow(c) +
