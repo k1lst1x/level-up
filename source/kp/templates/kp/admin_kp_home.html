@@ -7,13 +7,14 @@
 
 {% block content %}
 
+<div class="kp-admin-home">
 <div class="page-head">
   <div class="page-head-top">
     <div class="page-head-left"></div>
 
     <div class="page-head-center">
       <h1 class="page-title">{% trans "Сметы" %}</h1>
-      <div class="muted" style="font-size:12px; margin-top:6px;">
+      <div class="muted kp-admin-note">
         {% trans "Тут ты админ. Клиенты сюда не попадают." %}
       </div>
     </div>
@@ -65,17 +66,43 @@
 
 <div class="kp-center">
   <div class="kp-center-card">
+    <form class="kp-admin-search" onsubmit="return false;">
+      <div class="kp-admin-search-field">
+        <input
+          id="kpAdminSearchInput"
+          type="text"
+          class="search-input kp-admin-search-input"
+          placeholder="{% trans 'Поиск смет' %}"
+          autocomplete="off"
+        >
+        <button
+          id="kpAdminSearchBtn"
+          class="kp-admin-search-submit"
+          type="button"
+          aria-label="{% trans 'Искать' %}"
+        >
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"/>
+            <path d="M16 16L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </form>
 
     {# ===== Active list ===== #}
     <div id="kpPaneActive" role="tabpanel" style="{% if tab != 'active' %}display:none;{% endif %}">
-      <div class="card" style="margin-bottom:10px;">
-        <div class="muted">{% trans "Сметы, которые сейчас у тебя в работе:" %}</div>
+      <div class="kp-admin-list-hint muted">
+        {% trans "Сметы, которые сейчас у тебя в работе:" %}
       </div>
 
       {% if active_list %}
         <div class="kp-list">
           {% for kp in active_list %}
-            <div class="kp-item kp-row">
+            <div
+              class="kp-item kp-row kp-admin-item"
+              data-kp-item
+              data-kp-search="{{ kp.id }} {{ kp.customer.username|lower }} {{ kp.title|default:''|lower }} {{ kp.template.name|default:''|lower }}"
+            >
               <div class="kp-item-left">
                 <div class="kp-item-title">
                   {% blocktrans with id=kp.id username=kp.customer.username %}#{{ id }} · смета для {{ username }}{% endblocktrans %}
@@ -97,6 +124,9 @@
             </div>
           {% endfor %}
         </div>
+        <div class="card muted kp-admin-search-empty" data-kp-search-empty style="display:none;">
+          {% trans "Ничего не найдено по запросу." %}
+        </div>
       {% else %}
         <div class="card">
           <div class="muted">{% trans "Активных черновиков нет. Нажми “Создать”." %}</div>
@@ -106,14 +136,18 @@
 
     {# ===== Requests list ===== #}
     <div id="kpPaneRequests" role="tabpanel" style="{% if tab != 'requests' %}display:none;{% endif %}">
-      <div class="card" style="margin-bottom:10px;">
-        <div class="muted">{% trans "Запросы от клиентов:" %}</div>
+      <div class="kp-admin-list-hint muted">
+        {% trans "Запросы от клиентов:" %}
       </div>
 
       {% if requests_list %}
         <div class="kp-list">
           {% for kp in requests_list %}
-            <div class="kp-item kp-row">
+            <div
+              class="kp-item kp-row kp-admin-item"
+              data-kp-item
+              data-kp-search="{{ kp.id }} {{ kp.customer.username|lower }} {{ kp.title|default:''|lower }} {{ kp.status|default:''|lower }}"
+            >
               <div class="kp-item-left">
                 <div class="kp-item-title">
                   {% blocktrans with id=kp.id username=kp.customer.username title=kp.title %}#{{ id }} · Заявка от {{ username }} · {{ title }}{% endblocktrans %}
@@ -140,6 +174,9 @@
             </div>
           {% endfor %}
         </div>
+        <div class="card muted kp-admin-search-empty" data-kp-search-empty style="display:none;">
+          {% trans "Ничего не найдено по запросу." %}
+        </div>
       {% else %}
         <div class="card">
           <div class="muted">{% trans "Заявок нет." %}</div>
@@ -149,14 +186,18 @@
 
     {# ===== History list ===== #}
     <div id="kpPaneHistory" role="tabpanel" style="{% if tab != 'history' %}display:none;{% endif %}">
-      <div class="card" style="margin-bottom:10px;">
-        <div class="muted">{% trans "Завершённые/отклонённые сметы:" %}</div>
+      <div class="kp-admin-list-hint muted">
+        {% trans "Завершённые/отклонённые сметы:" %}
       </div>
 
       {% if history_list %}
         <div class="kp-list">
           {% for kp in history_list %}
-            <div class="kp-item kp-row">
+            <div
+              class="kp-item kp-row kp-admin-item"
+              data-kp-item
+              data-kp-search="{{ kp.id }} {{ kp.customer.username|lower }} {{ kp.title|default:''|lower }} {{ kp.status|default:''|lower }}"
+            >
               <div class="kp-item-left">
                 <div class="kp-item-title">{% blocktrans with id=kp.id title=kp.title %}#{{ id }} {{ title }}{% endblocktrans %}</div>
                 <div class="kp-item-sub muted">
@@ -176,6 +217,9 @@
             </div>
           {% endfor %}
         </div>
+        <div class="card muted kp-admin-search-empty" data-kp-search-empty style="display:none;">
+          {% trans "Ничего не найдено по запросу." %}
+        </div>
       {% else %}
         <div class="card">
           <div class="muted">{% trans "История пустая." %}</div>
@@ -184,6 +228,7 @@
     </div>
 
   </div>
+</div>
 </div>
 
 {# ===== Customer pick modal (admin only) ===== #}
@@ -267,6 +312,8 @@ function switchTab(kind){
     url.searchParams.set("tab", kind);
     window.history.replaceState({}, "", url.toString());
   } catch(e) {}
+
+  applyKpAdminSearch();
 }
 
 function openCustomerModal(){
@@ -279,6 +326,42 @@ function closeCustomerModal(){
   if(m) m.style.display = "none";
 }
 
+function normalizeSearch(value){
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[\s,]+/g, " ")
+    .trim();
+}
+
+function applyKpAdminSearch(){
+  var input = document.getElementById("kpAdminSearchInput");
+  if(!input) return;
+
+  var query = normalizeSearch(input.value);
+  var words = query ? query.split(" ").filter(Boolean) : [];
+  var paneIds = ["kpPaneActive", "kpPaneRequests", "kpPaneHistory"];
+
+  paneIds.forEach(function(paneId){
+    var pane = document.getElementById(paneId);
+    if(!pane) return;
+
+    var items = pane.querySelectorAll("[data-kp-item]");
+    var visibleCount = 0;
+
+    items.forEach(function(item){
+      var haystack = normalizeSearch(item.getAttribute("data-kp-search") || item.textContent);
+      var show = words.length === 0 || words.every(function(word){ return haystack.indexOf(word) !== -1; });
+      item.style.display = show ? "" : "none";
+      if(show) visibleCount += 1;
+    });
+
+    var empty = pane.querySelector("[data-kp-search-empty]");
+    if(empty){
+      empty.style.display = (words.length > 0 && items.length > 0 && visibleCount === 0) ? "" : "none";
+    }
+  });
+}
+
 (function(){
   var saved = null;
   try { saved = localStorage.getItem("kp_tab"); } catch(e) {}
@@ -286,6 +369,27 @@ function closeCustomerModal(){
   var initial = saved || "{{ tab|default:'active' }}";
   if(initial !== "active" && initial !== "requests" && initial !== "history") initial = "active";
   switchTab(initial);
+
+  var searchInput = document.getElementById("kpAdminSearchInput");
+  if(searchInput){
+    searchInput.addEventListener("input", applyKpAdminSearch);
+    searchInput.addEventListener("keydown", function(e){
+      if(e.key === "Enter"){
+        e.preventDefault();
+        applyKpAdminSearch();
+      }
+    });
+  }
+
+  var searchBtn = document.getElementById("kpAdminSearchBtn");
+  if(searchBtn){
+    searchBtn.addEventListener("click", function(){
+      applyKpAdminSearch();
+      if(searchInput) searchInput.focus();
+    });
+  }
+
+  applyKpAdminSearch();
 
   document.addEventListener("keydown", function(e){
     if(e.key === "Escape") closeCustomerModal();

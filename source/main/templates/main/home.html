@@ -28,7 +28,7 @@
     </p>
 
     <div class="hero-doc-buttons">
-      <a href="{% url 'main:categories' %}" class="hero-doc-btn">{% trans "Открыть каталог" %}</a>
+      <a class="hero-doc-btn" href="{{ nav_services_url }}">{% trans "Открыть каталог" %}</a>
     </div>
  
 
@@ -222,7 +222,7 @@
     </div>
   </div>
   <div class="cases-cta">
-    <a class="btn-black" href="{% url 'portfolio:list' %}">{% trans "Смотреть все кейсы" %} →</a>
+    <a class="btn-black" href="{% url 'portfolio:list' %}">{% trans "Смотреть все кейсы" %}</a>
   </div>
 </section>
 

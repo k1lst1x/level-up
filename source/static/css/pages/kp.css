@@ -252,6 +252,202 @@
   margin-top: 2px;
 }
 
+/* ===== KP admin home (compact layout) ===== */
+.kp-admin-home .page-head{
+  margin-bottom: 8px;
+}
+
+.kp-admin-home .kp-admin-note{
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.kp-admin-home .kp-tabs-wrap{
+  margin-top: 8px;
+}
+
+.kp-admin-home .kp-tabs{
+  max-width: 560px;
+  padding: 5px;
+  gap: 5px;
+}
+
+.kp-admin-home .kp-tab{
+  padding: 8px 10px;
+}
+
+.kp-admin-home .kp-center{
+  margin-top: 10px;
+}
+
+.kp-admin-home .kp-center-card{
+  max-width: 980px;
+}
+
+.kp-admin-home .kp-admin-search{
+  margin: 0 0 10px;
+}
+
+.kp-admin-home .kp-admin-search-field{
+  position: relative;
+}
+
+.kp-admin-home .kp-admin-search-input{
+  width: 100%;
+  height: 58px;
+  padding-right: 74px;
+  border-radius: 16px;
+}
+
+.kp-admin-home .kp-admin-search-submit{
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--purple-border);
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--purple-2), var(--purple));
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(109, 40, 217, 0.28);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.kp-admin-home .kp-admin-search-submit svg{
+  width: 20px;
+  height: 20px;
+}
+
+.kp-admin-home .kp-admin-search-submit:hover{
+  filter: brightness(1.04);
+}
+
+.kp-admin-home .kp-admin-search-submit:active{
+  transform: translateY(-50%) scale(0.98);
+}
+
+.kp-admin-home .kp-admin-search-submit:focus-visible{
+  outline: 3px solid rgba(109, 40, 217, 0.25);
+  outline-offset: 2px;
+}
+
+.kp-admin-home .kp-admin-list-hint{
+  margin: 0 0 8px;
+  font-size: 13px;
+}
+
+.kp-admin-home .kp-list{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.kp-admin-home .kp-item{
+  padding: 14px;
+  border-radius: 16px;
+}
+
+.kp-admin-home .kp-row{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.kp-admin-home .kp-item-title{
+  font-size: 17px;
+  line-height: 1.24;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.kp-admin-home .kp-item-sub{
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.kp-admin-home .kp-item-actions{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.kp-admin-home .kp-item-actions > a.btn,
+.kp-admin-home .kp-item-actions > form{
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+.kp-admin-home .kp-item-actions > a.btn,
+.kp-admin-home .kp-item-actions > form > button.btn{
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+}
+
+.kp-admin-home .kp-admin-search-empty{
+  margin-top: 8px;
+}
+
+@media (max-width: 1100px){
+  .kp-admin-home .kp-center-card{
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 900px){
+  .kp-admin-home .kp-list{
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px){
+  .kp-admin-home .kp-item-actions{
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px){
+  .kp-admin-home .kp-tabs-wrap{
+    justify-content: flex-start;
+  }
+
+  .kp-admin-home .kp-tabs{
+    max-width: 100%;
+    overflow-x: auto;
+    border-radius: 14px;
+    scrollbar-width: thin;
+  }
+
+  .kp-admin-home .kp-tab{
+    flex: 0 0 auto;
+    white-space: nowrap;
+    min-width: 112px;
+  }
+
+  .kp-admin-home .kp-item-actions{ width: 100%; }
+
+  .kp-admin-home .kp-admin-search-input{
+    height: 54px;
+    padding-right: 66px;
+  }
+
+  .kp-admin-home .kp-admin-search-submit{
+    width: 40px;
+    height: 40px;
+    right: 7px;
+  }
+}
+
 /* кнопки выбора клиента */
 .kp-pick{
   width: 100%;

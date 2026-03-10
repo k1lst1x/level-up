@@ -44,13 +44,14 @@
                 {{ it.price|default:"0" }} ₸
               </span>
             </div>
-
+            {% comment %}
             {% if it.discount and it.discount > 0 %}
               <div class="svc-row">
                 <span class="muted">{% trans "Скидка" %}</span>
                 <span class="meta-strong">{{ it.discount }}</span>
               </div>
             {% endif %}
+            {% endcomment %}
 
             <div class="svc-row svc-row-total">
               <span class="muted">{% trans "Сумма" %}</span>

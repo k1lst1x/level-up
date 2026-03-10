@@ -731,7 +731,6 @@ html[data-theme="dark"] .process-num {
 .cases-cta {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
   padding: 0 20px;
 }
 

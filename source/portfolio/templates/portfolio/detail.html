@@ -11,22 +11,27 @@
 {% block content %}
 
 {# ── Шапка кейса ── #}
-<div class="pf-detail-head">
-  <a class="pf-detail-back" href="{% url 'portfolio:list' %}">
-    ← {% trans "Все кейсы" %}
-  </a>
-
-  {% if case.category %}
-  <div>
-    <span class="pf-detail-cat">{{ case.category.name }}</span>
+<div class="pf-detail-wrap">
+  <div class="pf-detail-topbar">
+    <a class="pf-detail-back" href="{% url 'portfolio:list' %}">
+      <span class="pf-back-arrow" aria-hidden="true"></span>
+      <span>{% trans "Назад к кейсам" %}</span>
+    </a>
   </div>
-  {% endif %}
 
-  <h1 class="pf-detail-title">{{ case.title }}</h1>
+  <div class="pf-detail-head">
+    {% if case.category %}
+    <div>
+      <span class="pf-detail-cat">{{ case.category.name }}</span>
+    </div>
+    {% endif %}
 
-  {% if case.description %}
-  <p class="pf-detail-desc">{{ case.description }}</p>
-  {% endif %}
+    <h1 class="pf-detail-title">{{ case.title }}</h1>
+
+    {% if case.description %}
+    <p class="pf-detail-desc">{{ case.description }}</p>
+    {% endif %}
+  </div>
 </div>
 
 <div class="pf-divider"></div>
@@ -59,7 +64,7 @@
 {# ── Лайтбокс ── #}
 <div class="pf-lightbox" id="pfLightbox">
   <button class="pf-lightbox-close" id="pfLbClose" aria-label="{% trans 'Закрыть' %}">✕</button>
-  <button class="pf-lightbox-arrow pf-lightbox-prev" id="pfLbPrev" aria-label="{% trans 'Назад' %}">‹</button>
+  <button class="pf-lightbox-arrow pf-lightbox-prev" id="pfLbPrev" aria-label="{% trans '' %}">‹</button>
   <img src="" alt="" id="pfLbImg">
   <button class="pf-lightbox-arrow pf-lightbox-next" id="pfLbNext" aria-label="{% trans 'Вперёд' %}">›</button>
 </div>
