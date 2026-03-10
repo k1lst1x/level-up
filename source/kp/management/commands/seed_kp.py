@@ -4,6 +4,7 @@ from __future__ import annotations
 import os
 import random
 from datetime import timedelta
+from pathlib import Path
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from django.db import transaction
@@ -19,6 +20,18 @@ User = get_user_model()
 
 def _ensure_dir(path: str) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
+
+
+def _list_media_files(rel_dir: str) -> list[str]:
+    media_root = Path(getattr(settings, "MEDIA_ROOT", "") or "")
+    if not media_root:
+        return []
+    base = media_root / rel_dir
+    if not base.exists():
+        return []
+    files = [p for p in base.rglob("*") if p.is_file()]
+    files.sort()
+    return [str(p.relative_to(media_root)).replace("\\", "/") for p in files]
 
 
 def _try_make_kp_photo(rel_path: str, title: str) -> str | None:
@@ -62,6 +75,13 @@ class Command(BaseCommand):
     def handle(self, *args, **opts):
         rnd = random.Random(opts["seed"])
 
+        if opts["clear"]:
+            ProposalItem.objects.all().delete()
+            Proposal.objects.all().delete()
+            KPTemplate.objects.all().delete()
+            EventType.objects.all().delete()
+            self.stdout.write(self.style.WARNING("kp: cleared"))
+
         admin = User.objects.filter(is_superuser=True).first()
         if not admin:
             self.stdout.write(self.style.ERROR("kp: no superuser. Run seed_accounts first."))
@@ -70,13 +90,6 @@ class Command(BaseCommand):
         customers = list(User.objects.filter(is_superuser=False, is_staff=False)[:200])
         if not customers:
             customers = [admin]
-
-        if opts["clear"]:
-            ProposalItem.objects.all().delete()
-            Proposal.objects.all().delete()
-            KPTemplate.objects.all().delete()
-            EventType.objects.all().delete()
-            self.stdout.write(self.style.WARNING("kp: cleared"))
 
         # Event types
         event_types = []
@@ -87,25 +100,36 @@ class Command(BaseCommand):
         # Templates
         templates_n = int(opts["templates"])
         templates = []
+        colors = [
+            ("#6D28D9", "#1E3A8A"),
+            ("#047857", "#0F766E"),
+            ("#B45309", "#7C2D12"),
+            ("#BE123C", "#9F1239"),
+            ("#0E7490", "#1D4ED8"),
+        ]
+        font_pool = ["Inter", "Manrope", "Montserrat", "Lora", "PT Sans"]
         for i in range(templates_n):
             et = rnd.choice(event_types)
-            t = KPTemplate.objects.create(
+            p_color, s_color = colors[i % len(colors)]
+            t, _ = KPTemplate.objects.get_or_create(
                 name=f"Шаблон сметы (seed) #{i+1}",
                 event_type=et,
-                show_cover=True,
-                show_intro=True,
-                show_gift=True,
-                show_footer=True,
-                intro_title="О наших услугах",
-                intro_subtitle="Демо-текст. Здесь будет краткое описание того, что вы предлагаете клиенту.",
-                gift_text="{client_name}, заберите ваш индивидуальный подарок!",
-                gift_button_text="Забрать подарок",
-                gift_button_url="https://2gis.kz/almaty",
-                footer_text="Спасибо за доверие. По вопросам — свяжитесь с нами в WhatsApp",
-                footer_copyright="AE",
-                primary_color="#6D28D9",
-                secondary_color="#1E3A8A",
-                font_family="Inter",
+                defaults={
+                    "show_cover": True,
+                    "show_intro": True,
+                    "show_gift": True,
+                    "show_footer": True,
+                    "intro_title": "О наших услугах",
+                    "intro_subtitle": "Демо-текст. Здесь будет краткое описание того, что вы предлагаете клиенту.",
+                    "gift_text": "{client_name}, заберите ваш индивидуальный подарок!",
+                    "gift_button_text": "Забрать подарок",
+                    "gift_button_url": "https://2gis.kz/almaty",
+                    "footer_text": "Спасибо за доверие. По вопросам — свяжитесь с нами в WhatsApp",
+                    "footer_copyright": "AE",
+                    "primary_color": p_color,
+                    "secondary_color": s_color,
+                    "font_family": font_pool[i % len(font_pool)],
+                },
             )
             templates.append(t)
 
@@ -118,6 +142,9 @@ class Command(BaseCommand):
         items_min = int(opts["items_min"])
         items_max = int(opts["items_max"])
         with_photos = bool(opts["with_photos"])
+        photo_pool = _list_media_files("seed/kp/photos")
+        if items_min > items_max:
+            items_min, items_max = items_max, items_min
 
         created_items = 0
 
@@ -127,17 +154,27 @@ class Command(BaseCommand):
 
             dt = timezone.now() + timedelta(days=rnd.randrange(1, 90), hours=rnd.randrange(0, 23))
             title = f"Смета для {customer.username} #{n+1}"
+            status_pool = [
+                Proposal.Status.DRAFT,
+                Proposal.Status.DRAFT,
+                Proposal.Status.DRAFT,
+                Proposal.Status.REQUESTED,
+                Proposal.Status.SENT,
+                Proposal.Status.CONFIRMED,
+                Proposal.Status.REJECTED,
+                Proposal.Status.POSTPONED,
+            ]
 
             kp = Proposal.objects.create(
                 owner=admin,
                 customer=customer,
                 template=tpl,
                 title=title,
-                status=Proposal.Status.DRAFT if rnd.random() < 0.75 else Proposal.Status.SENT,
+                status=rnd.choice(status_pool),
                 notes="",
                 event_title=rnd.choice(["Свадьба", "Корпоратив", "ДР", "Презентация", "Открытие"]),
                 event_datetime=dt,
-                event_location=rnd.choice(["Алматы", "Астана", "Шымкент"]),
+                event_location=rnd.choice(["Алматы", "Астана", "Шымкент", "Тараз", "Онлайн"]),
                 event_description="Сгенерировано сидером. Демо-описание, чтобы не было пусто.",
                 drive_link=rnd.choice([
                     "https://toolgiz.com",
@@ -148,8 +185,8 @@ class Command(BaseCommand):
             )
 
             if with_photos and not kp.photo:
-                rel = f"seed/kp/photos/{kp.id}.png"
-                made = _try_make_kp_photo(rel, kp.title)
+                rel = photo_pool[n % len(photo_pool)] if photo_pool else None
+                made = rel or _try_make_kp_photo(f"seed/kp/photos/{kp.id}.png", kp.title)
                 if made:
                     kp.photo = made
                     kp.save(update_fields=["photo"])
