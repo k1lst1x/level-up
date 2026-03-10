@@ -212,7 +212,6 @@
         <div class="kp-summary-total">
           <div class="kp-summary-label">{% trans "Предварительная стоимость" %}</div>
           <div class="kp-summary-value">{{ kp_total }} ₸</div>
-          <div class="kp-summary-label" style="margin-top:4px;">{% trans "включая наценку 20%" %}</div>
         </div>
 
         <div class="kp-summary-row">
@@ -391,7 +390,7 @@
                         <input type="hidden" name="next" value="{{ request.get_full_path }}">
                         <input type="hidden" name="qty" value="1" class="qty-input">
                         <button class="btn btn-compact" type="submit">
-                          {% trans "Добавить и продолжить" %}
+                          {% trans "Добавить в смету и продолжить добавление услуг" %}
                         </button>
                       </form>
 
@@ -403,7 +402,7 @@
                         <input type="hidden" name="next" value="/kp/">
                         <input type="hidden" name="qty" value="1" class="qty-input">
                         <button class="btn btn-primary btn-compact" type="submit">
-                          {% trans "Добавить и открыть" %}
+                          {% trans "Добавитьв смету  и открыть для редактирования" %}
                         </button>
                       </form>
                     </div>
