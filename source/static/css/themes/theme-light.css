@@ -52,17 +52,17 @@
   --modal-shadow:   0 18px 50px rgba(15, 23, 42, 0.22);
 
   /* ---- Focus ring ---- */
-  --focus:        rgba(122, 92, 255, 0.16);
-  --focus-border: rgba(122, 92, 255, 0.60);
+  --focus:        rgba(124, 58, 237, 0.16);
+  --focus-border: rgba(124, 58, 237, 0.60);
 
   /* ---- Accent (purple / violet) ---- */
-  --color-accent:      #7c5cff;
-  --color-accent-hover:#6b4fe6;
-  --color-accent-glow: rgba(124, 92, 255, 0.35);
-  --purple:            #6d4cff;
-  --purple-2:          #7a5cff;
-  --purple-border:     rgba(122, 92, 255, 0.75);
-  --purple-glow:       rgba(122, 92, 255, 0.22);
+  --color-accent:      #7C3AED;
+  --color-accent-hover:#7C3AED;
+  --color-accent-glow: rgba(124, 58, 237, 0.35);
+  --purple:            #7C3AED;
+  --purple-2:          #7C3AED;
+  --purple-border:     rgba(124, 58, 237, 0.75);
+  --purple-glow:       rgba(124, 58, 237, 0.22);
 
   /* ---- Spacing scale ---- */
   --space-xs:  4px;

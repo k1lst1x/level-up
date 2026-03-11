@@ -269,7 +269,7 @@
   height: 8px;
   border-radius: 50%;
   background: var(--color-accent);
-  box-shadow: 0 0 0 4px rgba(122, 92, 255, 0.12);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
   flex: 0 0 auto;
 }
 

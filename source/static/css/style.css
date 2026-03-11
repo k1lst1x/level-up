@@ -49,8 +49,8 @@ html {
   --shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
 
   /* focus */
-  --focus: rgba(99, 102, 241, 0.12);
-  --focus-border: #c7d2fe;
+  --focus: rgba(124, 58, 237, 0.12);
+  --focus-border: rgba(124, 58, 237, 0.55);
 
   /* tiles */
   --tile-bg: #ffffff;
@@ -101,8 +101,8 @@ html[data-theme="dark"] {
   --input-bg: rgba(255, 255, 255, 0.06);
   --input-border: rgba(255, 255, 255, 0.14);
 
-  --focus: rgba(167, 139, 250, 0.16);
-  --focus-border: rgba(167, 139, 250, 0.55);
+  --focus: rgba(124, 58, 237, 0.16);
+  --focus-border: rgba(124, 58, 237, 0.55);
 
   --modal-backdrop: rgba(0, 0, 0, 0.72);
   --modal-bg: #12141a;
@@ -218,6 +218,8 @@ body {
 .nav-links a {
   text-decoration: none;
   color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .nav-right {
@@ -1589,14 +1591,14 @@ body::after {
   --modal-shadow: 0 18px 50px rgba(15, 23, 42, 0.22);
 
   /* focus */
-  --focus: rgba(122, 92, 255, 0.16);
-  --focus-border: rgba(122, 92, 255, 0.60);
+  --focus: rgba(124, 58, 237, 0.16);
+  --focus-border: rgba(124, 58, 237, 0.60);
 
   /* PURPLE BRAND */
-  --purple: #6d4cff;
-  --purple-2: #7a5cff;
-  --purple-border: rgba(122, 92, 255, 0.75);
-  --purple-glow: rgba(122, 92, 255, 0.22);
+  --purple: #7C3AED;
+  --purple-2: #7C3AED;
+  --purple-border: rgba(124, 58, 237, 0.75);
+  --purple-glow: rgba(124, 58, 237, 0.22);
 }
 
 /* 2) DARK: черный фон + белый текст */
@@ -1626,8 +1628,8 @@ html[data-theme="dark"] {
   --modal-border: rgba(255, 255, 255, 0.16);
   --modal-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
 
-  --focus: rgba(122, 92, 255, 0.22);
-  --focus-border: rgba(122, 92, 255, 0.70);
+  --focus: rgba(124, 58, 237, 0.22);
+  --focus-border: rgba(124, 58, 237, 0.70);
 }
 
 /* 3) УБРАТЬ всю “дымку/оверлеи” которые ты ненавидишь */
@@ -1909,7 +1911,7 @@ a.btn:active {
   padding: 10px 12px;
   border-radius: 14px;
 
-  background: #6d28d9;
+  background: #7C3AED;
   /* фиолетовый */
   border: 1px solid rgba(255, 255, 255, 0.18);
 
@@ -2066,7 +2068,7 @@ a.btn:active {
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
-  box-shadow: 0 10px 30px rgba(122,92,255,.35);
+  box-shadow: 0 10px 30px rgba(124, 58, 237, .35);
 }
 
 .process-card {
@@ -2629,7 +2631,7 @@ a.btn:active {
   font-weight: 900; /* Жирный шрифт */
   border-radius: 14px; /* Закругленные углы */
   box-sizing: border-box; /* Чтобы padding не добавлялся к ширине */
-  background: linear-gradient(180deg, #6d4cff, #7a5cff); /* Фиолетовый цвет для кнопок */
+  background: linear-gradient(180deg, #7C3AED, #7C3AED); /* Фиолетовый цвет для кнопок */
   color: #fff; /* Текст белый */
   border: none; /* Без рамки */
   cursor: pointer; /* Курсор на кнопку */
@@ -2637,7 +2639,7 @@ a.btn:active {
 }
 
 .button-container .btn:hover {
-  background: linear-gradient(180deg, #7a5cff, #6d4cff); /* Меняется градиент при наведении */
+  background: linear-gradient(180deg, #7C3AED, #7C3AED); /* Меняется градиент при наведении */
 }
 
 .button-container .btn:active {
@@ -2739,13 +2741,13 @@ a.btn:active {
 
 /* выбранный пункт (работает в большинстве браузеров) */
 .lang-switch option:checked {
-  background: linear-gradient(180deg, #7a5cff, #6d4cff);
+  background: linear-gradient(180deg, #7C3AED, #7C3AED);
   color: #fff;
 }
 
 /* наведение (Firefox / частично Chromium) */
 .lang-switch option:hover {
-  background: rgba(122, 92, 255, 0.35);
+  background: rgba(124, 58, 237, 0.35);
   color: #fff;
 }
 
@@ -2756,7 +2758,7 @@ html[data-theme="light"] .lang-switch option {
 }
 
 html[data-theme="light"] .lang-switch option:checked {
-  background: linear-gradient(180deg, #7a5cff, #6d4cff);
+  background: linear-gradient(180deg, #7C3AED, #7C3AED);
   color: #fff;
 }
 

@@ -814,6 +814,12 @@ textarea,
   line-height: var(--ui-min-line);
 }
 
+/* Исключения: кнопки с кастомным font-size */
+.hero-doc-btn {
+  font-size: 30px !important;
+  line-height: 1.1 !important;
+}
+
 /* Inline styles like style="font-size: 15px" */
 [style*="font-size: 15px"],
 [style*="font-size: 15px"],
@@ -827,13 +833,32 @@ textarea,
 .btn,
 .btn-compact,
 .banner-btn,
-.hero-doc-btn,
 .lang-mobile-toggle,
 .lang-mobile-option,
 .mobile-menu-link {
   min-height: 44px;
   padding-left: var(--ui-min-pad);
   padding-right: var(--ui-min-pad);
+}
+
+/* Small buttons floor: make text readable */
+.btn,
+.btn-compact,
+a.btn,
+input[type="submit"],
+input[type="button"],
+.banner-btn,
+.banner-btn-white,
+.banner-btn-outline,
+.search-btn-black,
+.search-reset,
+.category-search-reset,
+.lang-switch,
+.lang-mobile-toggle,
+.lang-mobile-option,
+.mobile-menu-link {
+  font-size: 18px !important;
+  line-height: 1.2;
 }
 
 input[type="text"],
