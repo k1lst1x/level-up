@@ -112,7 +112,7 @@
 
         <div class="card">
           <div style="font-weight:900;">{{ request.user.username }}</div>
-          <div class="muted" style="margin-top:4px; font-size:13px;">
+          <div class="muted" style="margin-top:4px; font-size: 15px;">
             {% if request.user.is_staff %}{% trans "Админ" %}{% else %}{% trans "Заказчик" %}{% endif %}
           </div>
         </div>

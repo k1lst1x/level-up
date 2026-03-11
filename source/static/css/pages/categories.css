@@ -459,7 +459,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
 }
 
@@ -576,7 +576,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
 }
 
@@ -606,7 +606,7 @@
 
 .mobile-kp-draft {
   padding-top: 12px;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .mobile-kp-list {
@@ -668,7 +668,7 @@
   border-radius: 12px;
   border: 1px dashed var(--border);
   text-align: center;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
 }
 
@@ -844,7 +844,7 @@
   width: 100%;
   min-height: 42px;
   border-radius: 12px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -896,7 +896,7 @@
 }
 
 .kp-summary-line-mini .kp-summary-line-label {
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .kp-summary-line-mini .kp-summary-line-value {
@@ -981,7 +981,7 @@
   flex: 1 1 auto;
   min-width: 0;
   overflow-wrap: break-word;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1.25;
 }
@@ -1228,7 +1228,7 @@
     max-width: 100%;
     white-space: normal;
     overflow-wrap: anywhere;
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .service-tile-desc {
@@ -1239,7 +1239,7 @@
   }
 
   .service-instagram {
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .service-tile-actions {
@@ -1254,7 +1254,7 @@
 
   .service-open-link {
     padding-top: 2px;
-    font-size: 13px;
+    font-size: 15px;
   }
 }
 
@@ -1278,7 +1278,7 @@
   }
 
   .mobile-category-toggle-sub {
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .mobile-category-toggle-badge {
@@ -1327,7 +1327,7 @@
   }
 
   .mobile-kp-item-name {
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .mobile-kp-item-meta {

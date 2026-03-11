@@ -12,7 +12,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 64px;
+  height: 78px;
   z-index: 99999;
   display: flex;
   align-items: center;
@@ -41,9 +41,9 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 10px;
-  font-weight: 700;
-  font-size: 21px;
+  padding: 8px 14px;
+  font-weight: 900;
+  font-size: 30px;
   line-height: 1;
   letter-spacing: 0.01em;
   color: var(--text);
@@ -63,9 +63,9 @@
 
 .brand-logo-wrap {
   position: relative;
-  width: 60px;
-  height: 60px;
-  flex: 0 0 60px;
+  width: 72px;
+  height: 72px;
+  flex: 0 0 72px;
 }
 
 .brand-logo {
@@ -120,7 +120,7 @@ html[data-theme="dark"] .brand-logo-light {
   text-align: right;
   display: none;
 }
-.user-chip-name  { font-size: 13px; font-weight: 700; line-height: 1.1; }
+.user-chip-name  { font-size: 15px; font-weight: 700; line-height: 1.1; }
 .user-chip-role  { font-size: 11px; color: var(--muted); }
 
 @media (min-width: 520px) { .user-chip { display: block; } }
@@ -170,7 +170,7 @@ html[data-theme="dark"] .brand-logo-light {
   border: 1px solid var(--purple-border);
   background: linear-gradient(180deg, var(--purple-2), var(--purple));
   font-weight: 700;
-  font-size: 13px;
+  font-size: 15px;
   cursor: pointer;
   box-shadow: 0 8px 20px var(--purple-glow);
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
@@ -189,7 +189,7 @@ html[data-theme="dark"] .brand-logo-light {
   border: 1px solid var(--purple-border);
   background: linear-gradient(180deg, var(--purple-2), var(--purple));
   color: #fff;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.04em;
   cursor: pointer;
@@ -222,7 +222,7 @@ html[data-theme="dark"] .brand-logo-light {
   border-radius: 8px;
   background: transparent;
   color: var(--text);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
   cursor: pointer;
 }
@@ -323,7 +323,7 @@ html[data-theme="dark"] .tile-badge {
   overflow: hidden;
 }
 .tile-placeholder {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
   padding: 10px;
   text-align: center;
@@ -357,7 +357,7 @@ html[data-theme="dark"] .tile-badge {
 }
 .btn:active { transform: scale(0.99); }
 
-.btn-compact { height: 40px; padding: 0 16px; font-size: 13px; }
+.btn-compact { height: 40px; padding: 0 16px; font-size: 15px; }
 
 .btn-danger {
   border-color: rgba(239, 68, 68, 0.45);
@@ -511,7 +511,7 @@ select:focus {
 .page-subtitle {
   margin-top: 4px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.25;
 }
 

@@ -208,7 +208,7 @@
   align-items: center;
   padding: 0 16px;
   color: #888;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   text-decoration: none;
   transition: color var(--transition-fast);
@@ -377,7 +377,7 @@
 }
 .category-tile-info p {
   margin: 0;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
   line-height: 1.4;
 }
@@ -621,7 +621,7 @@ html[data-theme="dark"] .process-num {
 }
 
 @media (max-width: 480px) {
-  .banner-btn { min-width: 160px; height: 48px; padding: 0 22px; font-size: 13px; }
+  .banner-btn { min-width: 160px; height: 48px; padding: 0 22px; font-size: 15px; }
 }
 
 
@@ -874,8 +874,8 @@ html[data-theme="dark"] .process-num {
   gap: 3px;
   text-align: left;
 }
-.address-link strong { font-size: 13px; font-weight: 700; }
-.address-link div span { font-size: 13px; color: var(--muted); }
+.address-link strong { font-size: 15px; font-weight: 700; }
+.address-link div span { font-size: 15px; color: var(--muted); }
 
 
 /* ================================================================

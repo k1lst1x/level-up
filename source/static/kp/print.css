@@ -148,7 +148,7 @@ body{
 
 .cardish .h3{
   text-transform: uppercase;
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: .12em;
   color: rgba(122,92,255,.9);
 }
@@ -173,7 +173,7 @@ body{
 }
 
 .value{
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 650;
   color: rgba(17,17,24,.86);
   line-height: 1.35;
@@ -285,7 +285,7 @@ body{
 
 .svc-desc{
   margin-top: 6px;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.4;
   color: rgba(17,17,24,.70);
 }
@@ -376,7 +376,7 @@ body{
 
 @media print{
   body{
-    font-size:13px;
+    font-size: 15px;
     line-height:1.45;
   }
 
@@ -446,7 +446,7 @@ body{
   align-items:center;
   justify-content:space-between;
   gap:14px;
-  font-size:13px;
+  font-size: 15px;
   flex-wrap:wrap; /* на всякий, если email длинный */
 }
 
@@ -483,11 +483,11 @@ body{
   }
 
   .label{
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .value{
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.4;
     word-break: break-word;
   }
@@ -601,7 +601,7 @@ body{
 
   .total-row{
     padding: 6px 4px;
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .total-final{
@@ -611,7 +611,7 @@ body{
 
 .svc-desc{
   margin-top: 6px;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.4;
   color: rgba(17,17,24,.70);
 

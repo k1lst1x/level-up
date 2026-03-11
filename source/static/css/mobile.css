@@ -15,8 +15,13 @@
    ---------------------------------------------------------------- */
 @media (max-width: 640px) {
   .navbar {
+    height: 64px;
     padding: 0 12px;
     gap: 6px;
+  }
+
+  body {
+    padding-top: 64px;
   }
 
   .nav-left {
@@ -43,6 +48,14 @@
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    height: 64px;
+  }
+
+  body {
+    padding-top: 64px;
+  }
+
   .lang-form-desktop-custom {
     display: none;
   }
@@ -101,7 +114,7 @@
   }
 
   .section-subtitle {
-    font-size: 13px;
+    font-size: 15px;
   }
 }
 
@@ -129,7 +142,7 @@
   .hero-small-text {
     margin-top: 16px;
     letter-spacing: 0.12em;
-    font-size: 13px;
+    font-size: 15px;
     opacity: 0.9;
   }
 
@@ -213,7 +226,7 @@
 
   .search-btn-black {
     padding: 0 20px;
-    font-size: 13px;
+    font-size: 15px;
   }
 }
 
@@ -225,7 +238,7 @@
   .btn {
     height: 44px;
     padding: 0 18px;
-    font-size: 13px;
+    font-size: 15px;
   }
 
   /* Banner buttons — стекируем вертикально */
@@ -295,7 +308,7 @@
 
   .faq-item p {
     padding: 14px 18px 18px;
-    font-size: 13px;
+    font-size: 15px;
   }
 }
 
@@ -414,7 +427,7 @@
 
   .pf-tab {
     padding: 8px 14px;
-    font-size: 13px;
+    font-size: 15px;
   }
 }
 
@@ -760,4 +773,89 @@
     transform: scale(0.97);
     filter: brightness(0.95);
   }
+}
+
+
+/* ================================================================
+   GLOBAL UI FLOOR (loaded last):
+   - font-size not below 15px
+   - compact controls get safer padding
+   - prevent text overflow in tight containers
+   ================================================================ */
+:root {
+  --ui-min-font: 15px;
+  --ui-min-pad: 15px;
+  --ui-min-line: 1.45;
+}
+
+body,
+input,
+select,
+textarea,
+button {
+  font-size: var(--ui-min-font);
+}
+
+p,
+small,
+label,
+li,
+a,
+button,
+input,
+select,
+textarea,
+.muted,
+.section-subtitle,
+.category-tile-info p,
+.address-link strong,
+.address-link div span {
+  font-size: var(--ui-min-font) !important;
+  line-height: var(--ui-min-line);
+}
+
+/* Inline styles like style="font-size: 15px" */
+[style*="font-size: 15px"],
+[style*="font-size: 15px"],
+[style*="font-size:14px"],
+[style*="font-size: 14px"],
+[style*="font-size:12px"],
+[style*="font-size: 12px"] {
+  font-size: var(--ui-min-font) !important;
+}
+
+.btn,
+.btn-compact,
+.banner-btn,
+.hero-doc-btn,
+.lang-mobile-toggle,
+.lang-mobile-option,
+.mobile-menu-link {
+  min-height: 44px;
+  padding-left: var(--ui-min-pad);
+  padding-right: var(--ui-min-pad);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+textarea,
+select {
+  min-height: 44px;
+  padding-left: var(--ui-min-pad);
+  padding-right: var(--ui-min-pad);
+}
+
+.container,
+.card,
+.tile,
+.modal,
+.faq-item,
+.contact-item,
+.category-tile-info {
+  overflow-wrap: anywhere;
 }

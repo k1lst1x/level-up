@@ -13,8 +13,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
-  /* 64px = fixed navbar height — keeps content below navbar */
-  padding-top: 64px;
+  /* 78px = fixed navbar height — keeps content below navbar */
+  padding-top: 78px;
   overflow-x: hidden; /* Убираем горизонтальный скролл на всей странице */
 }
 

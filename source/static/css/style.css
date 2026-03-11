@@ -172,8 +172,8 @@ html[data-theme="dark"] {
 }
 
 body {
-  padding-top: 64px;
-  /* подгони: 56-72, если высота другая */
+  padding-top: 78px;
+  /* sync with fixed navbar height */
 }
 
 #cases {
@@ -234,7 +234,7 @@ body {
 }
 
 .user-chip-name {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1.1;
 }
@@ -1267,7 +1267,7 @@ body {
 
 .home-step .muted {
   margin: 0;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.35;
   max-width: 360px;
   margin-left: auto;
@@ -1327,7 +1327,7 @@ body {
 
 .qty-title {
   font-weight: 900;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .qty-controls {
@@ -1469,7 +1469,7 @@ body::after {
 #price .tile-title,
 .price-grid .tile-title,
 .cost-grid .tile-title {
-  font-size: 13px !important;
+  font-size: 15px !important;
 }
 
 #pricing .tile-desc,
@@ -1482,7 +1482,7 @@ body::after {
 
 /* 6) Общая компактность карточек, чтобы всё не было "пухлым" */
 .card {
-  padding: 12px !important;
+  padding: 2px !important;
   border-radius: 14px !important;
   margin-bottom: 10px !important;
 }
@@ -1937,7 +1937,7 @@ a.btn:active {
 
 .contact-pill .contact-txt {
   font-weight: 800;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1;
   color: currentColor;
 }
@@ -2379,7 +2379,7 @@ a.btn:active {
 }
 
 .kp-example-note {
-  font-size: 13px;
+  font-size: 15px;
 }
 
 /* responsive */
@@ -2477,7 +2477,7 @@ a.btn:active {
 
 /* мета */
 .crm-page #crmMeta {
-  font-size: 13px;
+  font-size: 15px;
   margin-bottom: 4px;
 }
 
@@ -2681,7 +2681,7 @@ a.btn:active {
   color: #fff;
 
   font-weight: 900;
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: .5px;
 
   cursor: pointer;
