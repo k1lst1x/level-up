@@ -189,7 +189,6 @@ def home(request):
     )
 
 
-@login_required
 def categories_page(request):
     is_admin = _is_admin(request.user)
 
@@ -215,7 +214,6 @@ def categories_page(request):
     )
 
 
-@login_required
 def category_services_page(request, category_id: int):
     is_admin = _is_admin(request.user)
 
@@ -290,7 +288,7 @@ def category_services_page(request, category_id: int):
             active_kp = draft_kps.prefetch_related("items__service").first()
             if active_kp:
                 request.session["active_kp_id"] = active_kp.id
-    else:
+    elif request.user.is_authenticated:
         from kp.models import Proposal
         active_kp = (
             Proposal.objects
@@ -333,7 +331,6 @@ def category_services_page(request, category_id: int):
     )
 
 
-@login_required
 def service_detail_page(request, service_id: int):
     is_admin = _is_admin(request.user)
 

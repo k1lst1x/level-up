@@ -166,6 +166,9 @@
 
       <form method="post" class="auth-form">
         {% csrf_token %}
+        {% if next_url %}
+          <input type="hidden" name="next" value="{{ next_url }}">
+        {% endif %}
 
         <div class="auth-grid">
 
@@ -203,7 +206,7 @@
 
       <div class="auth-footer muted">
         {% trans "Уже есть аккаунт?" %}
-        <a href="{% url 'login' %}">{% trans "Войти" %}</a>
+        <a href="{% url 'login' %}{% if next_url %}?next={{ next_url|urlencode }}{% endif %}">{% trans "Войти" %}</a>
       </div>
 
     </div>

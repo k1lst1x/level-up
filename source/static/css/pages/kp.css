@@ -713,16 +713,16 @@
 
 .kp-services-list{
   display: grid;
-  grid-template-columns: repeat(2, minmax(360px, 1fr));
+  grid-template-columns: repeat(2, minmax(320px, 1fr));
   gap: 16px;
 }
 
 .kp-service-row{
-  display: grid;
-  grid-template-columns: 136px minmax(0, 1fr) auto;
-  align-items: stretch;
-  gap: 12px;
-  padding: 12px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
   background: rgba(120, 128, 145, 0.14);
   border: 1px solid rgba(120, 128, 145, 0.28);
   border-radius: 14px;
@@ -734,20 +734,19 @@
   background: rgba(120, 128, 145, 0.2);
 }
 
-.kp-service-left{
-  width: 136px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: 6px;
-  min-height: 134px;
+.kp-service-title{
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  word-break: break-word;
+  padding-right: 96px;
 }
 
 .kp-service-row .kp-item-photo{
   width: 100%;
-  height: 92px;
-  border-radius: 10px;
+  height: 260px;
+  border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--tile-media-bg);
@@ -761,67 +760,144 @@
   display: block;
 }
 
-.kp-service-main{
-  min-width: 0;
-  min-height: 134px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 6px;
-  --kp-controls-width: 160px;
-}
-
-.kp-service-name{
+.kp-service-description{
   font-size: 15px;
-  line-height: 1.25;
-  font-weight: 800;
-  min-height: calc(1.25em * 2);
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  text-overflow: ellipsis;
+  line-height: 1.35;
+  color: var(--muted);
+  min-height: 42px;
   overflow-wrap: anywhere;
 }
 
-.kp-service-meta{
+.kp-row-field{
+  min-height: 46px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--input-bg);
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 6px;
-  font-size: 13px;
-  width: var(--kp-controls-width);
-  margin-left: auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
 }
 
-.kp-service-qty-line{
-  width: 100%;
-  text-align: right;
+.kp-row-label{
+  font-size: 16px;
+  font-weight: 800;
   line-height: 1.2;
+  color: var(--text);
 }
 
-.kp-service-price-line{
-  width: 100%;
+.kp-row-controls{
+  margin-left: auto;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
 }
 
-.kp-services-list .kp-price-wrap{
+.kp-row-value{
+  margin-left: auto;
+  white-space: nowrap;
+  font-size: clamp(20px, 1.85vw, 28px);
+  line-height: 1;
+  font-weight: 900;
+}
+
+.kp-row-field-sum{
+  border-color: rgba(124, 92, 255, 0.42);
+  box-shadow: inset 0 0 0 2px rgba(124, 92, 255, 0.08);
+}
+
+.kp-stepper-inline{
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kp-stepper-inline .qty-btn{
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 19px;
+  line-height: 1;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.kp-stepper-inline .qty-btn:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.kp-stepper-inline .qty-value{
+  min-width: 20px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.kp-remove-corner-form{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  z-index: 2;
+}
+
+.kp-remove-cross{
+  width: auto;
+  min-width: 0;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.06);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.kp-remove-cross:hover{
+  background: rgba(239, 68, 68, 0.14);
+}
+
+.kp-remove-cross:active{
+  transform: scale(0.98);
+}
+
+.kp-services-list .kp-price-wrap-inline{
+  width: 188px;
+  max-width: 100%;
   margin-left: 0;
-  width: 100%;
   display: block;
   position: relative;
 }
 
-.kp-services-list .kp-price-input{
+.kp-services-list .kp-price-wrap-inline .kp-price-input{
   width: 100%;
-  height: 34px;
+  height: 36px;
   border-radius: 10px;
-  font-size: 14px;
-  text-align: center;
+  font-size: 16px;
+  text-align: right;
   padding-right: 24px;
 }
 
-.kp-services-list .kp-price-wrap .kp-currency{
+.kp-services-list .kp-price-wrap-inline .kp-currency{
   position: absolute;
   right: 8px;
   top: 50%;
@@ -832,72 +908,35 @@
 }
 
 .kp-services-list .kp-price-readonly{
-  width: 100%;
-  min-height: 34px;
+  width: 188px;
+  max-width: 100%;
+  margin-left: 0;
+  min-height: 36px;
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--input-bg);
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-weight: 800;
-}
-
-.kp-services-list .kp-service-actions{
-  display: flex;
-  align-items: center;
   justify-content: flex-end;
-  gap: 10px;
-  flex-wrap: nowrap;
-  margin-top: 0;
-  min-height: 34px;
-  width: var(--kp-controls-width);
-  margin-left: auto;
-}
-
-.kp-services-list .kp-stepper{
-  margin-top: 0;
-  width: 100%;
-  justify-content: space-between;
-  gap: 6px;
-}
-
-.kp-services-list .kp-stepper .qty-btn{
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  font-size: 17px;
-}
-
-.kp-services-list .kp-stepper .qty-value{
-  min-width: 26px;
-}
-
-.kp-services-list .kp-service-actions form{
-  margin: 0;
-  width: 100%;
-}
-
-.kp-services-list .kp-service-actions .btn{
-  width: 100%;
-  max-width: none;
-  min-width: 0;
-  height: 34px;
-  margin: 0;
-  padding: 0 14px;
-}
-
-.kp-service-right{
-  flex: 0 0 auto;
-  margin-left: auto;
-  align-self: flex-start;
-}
-
-.kp-service-sum{
-  white-space: nowrap;
-  font-size: 25px;
-  line-height: 0.95;
+  padding: 0 10px;
+  font-size: 16px;
   font-weight: 900;
+}
+
+.kp-total-card .kp-total-row .muted,
+.kp-total-card .kp-total-row b,
+.kp-total-card .kp-total-row > span{
+  color: var(--purple) !important;
+}
+
+.kp-total-card .kp-total-final{
+  color: var(--purple);
+}
+
+.kp-total-card .kp-total-final span:last-child{
+  color: var(--purple);
+  background: none;
+  -webkit-text-fill-color: var(--purple);
 }
 
 /* Fix overflow for inputs */
@@ -970,80 +1009,69 @@
   }
 
   .kp-service-row{
-    grid-template-columns: 1fr;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  .kp-service-left{
-    width: 100%;
-    max-width: 120px;
-    min-height: 0;
-    justify-content: flex-start;
     gap: 8px;
+    padding: 12px;
   }
 
   .kp-service-row .kp-item-photo{
-    height: 82px;
+    height: 236px;
+    border-radius: 14px;
   }
 
-  .kp-service-name{
+  .kp-service-title{
+    font-size: clamp(24px, 7vw, 32px);
+    padding-right: 86px;
+  }
+
+  .kp-service-description{
+    min-height: 0;
     font-size: 14px;
-    min-height: calc(1.25em * 2);
   }
 
-  .kp-service-main{
-    --kp-controls-width: 100%;
+  .kp-row-field{
+    min-height: 44px;
+    padding: 8px 10px;
   }
 
-  .kp-service-meta{
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .kp-service-qty-line{
-    text-align: left;
-  }
-
-  .kp-services-list .kp-price-wrap{
-    justify-content: flex-start;
-  }
-
-  .kp-services-list .kp-price-input{
-    width: 108px;
-    height: 32px;
+  .kp-row-label{
     font-size: 13px;
-    text-align: left;
   }
 
+  .kp-row-controls{
+    gap: 6px;
+  }
+
+  .kp-stepper-inline{
+    gap: 6px;
+  }
+
+  .kp-stepper-inline .qty-btn{
+    width: 32px;
+    height: 32px;
+  }
+
+  .kp-row-value{
+    font-size: clamp(19px, 5.4vw, 26px);
+  }
+
+  .kp-services-list .kp-price-wrap-inline,
   .kp-services-list .kp-price-readonly{
-    width: auto;
-    min-width: 108px;
-    justify-content: flex-start;
-    padding: 0 10px;
+    width: 146px;
   }
 
-  .kp-services-list .kp-service-actions{
-    gap: 8px;
-    margin-top: 0;
-    width: auto;
-    margin-left: 0;
-    justify-content: flex-start;
-  }
-
-  .kp-services-list .kp-service-actions .btn{
-    width: auto;
-    min-width: 96px;
+  .kp-services-list .kp-price-wrap-inline .kp-price-input{
     height: 34px;
+    font-size: 15px;
   }
 
-  .kp-service-right{
-    margin-left: 0;
-    align-self: flex-start;
+  .kp-remove-corner-form{
+    top: 8px;
+    right: 8px;
   }
 
-  .kp-service-sum{
-    font-size: 28px;
+  .kp-remove-cross{
+    height: 32px;
+    font-size: 12px;
+    padding: 0 9px;
   }
 }

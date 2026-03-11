@@ -133,6 +133,9 @@
 
       <form method="post" class="auth-form">
         {% csrf_token %}
+        {% if request.GET.next %}
+          <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {% endif %}
 
         <div class="auth-field">
           <label>{% trans "Логин" %}</label>
@@ -151,7 +154,7 @@
 
       <div class="auth-footer muted">
         {% trans "Нет аккаунта?" %}
-        <a href="{% url 'register' %}">{% trans "Зарегистрироваться" %}</a>
+        <a href="{% url 'register' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">{% trans "Зарегистрироваться" %}</a>
       </div>
 
     </div>

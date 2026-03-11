@@ -20,18 +20,7 @@
 
     {% include "kp/print/_header.html" %}
 
-    {# Фото / обложка #}
-    {% if kp.photo %}
-    <section class="block card">
-        <div class="cover-frame">
-          <img
-            class="cover-img"
-            src="{% if site_url %}{{ site_url }}{% endif %}{{ kp.photo.url }}"
-            alt="{% trans "Обложка сметы" %}"
-          >
-        </div>
-    </section>
-    {% endif %}
+    
 
     {# Основная информация: Заказчик / Исполнитель #}
     <section class="block card">
