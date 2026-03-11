@@ -4,8 +4,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "dev-secret-key"
 DEBUG = True
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "172.31.197.15",
+    "ligniform-disregardful-pauletta.ngrok-free.dev",
+    ".ngrok-free.dev",
+    ".ngrok.io",
+]
 
+# Разрешаем CSRF-origin для туннелей и локальной разработки.
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.ngrok-free.dev",
+    "https://*.ngrok.io",
+    "http://127.0.0.1",
+    "http://localhost",
+]
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
