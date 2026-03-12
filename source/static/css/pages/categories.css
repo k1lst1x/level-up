@@ -427,7 +427,7 @@
 }
 
 .mobile-category-toggle-label {
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 800;
@@ -436,7 +436,7 @@
 
 .mobile-category-toggle-sub {
   margin-top: 4px;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 1.3;
   font-weight: 700;
   color: var(--text);
@@ -1278,7 +1278,7 @@
   }
 
   .mobile-category-toggle-sub {
-    font-size: 15px;
+    font-size: 18px;
   }
 
   .mobile-category-toggle-badge {
@@ -1345,7 +1345,7 @@
   }
 
   .mobile-category-toggle-sub {
-    font-size: 12px;
+    font-size: 18px;
   }
 
   .service-tile-body {

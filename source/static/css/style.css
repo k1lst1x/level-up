@@ -1761,8 +1761,19 @@ a.btn:active {
 .kp-choice-actions .btn,
 .kp-item .btn {
   width: 100% !important;
-  height: 44px !important;
-  padding: 0 14px !important;
+  min-height: 56px !important;
+  height: auto !important;
+  padding: 14px 16px !important;
+  font-size: 16px !important;
+  line-height: 1.3 !important;
+  white-space: normal !important;
+  text-align: center !important;
+}
+
+@media (max-width: 640px) {
+  .kp-choice-actions {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 /* Все кнопки в KP-блоках — во всю ширину */
