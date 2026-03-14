@@ -713,32 +713,57 @@
 
 .service-tile-head {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   gap: 10px;
   min-width: 0;
 }
 
 .service-tile .tile-title {
-  flex: 1 1 auto;
+  width: 100%;
   min-width: 0;
-  line-height: 1.25;
-  min-height: 2.5em;
+  font-size: 20px;
+  line-height: 1.2;
+  min-height: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
 .service-price {
-  margin-left: auto;
+  margin-left: 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
   flex: 0 0 auto;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 800;
-  color: var(--color-accent);
+  color: #0b0b0f;
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 4px 8px;
+  padding: 6px 10px;
   background: var(--hover);
-  white-space: nowrap;
+  white-space: normal;
   max-width: 100%;
+  line-height: 1.1;
+}
+
+html[data-theme="dark"] .service-price {
+  color: #ffffff;
+}
+
+.service-price-value,
+.service-price-unit {
+  display: block;
+}
+
+.service-price-unit {
+  font-size: 14px;
+  line-height: 1.1;
+  font-weight: 700;
+  opacity: 0.88;
 }
 
 .service-tile-desc {
@@ -900,7 +925,7 @@
 }
 
 .kp-summary-line-mini .kp-summary-line-value {
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .kp-summary-divider {
@@ -1209,14 +1234,15 @@
   .service-tile-head {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 10px;
   }
 
   .service-tile .tile-title {
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-    font-size: 18px;
+    flex: 0 0 auto;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     line-height: 1.2;
     min-height: 0;
     margin: 0;
@@ -1225,10 +1251,26 @@
   .service-price {
     margin-left: 0;
     align-self: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
     max-width: 100%;
     white-space: normal;
-    overflow-wrap: anywhere;
-    font-size: 15px;
+    padding: 6px 10px;
+    line-height: 1.1;
+  }
+
+  .service-price-value,
+  .service-price-unit {
+    display: block;
+  }
+
+  .service-price-unit {
+    font-size: 14px;
+    line-height: 1.1;
+    font-weight: 700;
+    opacity: 0.88;
   }
 
   .service-tile-desc {
@@ -1353,7 +1395,15 @@
   }
 
   .service-tile .tile-title {
-    font-size: 17px;
+    font-size: 20px;
+  }
+
+  .service-price {
+    font-size: 20px;
+  }
+
+  .service-price-unit {
+    font-size: 13px;
   }
 
   .mobile-kp-toggle-value {

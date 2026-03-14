@@ -202,7 +202,7 @@
                 <div class="tile-title">{{ s.name }}</div>
                 {% if s.base_price %}
                   <div class="service-price">
-                    {{ s.base_price }} ₸{% if s.unit %} / {{ s.unit }}{% endif %}
+                    <span class="service-price-value">{{ s.base_price }} ₸{% if s.unit %}/ {{ s.unit }}{% endif %}</span>
                   </div>
                 {% endif %}
               </div>

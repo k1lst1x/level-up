@@ -492,7 +492,7 @@ body {
   border: none;
   background: transparent;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 24px !important;
   line-height: 1;
   color: var(--text);
 }
