@@ -91,7 +91,7 @@
   .section-cases,
   .section-contacts,
   .section-faq {
-    padding: var(--space-2xl) 0; /* 60px вместо 100px */
+    /*padding: var(--space-2xl) 0;*/ /* 60px вместо 100px */
   }
 
   .section-head {
@@ -783,7 +783,7 @@
    - prevent text overflow in tight containers
    ================================================================ */
 :root {
-  --ui-min-font: 15px;
+  --ui-min-font: 20px;
   --ui-min-pad: 15px;
   --ui-min-line: 1.45;
 }

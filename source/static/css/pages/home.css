@@ -138,7 +138,7 @@
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: var(--radius-full);
-  backdrop-filter: blur(var(--blur-md));
+  /* backdrop-filter: blur(var(--blur-md)); */
   color: rgba(255, 255, 255, 0.92);
   font-size: 100px;
   font-weight: 900;
@@ -470,12 +470,12 @@ html[data-theme="dark"] .process-num {
   margin: 0;
   line-height: 1.55;
 
-  display: -webkit-box;
+  /* display: -webkit-box; */
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 
-  min-height: calc(1.55em * 4);
+  min-height: calc(2.3em * 4);
 }
 
 @media (max-width: 640px) {
