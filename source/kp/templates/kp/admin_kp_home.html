@@ -101,11 +101,11 @@
             <div
               class="kp-item kp-row kp-admin-item"
               data-kp-item
-              data-kp-search="{{ kp.id }} {{ kp.customer.username|lower }} {{ kp.title|default:''|lower }} {{ kp.template.name|default:''|lower }}"
+              data-kp-search="{{ kp.id }} {{ kp.customer.get_full_name|lower }} {{ kp.customer.username|lower }} {{ kp.customer.phone|lower }} {{ kp.title|default:''|lower }} {{ kp.template.name|default:''|lower }}"
             >
               <div class="kp-item-left">
                 <div class="kp-item-title">
-                  {% blocktrans with id=kp.id username=kp.customer.username %}#{{ id }} · смета для {{ username }}{% endblocktrans %}
+                  {% with cname=kp.customer.get_full_name|default:kp.customer.username %}#{{ kp.id }} · смета для {{ cname }}{% endwith %}
                 </div>
                 <div class="kp-item-sub muted">
                   {% if kp.template %}
@@ -146,11 +146,11 @@
             <div
               class="kp-item kp-row kp-admin-item"
               data-kp-item
-              data-kp-search="{{ kp.id }} {{ kp.customer.username|lower }} {{ kp.title|default:''|lower }} {{ kp.status|default:''|lower }}"
+              data-kp-search="{{ kp.id }} {{ kp.customer.get_full_name|lower }} {{ kp.customer.username|lower }} {{ kp.customer.phone|lower }} {{ kp.title|default:''|lower }} {{ kp.status|default:''|lower }}"
             >
               <div class="kp-item-left">
                 <div class="kp-item-title">
-                  {% blocktrans with id=kp.id username=kp.customer.username title=kp.title %}#{{ id }} · Заявка от {{ username }} · {{ title }}{% endblocktrans %}
+                  {% with cname=kp.customer.get_full_name|default:kp.customer.username %}#{{ kp.id }} · Заявка от {{ cname }} · {{ kp.title }}{% endwith %}
                 </div>
                 <div class="kp-item-sub muted">
                   {% trans "Статус:" %} {{ kp.status }} · {% trans "Обновлено:" %} {{ kp.updated_at|date:"j E Y, H:i" }}
@@ -196,12 +196,12 @@
             <div
               class="kp-item kp-row kp-admin-item"
               data-kp-item
-              data-kp-search="{{ kp.id }} {{ kp.customer.username|lower }} {{ kp.title|default:''|lower }} {{ kp.status|default:''|lower }}"
+              data-kp-search="{{ kp.id }} {{ kp.customer.get_full_name|lower }} {{ kp.customer.username|lower }} {{ kp.customer.phone|lower }} {{ kp.title|default:''|lower }} {{ kp.status|default:''|lower }}"
             >
               <div class="kp-item-left">
-                <div class="kp-item-title">{% blocktrans with id=kp.id title=kp.title %}#{{ id }} {{ title }}{% endblocktrans %}</div>
+                <div class="kp-item-title">#{{ kp.id }} {{ kp.title }}</div>
                 <div class="kp-item-sub muted">
-                  {% trans "Клиент:" %} {{ kp.customer.username }} · {% trans "Обновлено:" %} {{ kp.updated_at|date:"j E Y, H:i" }}
+                  {% with cname=kp.customer.get_full_name|default:kp.customer.username %}{% trans "Клиент:" %} {{ cname }}{% if kp.customer.phone %} · {{ kp.customer.phone }}{% endif %}{% endwith %} · {% trans "Обновлено:" %} {{ kp.updated_at|date:"j E Y, H:i" }}
                 </div>
               </div>
 
@@ -250,8 +250,8 @@
             {% csrf_token %}
             <input type="hidden" name="customer_id" value="{{ u.id }}">
             <button class="kp-pick" type="submit">
-              <div class="kp-pick-title">{{ u.username }}</div>
-              <div class="kp-pick-sub muted">{% trans "id:" %} {{ u.id }}</div>
+              <div class="kp-pick-title">{{ u.get_full_name|default:u.username }}</div>
+              <div class="kp-pick-sub muted">{% if u.phone %}{{ u.phone }}{% else %}{{ u.username }}{% endif %}</div>
             </button>
           </form>
         {% empty %}

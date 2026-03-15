@@ -56,16 +56,23 @@ SECRET_KEY = env("DJANGO_SECRET_KEY", "dev-secret-key")
 if not DEBUG and SECRET_KEY == "dev-secret-key":
     raise RuntimeError("Set DJANGO_SECRET_KEY in source/.env before production deploy.")
 
-ALLOWED_HOSTS = env_list(
-    "DJANGO_ALLOWED_HOSTS",
-    [
-        "127.0.0.1",
-        "localhost",
-        "ala-event.kz",
-        "www.ala-event.kz",
-        "194.32.141.184",
-    ],
-)
+_allowed_hosts_default = [
+    "127.0.0.1",
+    "localhost",
+    "ala-event.kz",
+    "www.ala-event.kz",
+    "194.32.141.184",
+]
+if DEBUG:
+    # ngrok и другие тоннели — удобно при локальной разработке
+    _allowed_hosts_default += [
+        ".ngrok-free.dev",
+        ".ngrok-free.app",
+        ".ngrok.io",
+        ".loca.lt",
+    ]
+
+ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", _allowed_hosts_default)
 
 default_csrf_trusted_origins = [
     "https://ala-event.kz",
@@ -78,6 +85,9 @@ if DEBUG:
             "http://localhost",
             "http://127.0.0.1:8000",
             "http://localhost:8000",
+            "https://*.ngrok-free.dev",
+            "https://*.ngrok-free.app",
+            "https://*.ngrok.io",
         ]
     )
 
@@ -181,7 +191,7 @@ AUTH_USER_MODEL = "accounts.User"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
 
-KP_PERFORMER_NAME = env("KP_PERFORMER_NAME", "ИП Level-Up")
+KP_PERFORMER_NAME = env("KP_PERFORMER_NAME", "ИП Ala Event")
 KP_PERFORMER_PHONE = env("KP_PERFORMER_PHONE", "+77075822357")
 KP_PERFORMER_EMAIL = env("KP_PERFORMER_EMAIL", "abdildaajzada@gmail.com")
 

@@ -204,11 +204,12 @@ def _get_or_create_customer_draft(customer: User) -> Proposal:
         return draft
 
     tpl = _pick_default_template()
+    _customer_name = (customer.get_full_name() if hasattr(customer, "get_full_name") else "") or customer.username
     return Proposal.objects.create(
         owner=customer,
         customer=customer,
         template=tpl,
-        title=f"Смета для {customer.username}",
+        title=f"Смета для {_customer_name}",
         status=STATUS_DRAFT,
     )
 
@@ -230,11 +231,12 @@ def _get_or_create_admin_draft(owner: User, customer: User, *, force_new: bool =
             return existing
 
     tpl = _pick_default_template()
+    _customer_name = (customer.get_full_name() if hasattr(customer, "get_full_name") else "") or customer.username
     return Proposal.objects.create(
         owner=owner,
         customer=customer,
         template=tpl,
-        title=f"Смета для {customer.username}",
+        title=f"Смета для {_customer_name}",
         status=STATUS_DRAFT,
     )
 
@@ -752,8 +754,23 @@ def submit_kp(request, kp_id: int):
         kp.fixed_extra = extra20
         kp.fixed_total = total
 
+        # сохраняем ФИО клиента в notes, чтобы print корректно показывал имя
+        _admin_notes = _notes_json_load(kp)
+        if not _admin_notes.get("customer_full_name"):
+            _cust = kp.customer
+            _cfn = getattr(_cust, "first_name", "") or ""
+            _cln = getattr(_cust, "last_name", "") or ""
+            _admin_notes["customer_full_name"] = f"{_cfn} {_cln}".strip() or (
+                _cust.get_full_name() if hasattr(_cust, "get_full_name") else ""
+            ) or ""
+        if not _admin_notes.get("customer_phone"):
+            _admin_notes["customer_phone"] = (getattr(kp.customer, "phone", "") or "").strip()
+        if not _admin_notes.get("customer_email"):
+            _admin_notes["customer_email"] = (kp.customer.email or "").strip()
+        _notes_json_save(kp, _admin_notes)
+
         kp.status = STATUS_SENT
-        kp.save(update_fields=["status", "fixed_subtotal", "fixed_extra", "fixed_total"])
+        kp.save(update_fields=["notes", "status", "fixed_subtotal", "fixed_extra", "fixed_total"])
         _clear_active_kp(request)
 
         next_url = (request.POST.get("next") or "").strip()
@@ -781,7 +798,9 @@ def submit_kp(request, kp_id: int):
     data["customer_username"] = request.user.username
     data["customer_email"] = getattr(request.user, "email", "") or ""
     data["customer_phone"] = getattr(request.user, "phone", "") or ""
-    data["customer_full_name"] = getattr(request.user, "full_name", "") or ""
+    _fn = getattr(request.user, "first_name", "") or ""
+    _ln = getattr(request.user, "last_name", "") or ""
+    data["customer_full_name"] = f"{_fn} {_ln}".strip() or (request.user.get_full_name() if hasattr(request.user, "get_full_name") else "") or ""
     _notes_json_save(kp, data)
 
     kp.owner = manager

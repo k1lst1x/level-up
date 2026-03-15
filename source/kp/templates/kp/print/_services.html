@@ -1,7 +1,7 @@
 {% load static %}
 {% load i18n %}
 
-<section class="block">
+<section class="svc-section">
   <h2 class="h2 center">{% trans "Услуги" %}</h2>
   <div class="muted center svc-subtitle">{% trans "Состав и стоимость" %}</div>
 
@@ -28,8 +28,6 @@
 
           {% if it.service.description %}
             <div class="svc-desc">{{ it.service.description }}</div>
-          {% else %}
-            <div class="svc-desc muted">{% trans "Описание не указано." %}</div>
           {% endif %}
 
           <div class="svc-meta">
@@ -37,30 +35,14 @@
               <span class="muted">{% trans "Количество" %}</span>
               <span class="meta-strong">{{ it.qty|default:"—" }}</span>
             </div>
-
             <div class="svc-row">
               <span class="muted">{% trans "Цена" %}</span>
-              <span class="meta-strong">
-                {{ it.price|default:"0" }} ₸
-              </span>
+              <span class="meta-strong">{{ it.price|default:"0" }} ₸</span>
             </div>
-            {% comment %}
-            {% if it.discount and it.discount > 0 %}
-              <div class="svc-row">
-                <span class="muted">{% trans "Скидка" %}</span>
-                <span class="meta-strong">{{ it.discount }}</span>
-              </div>
-            {% endif %}
-            {% endcomment %}
-
             <div class="svc-row svc-row-total">
               <span class="muted">{% trans "Сумма" %}</span>
               <span class="meta-strong">
-                {% if it.line_total %}
-                  {{ it.line_total }} ₸
-                {% else %}
-                  {{ it.total_price }} ₸
-                {% endif %}
+                {% if it.line_total %}{{ it.line_total }}{% else %}{{ it.total_price }}{% endif %} ₸
               </span>
             </div>
           </div>
@@ -73,17 +55,16 @@
         <span class="muted">{% trans "Сумма услуг" %}</span>
         <b>{{ subtotal }} ₸</b>
       </div>
-    
       <div class="total-row">
         <span class="muted">{% trans "Комиссия агенства 20%" %}</span>
         <b>+ {{ extra20 }} ₸</b>
       </div>
-    
       <div class="total-row total-final">
         <span>{% trans "ИТОГО" %}</span>
         <span>{{ total }} ₸</span>
       </div>
-    </div>    
+    </div>
+
   {% else %}
     <div class="field">
       <div class="value muted">{% trans "Услуги не добавлены." %}</div>

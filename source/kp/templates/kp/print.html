@@ -68,23 +68,16 @@
         <div class="pill">
           <div class="label">{% trans "Дата и время" %}</div>
           <div class="value value-strong">
-            {% if event_dt %}
-              {{ event_dt|date:"d.m.Y H:i" }}
-            {% else %}
-              {{ now|date:"d.m.Y H:i" }}
-            {% endif %}
+            {% if event_dt %}{{ event_dt|date:"d.m.Y H:i" }}{% else %}{{ now|date:"d.m.Y H:i" }}{% endif %}
           </div>
         </div>
 
-        {# Скрыто по запросу: Название мероприятия #}
-        {# Скрыто по запросу: Адрес проведения #}
-        {# Скрыто по запросу: Ссылка на адрес (2ГИС/Google) #}
-        {# Скрыто по запросу: Ссылка на Drive #}
-
+        {% if meta.event_description %}
         <div class="pill pill-full">
           <div class="label">{% trans "Описание / заметки" %}</div>
-          <div class="value value-pre">{% if meta.event_description %}{{ meta.event_description }}{% else %}—{% endif %}</div>
+          <div class="value value-pre">{{ meta.event_description }}</div>
         </div>
+        {% endif %}
       </div>
     </section>
 

@@ -1,7 +1,5 @@
 /* static/kp/print.css
-   KP PRINT (readable, light purple)
-   - each field is a rounded pill with border
-   - services photos fixed, no drifting
+   KP PRINT — readable ≥16px, no empty gaps
 */
 
 /* ===== RESET ===== */
@@ -9,13 +7,14 @@
 html, body { margin: 0; padding: 0; }
 img { max-width: 100%; display: block; }
 
-html, body{
+html, body {
   font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 16px;
   color: #111;
 }
 
-/* ===== BACKGROUND (LIGHT, READABLE) ===== */
-body{
+/* ===== BACKGROUND ===== */
+body {
   min-height: 100dvh;
   background:
     radial-gradient(1100px 780px at 12% 0%, rgba(122,92,255,.22) 0%, rgba(122,92,255,0) 58%),
@@ -23,641 +22,193 @@ body{
     linear-gradient(180deg, #fbfaff 0%, #f3f0ff 48%, #ffffff 100%);
 }
 
-@media print{
-  html, body{ background:#fff !important; color:#111 !important; }
-  .no-print{ display:none !important; }
+@media print {
+  html, body { background: #fff !important; color: #111 !important; }
+  .no-print  { display: none !important; }
 }
 
 /* ===== LAYOUT ===== */
-.page{
+.page {
   max-width: 920px;
-  margin: 22px auto 56px;
+  margin: 16px auto 48px;
   padding: 0 14px;
 }
 
-.center{ text-align:center; }
-.muted{ color: rgba(17,17,17,.62); }
+.center { text-align: center; }
+.muted  { color: rgba(17,17,17,.62); }
 
 /* ===== ACTIONS ===== */
-.print-actions{
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  padding: 16px 12px 6px;
+.print-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 12px 4px;
 }
 
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:160px;
-  height:44px;
-  padding:0 16px;
-
-  border-radius:14px;
-  text-decoration:none;
-  font-weight:900;
-  font-size:14px;
-
-  color:#1b102e;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 16px;
+  color: #1b102e;
   background: rgba(122,92,255,.10);
   border: 1px solid rgba(122,92,255,.35);
   box-shadow: 0 10px 24px rgba(122,92,255,.14);
-
   transition: transform .12s ease, filter .15s ease, background .15s ease;
 }
-
-.btn:hover{ filter: brightness(1.03); }
-.btn:active{ transform: scale(.99); }
-
-.btn-primary{
+.btn:hover  { filter: brightness(1.03); }
+.btn:active { transform: scale(.99); }
+.btn-primary {
   background: linear-gradient(180deg, #7a5cff 0%, #6d4cff 100%);
   border-color: rgba(122,92,255,.75);
-  color:#fff;
+  color: #fff;
 }
 
-/* ===== OUTER BLOCKS ===== */
-
-
-.card{
+/* ===== CARD ===== */
+.card {
   background: rgba(255,255,255,.86);
   border-radius: 22px;
-  padding: 18px;
+  padding: 16px;
   border: 1px solid rgba(122,92,255,.22);
-  box-shadow:
-    0 1px 0 rgba(0,0,0,.03),
-    0 18px 50px rgba(16,24,40,.08);
+  box-shadow: 0 1px 0 rgba(0,0,0,.03), 0 18px 50px rgba(16,24,40,.08);
   backdrop-filter: blur(10px);
 }
 
-@media print{
-  .card{
-    background:#fff !important;
-    border:1px solid #e5e7eb !important;
-    box-shadow:none !important;
-    backdrop-filter:none !important;
+@media print {
+  .card {
+    background: #fff !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
   }
 }
 
-/* ===== TYPO ===== */
-.h2{
-  margin: 2px 0 10px;
+/* ===== TYPOGRAPHY ===== */
+.h2 {
+  margin: 2px 0 8px;
   font-weight: 950;
   font-size: 20px;
   letter-spacing: -0.2px;
 }
 
-.h3{
-  margin: 6px 0 12px;
+.h3 {
+  margin: 4px 0 10px;
   font-weight: 950;
   font-size: 16px;
   letter-spacing: -0.15px;
-  color:#151028;
+  color: #151028;
 }
 
 /* ===== GRIDS ===== */
-.grid-2{
-  display:grid;
+.grid-2 {
+  display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 12px;
 }
 
-/* 📱 МОБИЛКА */
-@media (max-width: 720px){
-  .grid-2{
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
+@media (max-width: 720px) {
+  .grid-2 { grid-template-columns: 1fr; gap: 8px; }
 }
 
-/* 🖨 ПЕЧАТЬ */
-@media print{
-  .grid-2{
-    grid-template-columns: 1fr 1fr;
-  }
+@media print {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
 }
 
-/* inner sections */
-.cardish{
-  background: linear-gradient(180deg,#ffffff 0%,#faf9ff 100%);
+/* ===== CARDISH (inner section) ===== */
+.cardish {
+  background: linear-gradient(180deg, #ffffff 0%, #faf9ff 100%);
   border: 1px solid rgba(122,92,255,.22);
-  border-radius: 18px;
-  padding: 14px;
-  margin-top: 10px;
+  border-radius: 16px;
+  padding: 12px;
+  margin-top: 8px;
 }
 
-.cardish .h3{
+.cardish .h3 {
   text-transform: uppercase;
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: .12em;
   color: rgba(122,92,255,.9);
+  margin-bottom: 8px;
 }
 
-/* ===== PILLS (each field with its own border) ===== */
-.pill{
-  border-radius: 16px;
-  padding: 12px 14px;
+/* ===== PILLS ===== */
+.pill {
+  border-radius: 14px;
+  padding: 10px 12px;
   border: 1px solid rgba(17,17,24,.14);
   background: rgba(255,255,255,.92);
-
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
-.pill-full{ grid-column: 1 / -1; }
+.pill-full { grid-column: 1 / -1; }
 
-.label{
-  font-size: 14px;
+.label {
+  font-size: 13px;
   font-weight: 950;
-  color: rgba(17,17,24,.92);
-  margin: 0 0 6px;
+  color: rgba(17,17,24,.75);
+  margin: 0 0 4px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
 }
 
-.value{
-  font-size: 15px;
-  font-weight: 650;
+.value {
+  font-size: 16px;
+  font-weight: 600;
   color: rgba(17,17,24,.86);
-  line-height: 1.35;
+  line-height: 1.4;
   overflow-wrap: anywhere;
 }
 
-.value-strong{
-  font-size: 15px;
-  font-weight: 980;
+.value-strong {
+  font-size: 16px;
+  font-weight: 900;
   color: rgba(17,17,24,.98);
 }
 
-.value-big{
-  font-size: 16px;
+.value-big {
+  font-size: 17px;
   font-weight: 980;
   letter-spacing: -0.15px;
   color: rgba(17,17,24,.98);
 }
 
-.svc-subtitle {
-  margin-bottom: 10px;
+.value-pre {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: pre-wrap;
+  color: rgba(17,17,24,.86);
+  line-height: 1.5;
 }
 
-/* link chip */
-.link-chip{
-  display:inline-block;
-  max-width:100%;
-  padding: 8px 10px;
-  border-radius: 14px;
-  border: 1px solid rgba(122,92,255,.22);
-  background: rgba(122,92,255,.10);
-  color: #2a165a;
-  font-weight: 950;
-  text-decoration:none;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-.link-chip:hover{ filter: brightness(1.03); }
-
-/* ===== COVER ===== */
-.cover-frame{
-  border-radius: 18px;
-  border: 1px solid rgba(17,17,24,.14);
-  background: rgba(255,255,255,.72);
-  padding: 10px;
-  overflow:hidden;
-}
-
-.cover-img{
-  width:100%;
-  height: 280px;
-  object-fit: cover;
-  border-radius: 14px;
-}
-
-@media (max-width: 720px){
-  .cover-img{ height: 210px; }
-}
-
-/* ===== SERVICES (svc-card markup) ===== */
-.services-grid,
-.kp-services-list{
-  display:grid;
-  gap: 14px;
-}
-
-.svc-card{
-  border-radius: 20px;
-  border: 1px solid rgba(17,17,24,.14);
-  background: rgba(255,255,255,.92);
-  padding: 16px;
-  box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 14px 34px rgba(0,0,0,.10);
-  break-inside: avoid;
-  page-break-inside: avoid;
-  display: grid;
-  grid-template-rows: auto auto auto 1fr auto;
-}
-
-.svc-photo{
-  width:100%;
-  height: 250px;
-  border-radius: 18px;
-  overflow:hidden;
-  border: 1px solid rgba(17,17,24,.14);
-  background: rgba(17,17,24,.06);
-}
-
-.svc-photo img{
-  width:100%;
-  height:100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.svc-no-photo{
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.svc-title{
-  margin-top: 12px;
-  font-size: 17px;
-  font-weight: 980;
-  color: rgba(17,17,24,.98);
-}
-
-.svc-desc{
-  margin-top: 6px;
-  font-size: 15px;
-  line-height: 1.4;
-  color: rgba(17,17,24,.70);
-}
-
-.svc-meta{
-  margin-top: 12px;
-  display:grid;
-  gap: 8px;
-  align-self: end;
-}
-
-.svc-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-radius: 16px;
-  border: 1px solid rgba(17,17,24,.14);
-  background: rgba(255,255,255,.94);
-  padding: 10px 12px;
-}
-
-.svc-row span:first-child{
-  font-size: 14px;
-  font-weight: 950;
-  color: rgba(17,17,24,.92);
-}
-
-.meta-strong{
-  font-size: 14px;
-  font-weight: 980;
-  color: rgba(17,17,24,.98);
-}
-
-.svc-row-total{
-  border-color: rgba(122,92,255,.30);
-  box-shadow: 0 0 0 3px rgba(122,92,255,.10);
-}
-
-.total-box{
-  margin-top: 14px;
-  border-radius: 20px;
-  border: 1px solid rgba(17,17,24,.14);
-  background: rgba(255,255,255,.92);
-  padding: 16px;
-  text-align:center;
-}
-
-.total-label{
-  font-size: 14px;
-  font-weight: 950;
-  color: rgba(17,17,24,.72);
-}
-
-.total-value{
-  margin-top: 6px;
-  font-size: 26px;
-  font-weight: 990;
-  color: rgba(17,17,24,.98);
-}
-
-/* ===== PRINT POLISH ===== */
-@media print{
-  .page{ margin:0; padding:0; max-width:100%; }
-  .card, .svc-card, .pill { break-inside: avoid; page-break-inside: avoid; }
-}
-
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  gap:20px;
-  margin-bottom: 6px;
-}
-
-.doc-title{
-  font-size: 28px;
-  font-weight: 1000;
-  letter-spacing: -0.5px;
-  color:#12092a;
-}
-
-.subtitle{
-  margin-top:4px;
-  font-size:15px;
-  font-weight:800;
-  color: rgba(17,17,24,.65);
-}
-
-@media print{
-  body{
-    font-size: 15px;
-    line-height:1.45;
-  }
-
-  .h2{
-    font-size:18px;
-    margin-top: 10px;
-  }
-
-  .doc-title{
-    font-size:26px;
-  }
-}
-
-.services-grid{
-  grid-template-columns: 1fr 1fr;
-}
-
-@media (max-width: 720px){
-  .services-grid{ grid-template-columns: 1fr; }
-}
-
-@media print{
-  .services-grid{
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.total-invoice{
-  /* margin-top:20px; */
-  border:2px solid rgba(122,92,255,.45);
-  background: linear-gradient(180deg,#faf8ff 0%,#ffffff 100%);
-}
-
-.total-invoice .total-row{
-  display:flex;
-  justify-content:space-between;
-  padding: 10px 6px;
-  font-size:15px;
-}
-
-.total-final{
-  margin-top:10px;
-  padding-top:12px;
-  border-top:2px dashed rgba(122,92,255,.4);
-  font-size:22px;
-  font-weight:1000;
-  color:#2a165a;
-}
-
-.block{
-  break-inside: avoid;
-  page-break-inside: avoid;
-}
-
-.block + .block{
-  margin-top:10px;
-}
-
-/* @media print{
-  section.block:nth-of-type(3){
-    page-break-before: always;
-  }
-} */
-
-.footer-line{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  font-size: 15px;
-  flex-wrap:wrap; /* на всякий, если email длинный */
-}
-
-.footer-item{
-  white-space:nowrap;
-}
-
-.footer-sep{
-  color: rgba(17,17,17,.35);
-  font-weight:900;
-}
-
-@media print{
-  .footer-line{
-    flex-wrap:nowrap;
-  }
-}
-
-/* ===== MOBILE FIXES ===== */
-@media (max-width: 720px){
-
-  .page{
-    padding: 0 10px;
-  }
-
-  .card{
-    padding: 14px;
-    border-radius: 18px;
-  }
-
-  .pill{
-    padding: 10px 12px;
-    border-radius: 14px;
-  }
-
-  .label{
-    font-size: 15px;
-  }
-
-  .value{
-    font-size: 15px;
-    line-height: 1.4;
-    word-break: break-word;
-  }
-
-  .value-big{
-    font-size: 15px;
-  }
-
-  .value-strong{
-    font-size: 14px;
-  }
-
-  .link-chip{
-    max-width: 100%;
-    white-space: normal;
-    word-break: break-all;
-  }
-
-  .h2{
-    font-size: 17px;
-  }
-
-  .svc-title{
-    font-size: 15px;
-  }
-
-  .svc-desc{
-    font-size: 12.5px;
-  }
-
-  .svc-photo{
-    height: 180px;
-  }
-
-  .footer-item{
-    white-space: normal;
-  }
-}
-
-.pill, .card, .svc-card{
-  max-width: 100%;
-  overflow: hidden;
-}
-
-.value, .svc-desc{
-  overflow-wrap: anywhere;
-}
-
-/* ===== ONE PAGE TUNING (PRINT) ===== */
-@media print{
-
-  /* уменьшаем обложку */
-  .cover-img{
-    height: 190px;
-  }
-
-  .cover-frame{
-    padding: 6px;
-    border-radius: 14px;
-  }
-
-  /* уменьшаем карточки услуг */
-  .svc-card{
-    padding: 10px;
-    border-radius: 16px;
-  }
-
-  .svc-photo{
-    height: 220px;
-  }
-
-  .svc-title{
-    margin-top: 8px;
-    font-size: 15px;
-  }
-
-  .svc-desc{
-    font-size: 12px;
-    line-height: 1.35;
-  }
-
-  .svc-meta{
-    gap: 6px;
-    margin-top: 8px;
-  }
-
-  .svc-row{
-    padding: 7px 9px;
-    font-size: 12px;
-  }
-
-  /* сетка услуг компактнее */
-  .services-grid{
-    gap: 10px;
-  }
-
-  /* меньше воздуха между блоками */
-  .block{
-    margin-top: 8px;
-  }
-
-  .h2{
-    margin-bottom: 6px;
-  }
-
-  /* итоговый блок компактнее */
-  .total-box{
-    padding: 10px;
-    margin-top: 10px;
-  }
-
-  .total-row{
-    padding: 6px 4px;
-    font-size: 15px;
-  }
-
-  .total-final{
-    font-size: 18px;
-  }
-}
-
-.svc-desc{
-  margin-top: 6px;
-  font-size: 15px;
-  line-height: 1.4;
-  color: rgba(17,17,24,.70);
-
-  display: -webkit-box;
-  -webkit-line-clamp: 4;      /* 👈 сколько строк */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.svc-desc{
-  min-height: calc(1.4em * 3); /* line-height * кол-во строк */
-}
-
-.cover-img {
-  height: 140px; /* Уменьшаем высоту изображения */
-  object-fit: cover;
-}
-
-.small {
-  display: block; /* Обеспечивает отображение блоков по вертикали */
-}
-
-.date-time {
-  display: inline-block; /* Делаем каждый блок в одну строку */
-  margin-bottom: 8px; /* Добавляем отступ между строками */
-}
-
-.date-time span {
-  font-weight: normal;
-  margin-right: 5px; /* Отступ между меткой (Дата/Время) и значением */
-}
+/* ===== HEADER ===== */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  gap: 20px;
+  margin-bottom: 10px;
 }
 
-.header-left {
-  font-size: 32px;
-  font-weight: 900;
+.header-left { }
+
+.doc-title {
+  font-size: 28px;
+  font-weight: 1000;
+  letter-spacing: -0.5px;
+  color: #12092a;
 }
 
 .subtitle {
+  margin-top: 2px;
   font-size: 16px;
-  color: rgba(17, 17, 17, 0.7);
+  font-weight: 700;
+  color: rgba(17,17,24,.65);
 }
 
 .header-right {
@@ -669,45 +220,326 @@ body{
 .header-info {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 3px;
 }
 
 .info-item {
   display: flex;
   align-items: center;
+  font-size: 16px;
 }
 
 .info-item span.muted {
-  margin-right: 8px;
+  margin-right: 6px;
 }
 
 .hr {
-  margin-top: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid rgba(0,0,0,.10);
 }
 
-.total-invoice{
-  margin-top: 18px;
-  border:2px solid rgba(122,92,255,.45);
-  background: linear-gradient(180deg,#faf8ff 0%,#ffffff 100%);
+/* ===== SERVICES ===== */
+.svc-subtitle {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .services-grid { grid-template-columns: 1fr; }
 }
 
 @media print {
-  .total-box { 
-    page-break-before: always;
-  }
-  /* убираем все декоративные тени в PDF */
-  .card,
-  .svc-card,
-  .pill,
-  .total-box,
-  .svc-row,
-  .cover-frame {
-    box-shadow: none !important;
+  .services-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+}
+
+.svc-card {
+  border-radius: 18px;
+  border: 1px solid rgba(17,17,24,.14);
+  background: rgba(255,255,255,.92);
+  padding: 14px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 14px 34px rgba(0,0,0,.10);
+  break-inside: avoid;
+  page-break-inside: avoid;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+}
+
+.svc-photo {
+  width: 100%;
+  height: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(17,17,24,.14);
+  background: rgba(17,17,24,.06);
+}
+
+.svc-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.svc-no-photo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.svc-title {
+  margin-top: 10px;
+  font-size: 17px;
+  font-weight: 980;
+  color: rgba(17,17,24,.98);
+  text-align: center;
+}
+
+.svc-desc {
+  margin-top: 6px;
+  font-size: 16px;
+  line-height: 1.45;
+  color: rgba(17,17,24,.70);
+  /* no min-height — no empty gap */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.svc-meta {
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+  align-self: end;
+}
+
+.svc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 14px;
+  border: 1px solid rgba(17,17,24,.14);
+  background: rgba(255,255,255,.94);
+  padding: 9px 12px;
+}
+
+.svc-row span:first-child {
+  font-size: 16px;
+  font-weight: 800;
+  color: rgba(17,17,24,.80);
+}
+
+.meta-strong {
+  font-size: 16px;
+  font-weight: 980;
+  color: rgba(17,17,24,.98);
+}
+
+.svc-row-total {
+  border-color: rgba(122,92,255,.30);
+  box-shadow: 0 0 0 3px rgba(122,92,255,.10);
+}
+
+/* ===== TOTALS ===== */
+.total-box {
+  margin-top: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(17,17,24,.14);
+  background: rgba(255,255,255,.92);
+  padding: 14px;
+  text-align: center;
+}
+
+.total-invoice {
+  margin-top: 12px;
+  border: 2px solid rgba(122,92,255,.45);
+  background: linear-gradient(180deg, #faf8ff 0%, #ffffff 100%);
+}
+
+.total-invoice .total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 6px;
+  font-size: 16px;
+}
+
+.total-final {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 2px dashed rgba(122,92,255,.4);
+  font-size: 20px;
+  font-weight: 1000;
+  color: #2a165a;
+}
+
+/* ===== FOOTER ===== */
+.footer-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-item { white-space: nowrap; }
+.footer-sep  { color: rgba(17,17,17,.35); font-weight: 900; }
+
+/* ===== BLOCKS ===== */
+/* Информационные блоки — целиком, не разрываем (они маленькие, влезают) */
+.block { break-inside: avoid; page-break-inside: avoid; }
+.block + .block { margin-top: 10px; }
+
+/* Секция услуг — НЕ держим целиком: пусть карточки текут по страницам естественно */
+.svc-section { margin-top: 10px; }
+
+/* Итоговый блок:
+   - не разрываем внутри
+   - стараемся не переносить на отдельную страницу (прилипает к последним карточкам) */
+.total-invoice {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  break-before: avoid;
+  page-break-before: avoid;
+}
+
+/* Сетка услуг не переносит последний ряд отдельно от итогов */
+.services-grid + .total-invoice {
+  break-before: avoid;
+  page-break-before: avoid;
+}
+
+.pill, .card, .svc-card { max-width: 100%; overflow: hidden; }
+.value, .svc-desc        { overflow-wrap: anywhere; }
+
+/* link chip */
+.link-chip {
+  display: inline-block;
+  max-width: 100%;
+  padding: 8px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(122,92,255,.22);
+  background: rgba(122,92,255,.10);
+  color: #2a165a;
+  font-weight: 950;
+  font-size: 16px;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.link-chip:hover { filter: brightness(1.03); }
+
+/* cover */
+.cover-frame {
+  border-radius: 16px;
+  border: 1px solid rgba(17,17,24,.14);
+  background: rgba(255,255,255,.72);
+  padding: 8px;
+  overflow: hidden;
+}
+
+.cover-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+@media (max-width: 720px) {
+  .cover-img { height: 160px; }
+}
+
+/* ===== PRINT MEDIA ===== */
+@media print {
+  .page       { margin: 0; padding: 0; max-width: 100%; }
+  .footer-line { flex-wrap: nowrap; }
+
+  body        { font-size: 16px; line-height: 1.4; }
+
+  .h2         { font-size: 17px; margin-top: 6px; margin-bottom: 3px; }
+  .h3         { font-size: 14px; }
+  .doc-title  { font-size: 24px; }
+  .label      { font-size: 11px; }
+
+  .card       { background: #fff !important; border: 1px solid #e5e7eb !important;
+                box-shadow: none !important; backdrop-filter: none !important;
+                padding: 12px; }
+
+  /* Держим вместе: карточки, пилы, и — главное — итоговый блок */
+  .card, .svc-card, .pill, .total-invoice {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
-  /* иногда браузер рисует «ореол» из-за backdrop-filter */
-  .card {
-    backdrop-filter: none !important;
+  .cover-img  { height: 140px; }
+  .cover-frame { padding: 5px; border-radius: 10px; }
+
+  /* Карточки услуг — меньше высота фото = больше помещается на странице */
+  .svc-card   { padding: 8px; border-radius: 12px; }
+  .svc-photo  { height: 160px; }
+  .svc-title  { font-size: 15px; margin-top: 6px; }
+  .svc-desc   { font-size: 14px; line-height: 1.3; margin-top: 4px; }
+  .svc-meta   { gap: 4px; margin-top: 6px; }
+  .svc-row    { padding: 5px 8px; font-size: 14px; border-radius: 10px; }
+  .meta-strong { font-size: 14px; }
+  .services-grid { gap: 8px; }
+  .svc-subtitle { margin-bottom: 6px; font-size: 14px; }
+
+  .pill       { padding: 6px 9px; margin-top: 5px; border-radius: 10px; }
+  .block      { margin-top: 6px; }
+  .block + .block { margin-top: 6px; }
+  .svc-section { margin-top: 6px; }
+  .cardish    { padding: 10px; margin-top: 6px; }
+
+  /* Итоговый блок — максимально компактный */
+  .total-invoice {
+    margin-top: 8px;
+    padding: 8px 10px;
+    break-before: avoid;
+    page-break-before: avoid;
   }
+  .total-invoice .total-row {
+    padding: 5px 4px;
+    font-size: 15px;
+  }
+  .total-final {
+    font-size: 17px;
+    margin-top: 6px;
+    padding-top: 6px;
+  }
+
+  /* Убираем тени */
+  .card, .svc-card, .pill, .total-box, .svc-row, .cover-frame {
+    box-shadow: none !important;
+  }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 720px) {
+  .page   { padding: 0 8px; }
+  .card   { padding: 12px; border-radius: 16px; }
+  .pill   { padding: 9px 11px; border-radius: 12px; }
+
+  .label       { font-size: 13px; }
+  .value       { font-size: 16px; line-height: 1.4; word-break: break-word; }
+  .value-big   { font-size: 16px; }
+  .value-strong { font-size: 16px; }
+
+  .h2     { font-size: 17px; }
+  .svc-title { font-size: 16px; }
+  .svc-desc  { font-size: 16px; }
+  .svc-photo { height: 180px; }
+
+  .link-chip  { max-width: 100%; white-space: normal; word-break: break-all; }
+  .footer-item { white-space: normal; }
 }
