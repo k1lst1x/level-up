@@ -601,6 +601,18 @@
     }
   }
 
+  function normalizeDescriptionText(raw){
+    return normalizeUrl(raw)
+      .replace(/\\u000D\\u000A/gi, "\n")
+      .replace(/\\u000A/gi, "\n")
+      .replace(/\\u000D/gi, "\n")
+      .replace(/\\r\\n/gi, "\n")
+      .replace(/\\n/gi, "\n")
+      .replace(/\\r/gi, "\n")
+      .replace(/\r\n?/g, "\n")
+      .replace(/\n{3,}/g, "\n\n");
+  }
+
   function formatPrice(raw){
     const value = parseInt(String(raw || "").replace(/[^\d-]/g, ""), 10);
     if(!Number.isFinite(value) || value <= 0) return "";
@@ -926,9 +938,11 @@
     gallerySlides = buildGallerySlides(images || []);
     renderGallerySlides(serviceName || "");
 
-    if(serviceDesc && serviceDesc.trim().length > 0){
+    const normalizedDesc = normalizeDescriptionText(serviceDesc);
+
+    if(normalizedDesc){
       if(descCard) descCard.style.display = "flex";
-      if(descEl) descEl.textContent = serviceDesc;
+      if(descEl) descEl.textContent = normalizedDesc;
     } else {
       if(descCard) descCard.style.display = "none";
       if(descEl) descEl.textContent = "";
