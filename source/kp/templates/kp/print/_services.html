@@ -15,7 +15,6 @@
                 class="svc-photo-img"
                 src="{% if site_url %}{{ site_url }}{% else %}{% static 'default-image.jpg' %}{% endif %}{{ it.service.image.url }}"
                 alt="{{ it.service.name|default:_('Услуга') }}"
-                loading="lazy"
               >
             {% else %}
               <div class="svc-no-photo muted">{% trans "Без фото" %}</div>
