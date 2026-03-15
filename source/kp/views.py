@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import logging
+import time
 from datetime import datetime, timedelta
 from typing import Any, Optional
 
@@ -30,6 +32,7 @@ User = get_user_model()
 ACTIVE_KP_SESSION_KEY = "active_kp_id"
 
 AUTO_CLOSE_HOURS = 16  # автозакрытие после начала мероприятия
+logger = logging.getLogger(__name__)
 
 
 # =========================
@@ -979,7 +982,10 @@ def kp_builder(request, kp_id: int):
 # =========================
 @login_required
 def kp_print(request, kp_id: int):
-    kp = get_object_or_404(Proposal, id=kp_id)
+    kp = get_object_or_404(
+        Proposal.objects.select_related("customer", "owner"),
+        id=kp_id,
+    )
 
     # Права
     if _is_admin(request.user):
@@ -1078,13 +1084,23 @@ def kp_print(request, kp_id: int):
     # ========= PDF через Playwright =========
     html_string = render_to_string("kp/print.html", ctx, request=request)
     filename = f"KP_{kp.id}.pdf"
+    image_count = sum(1 for item in items if getattr(item.service, "image", None))
 
     try:
         from playwright.sync_api import sync_playwright  # type: ignore
 
+        logger.warning(
+            "Starting proposal PDF generation kp_id=%s item_count=%s image_count=%s",
+            kp.id,
+            len(items),
+            image_count,
+        )
+        started_at = time.perf_counter()
+
         with sync_playwright() as p:
             browser = p.chromium.launch()
             page = browser.new_page()
+            page.emulate_media(media="print")
 
             # Важно: чтобы относительные ссылки нормально резолвились,
             # добавим <base href="..."> прямо в HTML (надёжнее, чем надеяться на base_url API).
@@ -1108,12 +1124,28 @@ def kp_print(request, kp_id: int):
 
             browser.close()
 
+        elapsed = time.perf_counter() - started_at
+        if elapsed >= 10:
+            logger.warning(
+                "Slow proposal PDF generation kp_id=%s item_count=%s image_count=%s duration=%.2fs",
+                kp.id,
+                len(items),
+                image_count,
+                elapsed,
+            )
+
         resp = HttpResponse(pdf_bytes, content_type="application/pdf")
         resp["Content-Disposition"] = f'attachment; filename="{filename}"'
         resp["Cache-Control"] = "no-store"
         return resp
 
     except Exception as e:
+        logger.exception(
+            "Proposal PDF generation failed kp_id=%s item_count=%s image_count=%s",
+            kp.id,
+            len(items),
+            image_count,
+        )
         return HttpResponse(
             "PDF генерация не работает через Playwright.\n"
             f"Ошибка: {e}\n\n"
