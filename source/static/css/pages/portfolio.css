@@ -28,7 +28,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
   padding: 6px;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   scrollbar-width: none;
 }
 
