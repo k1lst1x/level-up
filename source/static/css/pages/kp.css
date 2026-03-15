@@ -449,6 +449,14 @@
 }
 
 /* кнопки выбора клиента */
+.kp-modal-search{
+  margin: 0 0 10px;
+}
+
+.kp-pick-form{
+  margin: 0;
+}
+
 .kp-pick{
   width: 100%;
   text-align: left;
@@ -478,6 +486,10 @@
 }
 
 .kp-pick-sub{ font-size: 12px; margin-top: 2px; }
+
+.kp-modal-search-empty{
+  margin-top: 10px;
+}
 
 /* ===== subcategory_services: scrollable modal ===== */
 .modal--scroll{

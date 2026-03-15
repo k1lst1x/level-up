@@ -469,7 +469,7 @@ def kp_home(request):
         .order_by("-updated_at")[:50]
     )
 
-    customers = User.objects.filter(is_staff=False).order_by("username")
+    customers = User.objects.filter(is_staff=False).order_by("-date_joined", "-id")
 
     tab = (request.GET.get("tab") or "active").strip().lower()
     if tab not in ("active", "requests", "history"):
