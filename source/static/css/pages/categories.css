@@ -187,9 +187,9 @@
 }
 
 .category-services-layout {
-  --side-width: 340px;
+  --side-width: clamp(260px, 18vw, 320px);
   display: grid;
-  gap: 20px;
+  gap: clamp(16px, 1.4vw, 20px);
   grid-template-columns: var(--side-width) minmax(0, 1fr) var(--side-width);
   grid-template-areas: "side main kp";
   align-items: start;
@@ -275,8 +275,9 @@
 
 .category-name {
   flex: 1 1 auto;
-  font-size: 17px;
+  font-size: clamp(15px, 1vw, 17px);
   font-weight: 700;
+  line-height: 1.3;
   white-space: normal;
   overflow: visible;
   min-width: 0;
@@ -285,7 +286,7 @@
 
 .category-count {
   flex: 0 0 auto;
-  font-size: 14px;
+  font-size: clamp(12px, 0.9vw, 14px);
   font-weight: 700;
   color: var(--muted);
   border: 1px solid var(--border);
@@ -306,7 +307,8 @@
 
 .category-head .page-title {
   text-align: left;
-  font-size: 22px;
+  font-size: clamp(20px, 1.35vw, 22px);
+  line-height: 1.14;
 }
 
 .page-breadcrumb {
@@ -677,20 +679,8 @@
 }
 
 .services-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-@media (min-width: 900px) {
-  .services-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1200px) {
-  .services-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: clamp(14px, 1.2vw, 16px);
 }
 
 .service-tile {
@@ -722,8 +712,8 @@
 .service-tile .tile-title {
   width: 100%;
   min-width: 0;
-  font-size: 20px;
-  line-height: 1.2;
+  font-size: clamp(18px, 1.12vw, 20px);
+  line-height: 1.22;
   min-height: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -738,12 +728,12 @@
   align-items: flex-start;
   gap: 2px;
   flex: 0 0 auto;
-  font-size: 20px;
+  font-size: clamp(17px, 1.05vw, 20px);
   font-weight: 800;
   color: #0b0b0f;
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 6px 10px;
+  padding: 6px 9px;
   background: var(--hover);
   white-space: normal;
   max-width: 100%;
@@ -760,7 +750,7 @@ html[data-theme="dark"] .service-price {
 }
 
 .service-price-unit {
-  font-size: 14px;
+  font-size: clamp(12px, 0.82vw, 14px);
   line-height: 1.1;
   font-weight: 700;
   opacity: 0.88;
@@ -768,14 +758,14 @@ html[data-theme="dark"] .service-price {
 
 .service-tile-desc {
   -webkit-line-clamp: 3;
-  font-size: 16px;
-  line-height: 1.4;
-  min-height: calc(1.4em * 3);
+  font-size: clamp(14px, 0.92vw, 16px);
+  line-height: 1.48;
+  min-height: calc(1.48em * 3);
   margin-bottom: 2px;
 }
 
 .service-instagram {
-  font-size: 14px;
+  font-size: clamp(13px, 0.82vw, 14px);
   font-weight: 800;
   color: var(--color-accent);
   text-decoration: none;
@@ -907,13 +897,13 @@ html[data-theme="dark"] .service-price {
 }
 
 .kp-summary-line-label {
-  font-size: 14px;
+  font-size: clamp(13px, 0.92vw, 14px);
   line-height: 1.3;
   color: var(--muted);
 }
 
 .kp-summary-line-value {
-  font-size: 18px;
+  font-size: clamp(16px, 1.15vw, 18px);
   font-weight: 900;
   color: var(--text);
   white-space: nowrap;
@@ -921,11 +911,11 @@ html[data-theme="dark"] .service-price {
 }
 
 .kp-summary-line-mini .kp-summary-line-label {
-  font-size: 15px;
+  font-size: clamp(14px, 0.98vw, 15px);
 }
 
 .kp-summary-line-mini .kp-summary-line-value {
-  font-size: 20px;
+  font-size: clamp(18px, 1.32vw, 20px);
 }
 
 .kp-summary-divider {
@@ -934,14 +924,14 @@ html[data-theme="dark"] .service-price {
 }
 
 .kp-summary-line-total .kp-summary-line-label {
-  font-size: clamp(17px, 1.35vw, 22px);
+  font-size: clamp(15px, 1.18vw, 22px);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   font-weight: 900;
 }
 
 .kp-summary-line-total .kp-summary-line-value {
-  font-size: clamp(30px, 1.4vw, 38px);
+  font-size: clamp(24px, 2vw, 38px);
   line-height: 1;
   color: var(--color-accent);
 }
@@ -1006,7 +996,7 @@ html[data-theme="dark"] .service-price {
   flex: 1 1 auto;
   min-width: 0;
   overflow-wrap: break-word;
-  font-size: 15px;
+  font-size: clamp(14px, 0.95vw, 15px);
   font-weight: 700;
   line-height: 1.25;
 }
@@ -1066,7 +1056,7 @@ html[data-theme="dark"] .service-price {
   filter: grayscale(0.2);
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1320px) {
   .category-services-layout {
     grid-template-columns: 220px minmax(0, 1fr);
     grid-template-areas:
